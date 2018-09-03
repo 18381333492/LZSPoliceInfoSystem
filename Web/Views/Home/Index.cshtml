@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "泸州市公安信息网管理系统";
+}
+@model Web.Models.LoginCacheInfo
+<style>
+    .panel-header{
+        padding-top:8px;
+        padding-bottom:8px;
+    }
+    .operate{
+       cursor:pointer;
+       color:white;
+       font-size:14px;
+       display:inline-block;
+       margin-right:30px;
+    }
+    .hover:hover{
+        color:blue;
+    }
+</style>
+<link href="~/Content/fonts/iconfont.css" rel="stylesheet" />
+<div id="layout" class="easyui-layout" data-options="fit:true">
+    <!--header-->
+    <div data-options="region:'north',border:false" style="height:75px;background-color:#438eb9">
+        <div>
+            <div style="float:left;height:70px;">
+                <img src="~/Content/images/logo.png" style="width:60px;height:60px;margin:7px 10px 0px 30px;" />
+            </div>
+            <div style="float:left;height:70px;line-height:70px;color:white;font-size:32px">泸州市公安信息网管理系统</div>
+            <div style="float:right;height:70px;line-height:70px;margin-right:50px;font-size:16px;">
+               <span id="weather"></span>
+               <span class="operate">欢迎您:@Model.sUserName</span>
+               <span class="operate hover AlterPwd"><i class="iconfont icon-xiugaimima"></i>密码修改</span>
+               <span class="operate hover Quit"><i class="iconfont icon-084tuichu"></i>退出系统</span>
+            </div>
+        </div> 
+    </div>
+    <!--Menu-->
+    <div data-options="region:'west',title:'菜单栏目',split:true" style="width:200px;">
+        <ul id="tree" class="easyui-tree" data-options="animate:true,lines:false" 
+            style="width:180px;margin:0 auto;margin-top:10px">
+            <li>
+                <span>信息管理</span>
+                <ul>
+                    <li>
+                        <span><a data-url="/Category/Index">栏目管理</a></span>
+                    </li>
+                    <li>
+                        <span><a data-url="/Article/Index">文章管理</a></span>
+                    </li>
+                    <li>
+                        <span><a data-url="/Templet/Index">模板管理</a></span>
+                    </li>
+                    <li>
+                        <span><a data-url="/MakeHtml/Index">生成页面</a></span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span>系统设置</span>
+                <ul>
+                    <li>
+                        <span><a data-url="/User/Index">用户管理</a></span>
+                    </li>
+                    <li>
+                        <span><a data-url="/WebSite/Index">站点设置</a></span>
+                    </li>
+                    @if (Model.bIsSuper)
+                    {
+                        <li>
+                            <span><a data-url="/User/LogList">登录日志</a></span>
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <span>客户资料</span>
+                <ul>
+                    <li>
+                        <span><a data-url="/Client/Index">客户咨询</a></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!--Center-->
+    <div data-options="region:'center',border:false"> 
+        <div id="tabs" class="easyui-tabs" data-options="fit:true,tabHeight:31">
+            <div title="首页" style="padding:10px;">
+                <div style="padding:0px;font-size:13px;">
+                    <div style="margin-bottom:5px;color:rgb(67, 142, 185)">欢迎登录泸州市公安信息网管理系统</div>
+                    @if (Model.isFirst == false)
+                    {
+                        <div style="margin-bottom:5px">上次登录时间:@Model.dLoginTime.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                        <div style="margin-bottom:5px">上次登录Ip地址:@Model.Ip</div>
+                    }
+                    else
+                    {
+                        <div style="margin-bottom:5px">本次登录时间:@Model.dLoginTime.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                        <div style="margin-bottom:5px">本次登录Ip地址:@Model.Ip</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--footer-->
+    <div data-options="region:'south'" style="height:30px;">
+        <div style="text-align:center;height:28px;line-height:28px;font-size:13px">
+            Copyright:2015 <a href="" target="_blank">台哥来了工作室</a> All rights reserved
+        </div>
+    </div>
+</div>  
+<script src="~/Scripts/common.client.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#tree').tree({
+            onClick: function (node) {
+                var menu = $(node.target).find('a');
+                if (menu.length == 1) {
+                    var title = menu.text();
+                    var url = menu.attr("data-url");
+                    if ($('#tabs').tabs("getTab", title)) {
+                        $('#tabs').tabs("select", title);
+                    }
+                    else {
+                        $('#tabs').tabs('add', {
+                            title: title,
+                            content: '<iframe scrolling="auto" frameborder="0"  src="' + url + '" width="100%" height="100%" style="display:-webkit-box"></iframe>',
+                            closable: true,
+                            tools: [{
+                                iconCls: 'icon-mini-refresh',
+                                handler: function () {
+                                    //刷新
+                                    $('#tabs').tabs('getSelected').panel();
+                                }
+                            }]
+
+                        });
+                    }
+                }
+            }
+        });
+
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("User");
+        //修改密码
+        $('.AlterPwd').on("click", function () {
+            var dialog = admin.dialog(admin.route('AlterPwd'), "修改密码", function (r) {
+                if ($(admin.form).form('validate')) {
+                    admin.button.disable();
+                    var data = $(admin.form).serialize();
+                    admin.Ajax(admin.route('AlterPwd'), data, function (r) {
+                        admin.alert("修改成功");
+                        dialog.dialog('close');
+                    });
+                }
+            }, 300,200);
+        });
+        //退出系统
+        $('.Quit').on("click", function () {
+            if (confirm("确定要退出系统")) {
+                client.ajax.postRequest("/User/Quit", null, function (r) {
+                    location.href = "/User/Login";
+                });
+            }
+        });
+    });
+</script>

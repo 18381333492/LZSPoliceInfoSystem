@@ -1,0 +1,26 @@
+﻿  .gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:13px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #e4e4e4;
+	border-collapse: collapse;
+    width:100%;
+}
+.gridtable td {
+	border-width: 1px;
+	padding: 5px;
+	border-style: solid;
+	border-color: #ccc;
+	background-color: #ffffff;
+}
+.gridtable tr td:nth-child(odd){
+	border-width: 1px;
+	padding: 5px;
+	border-style: solid;
+	border-color: #ccc;
+	background-color: #FBFBFB;
+    text-align:right;
+    width:120px;
+    color:blue;
+}

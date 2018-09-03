@@ -1,0 +1,345 @@
+﻿@using Web.Server;
+@using Web.Models;
+@{
+    var Category = Model as TG_Category;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="agent-pc theme-b theme-bwhite">
+<head>
+    @Include("quote");
+    <script src="~/page/statics/js/main.js" data-main="indexMain"></script>
+    <title>@Category.sName</title>
+</head>
+<body id="longPage" class="gh0  longPage">
+    <!--头部-->
+    @Include("top");
+    <div id="sitecontent" class="ff_sitecontent">
+        <!--栏目列表手机端-->
+        @Include("list");
+        <div id="indexPage" class="ff_indexPage" data-scroll-ease="Expo.easeInOut" data-scroll-speed="1" data-control="0" data-control-wheel="0" data-singlescreen="0">
+            <div id="topSlider" class="ff_topSlider mslider module">
+                <div class="content_wrapper">
+                    <div class="content_list owl-carousel owl-theme" data-slider-height="500" data-slider-auto="1" data-slider-mode="3" data-slider-pause="5" data-slider-ease="ease-out" data-slider-speed="1" style="height:500px">
+                        @foreach (var url in Category.sPictureUrl.Split(',').ToList())
+                        {
+                            <div class="item_block">
+                                <div class="item_bg image" style="background-image:url(@url)"></div>
+                            </div>
+                        }
+                    </div>
+                    <div class="sliderArrow">
+                        <div></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <!--服务-->
+           
+            <div class="mlist service_tabs module ff_noSlider">
+                <div class="bgmask"></div>
+                <div class="module_container wide">
+                    <div class="container_header wow">
+                        <p class="title">服务</p>
+                        <p class="subtitle">/ SERVICE</p>
+                    </div>
+                    <div class="container_category wow movedx one" data-movedx-mid="2" data-movedx-distance="15">
+                        <a href="#" class="active"><span>全部</span></a>
+                    </div>
+                    <div class="container_content">
+                        <div class="content_wrapper">
+                            <div class="tab_content_wrapper">
+                                <div class="tab_content">
+                                    <div class="tab_indexs">
+                                        <div class="fnums nums_item" data-current="0">
+                                            <div><span>0</span><span>1</span><span>2</span></div>
+                                        </div>
+                                        <div class="tnums nums_item">
+                                            <div><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+                                        </div>
+                                        <div class="nums_item">
+                                            <div><span> /</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="sliderWrapper" data-slider-num="1">
+                                        <div class="content_list">
+                                            @{ var server_acticlelist = FuncHelper.Instance.GetArticleListByCategoryId(FuncHelper.Instance.GetCategoryByEnName("server").ID); }
+                                            @for (var i = 0; i < server_acticlelist.Count; i++)
+                                            {
+                                                <div id="service_postitem_@i" class="item_block">
+                                                    <div class="item_wrapper">
+                                                        <div class="item_info">
+                                                            <p class="title ellipsis">@server_acticlelist[i].sTitle</p>
+                                                            <p class="subtitle ellipsis">@server_acticlelist[i].sEnTitle</p>
+                                                            <div class="description">
+                                                                <p>@server_acticlelist[i].sContent</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab_button">
+                                <div class="content_list">
+                                    @for (var i = 0; i < server_acticlelist.Count; i++)
+                                    {
+                                        <div id="service_item_@i" class="item_block wow" style="animation-delay:.0s">
+                                            <a href="javascript:;" class="item_link">
+                                                <div class="item_wrapper">
+                                                    <div class="item_img"><img src="@server_acticlelist[i].sPictureUrl.Split(',')[0]" /></div>
+                                                    <div class="item_info">
+                                                        <p class="nums">@i/</p>
+                                                        <p class="title ellipsis">@server_acticlelist[i].sTitle</p>
+                                                        <p class="subtitle ellipsis">@server_acticlelist[i].sEnTitle</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <!--项目-->
+            <div class="mlist project module ff_noSlider">
+                <div class="bgmask"></div>
+                <div class="module_container wide">
+                    <div class="container_header wow">
+                        <p class="title">项目</p>
+                        <p class="subtitle"> / PROJECT</p>
+                    </div>
+                    <div class="container_category wow movedx" data-movedx-mid="2" data-movedx-distance="15">
+                        <a href="#" class="active">
+                            <span>全部</span>
+                        </a>
+                        @{  var project_list = FuncHelper.Instance.GetChildCategory(Category.ID, false); }
+                        @for (var i = 0; i < project_list.Count; i++)
+                        {
+                            <a href="#" data-type="@project_list[i].ID">
+                                <span>@project_list[i].sName</span>
+                            </a>
+                        }
+                    </div>
+                    <div class="container_content">
+                        <div class="content_wrapper">
+                            <div class="content_list movedx" data-movedx-mid="2" data-movedx-distance="15">
+                            @{  var project_acticlelist = FuncHelper.Instance.GetCategoryAllArticleList(FuncHelper.Instance.GetCategoryByEnName("project").ID); }
+                            @for (var i = 0; i < project_acticlelist.Count; i++)
+                            {
+                                <div id="project_item_@i" class="item_block wow" data-type="@project_acticlelist[i].iCategoryId" style="animation-delay:.0s">
+                                    <a href="#" class="item_link" target="_blank">
+                                        <img src="@project_acticlelist[i].sPictureUrl.Split(',')[0]" />
+                                        <div class="item_wrapper">
+                                            <div class="item_info move">
+                                                <p class="title ellipsis">@project_acticlelist[i].sTitle</p>
+                                                <p class="subtitle ellipsis">@project_acticlelist[i].sDescription</p>
+                                            </div><i class="icon iconfont icon-add"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            
+            <!--关于-->
+            <div class="mcustomize module horizontal tril" style="">
+                <div class="bgmask"></div>
+                <div class="module_container">
+                    <div class="container_content">
+                        <div class="contentbody">
+                            <div class="wrapper">
+                                <div class="header wow">
+                                    <p class="title">关于我们</p>
+                                    <p class="subtitle">ABOUT US</p>
+                                </div>
+                                <div class="description wow">
+                                    <p style="text-align: center;"><span style="font-size: 14px;">我们是JSMO集团建筑设计院，一家全面服务的设计和咨询公司，业务范围包括规划与景观设计所、市政与设备设计所，有些建筑设计院还设立分院，专业范围包括城市规划、建筑工程设计、景观设计、室内设计、市政设计、消防设计、智能设计等，业务涉及中外合作设计，施工图设计审查，工程承包，环境艺术，建筑智能化工程等。</span></p>
+                                    <p><span style="font-size: 14px;"><br /></span></p>
+                                    <p style="text-align: center;">
+                                        <a class="more" href="#" target="_blank">MORE</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mediabody wow">
+                            <a target="_popup" href="http://resources.jsmo.xin/templates/upload/demo/yanshi.mp4">
+                                <div class="image" style="background-image:url(./statics/images/149007689617.jpg)"></div>
+                                <div class="mask"></div>
+                                <div class="link_icon"><i class="fa fa-link" aria-hidden="true"></i></div>
+                            </a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--公司信息-->
+            <div class="mcounter module " style=" =">
+                <div class="bgmask"></div>
+                <div id="counterBgdx" style="position:absolute; width:100%; height:100%"></div>
+                <div class="module_container">
+                    <div class="container_content">
+                        <ul class="content_list">
+                            <li>
+                                <div>
+                                    <p class="number"><span class="counterDX" data-counter-value="1912">1912</span><span class="unit">年</span></p>
+                                    <p class="title">成立</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p class="number"><span class="counterDX" data-counter-value="299">299</span><span class="unit">+</span></p>
+                                    <p class="title">服务</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p class="number"><span class="counterDX" data-counter-value="999">999</span><span class="unit">+</span></p>
+                                    <p class="title">项目</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p class="number"><span class="counterDX" data-counter-value="2016">2016</span><span class="unit">+</span></p>
+                                    <p class="title">客户</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <!--团队-->
+            <div class="mlist team module ff_slider">
+                <div class="bgmask"></div>
+                <div class="module_container">
+                    <div class="container_header wow">
+                        <p class="title">团队精英</p>
+                        <p class="subtitle"> / TEAM</p>
+                    </div>
+                    <div class="container_category wow movedx one" data-movedx-mid="2" data-movedx-distance="15">
+                        <a href="#" class="active"><span>全部</span></a>
+                    </div>
+                    <div class="container_content">
+                        <div class="content_wrapper slider" data-slider-num='{"0":{"nav":0,"items":2},"1180":{"items":4}}' data-slider-loop="1">
+                            <div class="content_list">
+                                @{    
+                                    var acticlelist = FuncHelper.Instance.GetArticleListByCategoryId(FuncHelper.Instance.GetCategoryByEnName("team").ID); 
+                                 }
+                                @for (var i = 0; i < acticlelist.Count; i++)
+                                {
+                                    <div id="project_item_@i" class="item_block wow" style="animation-delay:.0s">
+                                        <a class="item_link" target="_blank">
+                                            <div class="item_img">
+                                                <img src="@acticlelist[i].sPictureUrl.Split(',')[0]" />
+                                                <div class="rectborder"></div><i class="icon iconfont icon-add"></i>
+                                            </div>
+                                            <div class="item_wrapper">
+                                                <div class="item_info">
+                                                    <p class="title ellipsis">@acticlelist[i].sTitle</p>
+                                                    <p class="subtitle">@acticlelist[i].sEnTitle</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            
+            <!--联系-->
+            <div id="mcontact" class="mcontact module">
+                <div class="module_container">
+                    <div class="container_header wow">
+                        <p class="title">联系</p>
+                        <p class="subtitle">/ CONTACT</p>
+                    </div>
+                    <div class="container_content">
+                        <div class="content_wrapper">
+                            <div id="contactlist" class="contactlist">
+                                <div id="contactinfo" class="contactinfo wow">
+                                    @{ var config = FuncHelper.Instance.GetConfig(); }
+                                    <h3 class="ellipsis contact_name">@config.sSiteName</h3>
+                                    <p class="ellipsis contact_add">地址：@config.sAddress</p>
+                                    <p class="ellipsis contact_tel">电话：@config.sMobile</p>
+                                    <p class="ellipsis contact_mob">手机：@config.sPhone</p>
+                                    <p class="ellipsis contact_fax">传真：@config.sFax</p>
+                                    <p class="ellipsis contact_eml">邮箱：@config.sEmail</p>
+                                    <div class="ff_social">
+                                        <a class="fl" target="_blank" href="http://weibo.com/web"><i class="fa fa-weibo"></i></a>
+                                        <a class="fl" target="_blank" href="tencent://message/?uin=@config.sQQNum&Site=uemo&Menu=yes"><i class="fa fa-qq"></i></a>
+                                        <a id="mpbtn" class="fl" target="_blank" href="~/page/statics/images/1438424052624.jpg"><i class="fa fa-weixin"></i></a>
+                                    </div>
+                                </div>
+                                <div id="contactform" class="contactform wow">
+                                    <form id="client_form">
+                                        <p class="contactform_name">
+                                            <input type="text" class="inputtxt" name="sName" placeholder="姓名" autocomplete="off" />
+                                        </p>
+                                        <p class="contactform_eml">
+                                            <input type="text" class="inputtxt" name="sEmail" placeholder="邮箱" autocomplete="off" />
+                                        </p>
+                                        <p class="contactform_tel">
+                                            <input type="text" class="inputtxt" name="sPhone" placeholder="电话" autocomplete="off" />
+                                        </p>
+                                        <p class="contactform_content">
+                                            <textarea class="inputtxt" name="sContent" placeholder="内容" autocomplete="off"></textarea>
+                                        </p>
+                                        <p class="contactform_submit">
+                                            <input class="inputtxt" id="commit" value="提交" />
+                                        </p>
+                                    </form>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部-->
+    @Include("bottom");
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        $('#commit').on("click", function () {
+            var sName = $.trim($('input[name=sName]').val());
+            var sEmail = $.trim($('input[name=sEmail]').val());
+            var sPhone = $.trim($('input[name=sPhone]').val());
+            var sContent = $.trim($('input[name=sContent]').val());
+            if (sName.length == 0) return alert("姓名不能为空");
+            if (sPhone.length == 0) return alert("电话不能为空");
+            $.ajax({
+                url: '/Client/Add',
+                type: 'POST',
+                data: { sName: sName, sEmail: sEmail, sPhone: sPhone, sContent: sContent },
+                dataType: 'json',
+                success: function (r) {
+                    if (r.success) {
+                        alert("提交成功,客服人员将尽快联系您");
+                    }
+                    else {
+                        alert("提交失败");
+                    }
+                }
+            });
+        });
+    });
+</script>

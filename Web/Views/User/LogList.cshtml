@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "登录日志";
+}
+<table id="User"></table>
+<div id="User_toolbar" style="padding:5px;">
+    <form id="searchForm">
+        <div style="margin-bottom:5px">
+            <span>模糊查询</span>
+            <input class="easyui-textbox" name="sKeyWord" data-options="width:180,height:22,required:false,prompt:'账号'">
+            <a class="easyui-linkbutton search" data-options="iconCls:'icon-search'">查 询</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("User");
+
+        //查询操作
+        $('#searchForm .search').on("click", function () {
+            var params = $(admin.searchform).serializeArray().toObject();
+            admin.grid.datagrid({
+                queryParams: params
+            })
+        });
+
+        /*!
+        * method:数据列表(datagrid)的绑定
+        */
+        admin.grid.datagrid({
+            url: admin.route('LogList'),
+            toolbar: admin.toolbar,
+            fitColumns:false,
+            columns: [[
+                { field: 'sUserName', title: '账号', align: 'center', width: 120 },
+                { field: 'Ip', title: '登录IP', align: 'center', width: 150 },
+                { field: 'dInsertTime', title: '登录时间', align: 'center', width: 150 },
+            ]],
+            onLoadSuccess: function () {
+                admin.grid.datagrid('resize');
+            }
+        });
+
+    });
+
+
+
+
+</script>
+
+

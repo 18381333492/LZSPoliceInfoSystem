@@ -1,0 +1,21 @@
+﻿
+
+<style>
+    #dataForm p {
+        text-align: center;
+    }
+</style>
+<!--修改密码-->
+<form id="dataForm">
+    <input  type="hidden" name="ID" value="@ViewBag.ID"/>
+    <div style="padding-left:5px;margin:auto">
+        <p>
+            <label>新的密码：</label><input id="pwd" class="easyui-textbox" name="sPassword" data-options="required:true,validType:'length[6,255]'"
+                                     invalidmessage="密码长度应大于6位" type="password">
+        </p>
+        <p>
+            <label>确认密码：</label><input class="easyui-textbox" name="resPassword" data-options="required:true" validType="equals['#pwd']" type="password">
+        </p>
+    </div>
+</form>
+

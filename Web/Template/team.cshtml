@@ -1,0 +1,74 @@
+@using Web.Server;
+@using Web.Models;
+@{
+    var Category = Model as TG_Category;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="agent-pc theme-b theme-bwhite">
+<head>
+    @Include("quote");
+    <script src="~/page/statics/js/main.js" data-main="baseMain"></script>
+</head>
+<body id="longPage" class="gh0  longPage">
+    <!--头部-->
+    @Include("top");
+    <div id="sitecontent" class="ff_sitecontent">
+        <!--栏目列表手机端-->
+        @Include("list");
+        <div class="npagePage ff_pageList">
+            <div id="banner">
+                <div style="background-image:url(@Category.sPictureUrl.Split(',')[0]);"></div>
+            </div>
+            <div id="pageTarget" class="ff_pageTarget module">
+                <div class="module_container">
+                    <div class="container_target wow">
+                        您的位置：
+                        <a href="/">首页</a><i class="fa fa-angle-right"></i>
+                        <a href="#">@Category.sName</a>
+                    </div>
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="mlist team module ff_noSlider">
+                    <div class="bgmask"></div>
+                    <div class="module_container">
+                        <div class="container_content nocat">
+                            <div class="content_wrapper">
+                                <div class="content_list">
+                                    @{ var acticlelist = FuncHelper.Instance.GetArticleListByCategoryId(Category.ID); }
+                                    @for (var i = 0; i < acticlelist.Count; i++)
+                                    {
+                                    <div id="project_item_@i" class="item_block wow" style="animation-delay:.0s">
+                                        <a class="item_link" target="_blank">
+                                            <div class="item_img">
+                                                <img src="@acticlelist[i].sPictureUrl.Split(',')[0]" />
+                                                <div class="rectborder"></div><i class="icon iconfont icon-add"></i>
+                                            </div>
+                                            <div class="item_wrapper">
+                                                <div class="item_info">
+                                                    <p class="title ellipsis">@acticlelist[i].sTitle</p>
+                                                    <p class="subtitle">@acticlelist[i].sEnTitle</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    }
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                  
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <!--底部-->
+    @Include("bottom");
+</body>
+</html>

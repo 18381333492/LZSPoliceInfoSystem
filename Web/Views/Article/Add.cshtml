@@ -1,0 +1,110 @@
+﻿
+
+<!--添加文章视图-->
+<form id="dataForm">
+    <table class="gridtable">
+        <tr>
+            <td>所属栏目:</td>
+            <td>
+                <input class="easyui-combotree" name="iCategoryId" data-options="url:'/Category/CategoryComtreeData?IsGen=0',required:true,panelHeight:'auto'">
+            </td>
+            <td>文章属性:</td>
+            <td>
+                @*<input type="checkbox" name="bIsRelease" value="true" class="bIsRelease" />发布&nbsp;&nbsp;*@
+                <input type="checkbox" name="bIsSlide" value="true" class="bIsSlide" />最新 &nbsp;&nbsp;
+                <input type="checkbox" name="bIsTop" value="true" class="bIsTop" />置顶 &nbsp;&nbsp;
+                <input type="checkbox" name="bIsHot" value="true" class="bIsHot" />热点
+            </td>
+        </tr>
+        <tr>
+            <td>文章标题:</td>
+            <td colspan="3">
+                <input class="easyui-textbox" name="sTitle" style="width:500px">
+            </td>
+        </tr>
+        <tr>
+            <td>英文标题:</td>
+            <td colspan="3">
+                <input class="easyui-textbox" name="sEnTitle" style="width:500px">
+            </td>
+        </tr>
+        <tr>
+            <td>发布时间:</td>
+            <td>
+                <input type="text" class="easyui-datebox" name="dPublishTime" />
+            </td>
+            <td>独立模板:</td>
+            <td>
+                <input name="iTemplateId" class="easyui-combobox" data-options="url:'/Templet/comboxData',valueField:'ID',
+                        textField:'sTempletName',editable:false,height:25,width:173">   
+            </td>
+        </tr>
+        <tr>
+            <td>信息版本:</td>
+            <td>
+                <input class="easyui-textbox" name="sVersion">
+            </td>
+            <td>信息大小:</td>
+            <td>
+                <input class="easyui-textbox" name="sSize">
+            </td>
+        </tr>
+        <tr>
+            <td>信息语言:</td>
+            <td>
+                <input class="easyui-textbox" name="sLang"> 
+            </td>
+            <td>作者/提供商:</td>
+            <td>
+                <input class="easyui-textbox" name="sAuthor">   
+            </td>
+        </tr>
+        <tr>
+            <td>导图尺寸:</td>
+            <td>
+                <input class="easyui-textbox" type="text" name="sPictureSize" />
+            </td>
+            <td>摘要/运行环境:</td>
+            <td>
+                <input class="easyui-textbox" name="sSummary">
+            </td>
+        </tr>
+        <tr>
+            <td>文章导图:</td>
+            <td colspan="3">
+                <div id="sPictureUrl"></div>
+                <input type="hidden" name="sPictureUrl" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>文章描述:</td>
+            <td colspan="3">
+                <textarea name="sDescription" style="width:650px;height:80px"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>文章关键字:</td>
+            <td colspan="3">
+                <textarea name="sKeyword" style="width:650px;height:80px"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>文章内容:</td>
+            <td colspan="3">
+                <textarea id="sContent" name="sContent" style="width:650px;height:400px;"></textarea>
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $('.bIsRelease,.bIsTop,.bIsSlide,.bIsHot').iCheck({
+        labelHover: false,
+        cursor: true,
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%'
+    });
+
+    var pciture = new dpictures();
+    pciture.create("sPictureUrl");
+</script>

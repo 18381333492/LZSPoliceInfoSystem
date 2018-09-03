@@ -1,0 +1,47 @@
+@using Web.Server;
+@using Web.Models;
+@{
+    var Category = Model as TG_Category;
+}
+<div id="navMini">
+    <div id="navMiniTable">
+        <div id="navMiniCell">
+            <ul class="nav">
+                @foreach (var item in FuncHelper.Instance.GetShowCategory())
+                {
+                var list = FuncHelper.Instance.GetChildCategory(item.ID);
+                if (list.Count == 0)
+                {
+                if (item.ID == Category.ID)
+                {
+                <li class="navitem">
+                    <a class="active" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" target="_self">@item.sName</a>
+                </li>
+                }
+                else
+                {
+                <li class="navitem">
+                    <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" target="_self">@item.sName</a>
+                </li>
+                }
+                }
+                else
+                {
+                <a href="javascript:;" target="">@item.sName<i class="fa fa-angle-down"></i></a>
+                <ul class="subnav">
+                    @foreach (var m in list)
+                    {
+                    <li>
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(m.ID)" target="_self">@m.sName</a>
+                    </li>
+                    }
+                </ul>
+                }
+                }
+                <li class="search-but" style="opacity:0">
+                    <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

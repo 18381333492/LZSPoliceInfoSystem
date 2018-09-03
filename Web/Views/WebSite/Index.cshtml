@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "站点设置";
+}
+@using Web.Models;
+@model TG_WebSite
+<style>
+    .gridtable{
+        font-size:14px;
+    }
+</style>
+<link href="~/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Content/icheck/icheck.min.js"></script>
+<div class="container">
+    <form id="dataForm">
+        @if (ViewBag.bIsSuper==false)
+        {
+            if (Model.IsNeedVerify)
+            {
+                <input type="hidden" name="IsNeedVerify" value="true" />
+            }
+            else
+            {
+                <input type="hidden" name="IsNeedVerify" value="false" />
+            }
+        }
+        <input type="hidden" name="ID"  value="@Model.ID" />
+        <table class="gridtable">
+            <tr>
+                <td>站点名称:</td>
+                <td>
+                    <input name="sSiteName" class="easyui-textbox" data-options="required:true" style="width:300px" value="@Model.sSiteName">
+                </td>
+            </tr>
+            <tr>
+                <td>站点域名:</td>
+                <td>
+                    <input name="sSiteDNS" class="easyui-textbox easyui-validatebox"  style="width:300px" value="@Model.sSiteDNS">
+                </td>
+            </tr>
+            @if (ViewBag.bIsSuper)
+            {
+                <tr>
+                    <td>需要审核文章</td>
+                    <td>
+                        <input type="checkbox" class="IsNeedVerify" name="IsNeedVerify" value="true" />
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>联系QQ:</td>
+                <td>
+                    <input class="easyui-textbox" type="text" style="width: 300px;" name="sQQNum" maxlength="30" value="@Model.sQQNum" />
+                </td>
+            </tr>
+            <tr>
+                <td>联系邮箱:</td>
+                <td>
+                    <input class="easyui-textbox" type="text" style="width: 300px;" name="sEmail" maxlength="30" value="@Model.sEmail" />
+                </td>
+            </tr>
+            <tr>
+                <td>联系电话:</td>
+                <td>
+                    <input class="easyui-textbox" type="text" style="width: 300px;" name="sPhone" maxlength="30" value="@Model.sPhone"/>
+                </td>
+            </tr>
+            <tr>
+                <td>联系座机:</td>
+                <td>
+                    <input class="easyui-textbox" type="text" style="width: 300px;" name="sMobile" maxlength="30" value="@Model.sMobile" />
+                </td>
+            </tr>
+            <tr>
+                <td>联系传真:</td>
+                <td>
+                    <input class="easyui-textbox" type="text" style="width: 300px;" name="sFax" maxlength="30" value="@Model.sFax" />
+                </td>
+            </tr>
+            <tr>
+                <td>联系地址:</td>
+                <td>
+                    <input class="easyui-textbox" type="text" style="width: 300px;" name="sAddress" maxlength="30" value="@Model.sAddress" />
+                </td>
+            </tr>
+            <tr>
+                <td>网站关键字:</td>
+                <td>
+                    <input class="easyui-textbox" type="text" style="width: 300px;" name="sKeyWord" maxlength="20" value="@Model.sKeyWord" />
+                    多个关键字请用英文逗号隔开.
+                </td>
+            </tr>
+            <tr>
+                <td>网站描述:</td>
+                <td>
+                    <textarea class="easyui-validatebox" style="width: 300px; height: 50px;" name="sDescription">@Model.sDescription</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>版权信息:</td>
+                <td>
+                    <textarea class="easyui-validatebox" style="width: 300px; height: 50px;" name="sCopyRight">@Model.sCopyRight</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>备案信息:</td>
+                <td>
+                    <textarea class="easyui-validatebox" style="width: 300px; height: 50px;" name="sFiling">@Model.sFiling</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div id="action-buttons-webconfig">
+                        <a href="javascript:void(0)" id="btnWebConfigSave" class="easyui-linkbutton" iconcls="icon-ok">保 存</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        $('.IsNeedVerify').iCheck({
+            labelHover: false,
+            cursor: true,
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+        var IsNeedVerify = '@Model.IsNeedVerify' == "True" ? true : false;
+        if (IsNeedVerify) $('.IsNeedVerify').iCheck('check');
+
+
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("WebSite");
+
+        //编辑操作
+        $('#btnWebConfigSave').on("click", function () {
+            if ($(admin.form).form("validate")) {
+                admin.button.disable();
+                var params = $(admin.form).serialize();
+                admin.Ajax(admin.route("Set"), params, function (r) {
+                    admin.alert("操作成功");
+                });
+            }
+        });
+    });
+</script>

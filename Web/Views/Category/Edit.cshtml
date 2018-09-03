@@ -1,0 +1,117 @@
+﻿
+<!--编辑栏目-->
+@using Web.Models;
+@model TG_Category
+
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <table class="gridtable">
+        <tr>
+            <td>所属栏目：</td>
+            <td>
+                <input class="easyui-combotree" name="CategoryId" value="@Model.CategoryId" data-options="url:'/Category/CategoryComtreeData',required:true,panelHeight:'auto'">
+            </td>
+            <td>是否为跳转的栏目：</td>
+            <td>
+                <input type="checkbox" name="bIsRedirect" value="true" class="bIsRedirect" />
+                <label>跳转链接：</label>
+                <input class="easyui-textbox" type="text" name="sRedirectUrl" value="@Model.sRedirectUrl" />
+            </td>
+        </tr>
+        <tr>
+            <td>栏目名称：</td>
+            <td>
+                <input class="easyui-textbox" name="sName" data-options="required:true" value="@Model.sName">
+            </td>
+            <td>是否显示在导航栏：</td>
+            <td>
+                <input type="checkbox" name="bIsShowNav" class="bIsShowNav" value="true" />
+            </td>
+        </tr>
+        <tr>
+            <td>栏目标识：</td>
+            <td>
+                <input class="easyui-textbox" name="sEnName" data-options="required:true" value="@Model.sEnName">
+            </td>
+            <td>是否为内容的栏目：</td>
+            <td>
+                <input type="checkbox" class="bIsContentCategory" name="bIsContentCategory" value="true" />
+            </td>
+        </tr>
+        <tr>
+            <td>排序编号：</td>
+            <td>
+                <input class="easyui-numberspinner" name="iOrder" required="required" value="@Model.iOrder"
+                       missingmessage="请输入排序编号." data-options="min:0,max:100,editable:true">
+            </td>
+            <td>栏目英文：</td>
+            <td>
+                <input class="easyui-textbox" name="sEnNick" value="@Model.sEnNick">
+            </td>
+        </tr>
+        <tr>
+            <td>栏目模板：</td>
+            <td>
+                <input name="iTemplateId" class="easyui-combobox" value="@Model.iTemplateId" data-options="url:'/Templet/comboxData',valueField:'ID',
+                        textField:'sTempletName',editable:false,height:25,width:173">
+            </td>
+            <td>栏目下文章模板：</td>
+            <td>
+                <input name="iArticleTemplateId" class="easyui-combobox" value="@Model.iArticleTemplateId" data-options="url:'/Templet/comboxData',valueField:'ID',
+                         textField:'sTempletName',editable:false,height:25,width:173">
+            </td>
+        </tr>
+        <tr>
+            <td>导图尺寸：</td>
+            <td colspan="3">
+                <input class="easyui-textbox" type="text" name="sPictureSize" value="@Model.sPictureSize" />(建议尺寸)
+            </td>
+        </tr>
+        <tr>
+            <td>栏目导图：</td>
+            <td colspan="3">
+                <div id="sPictureUrl"></div>
+                <input type="hidden" name="sPictureUrl" value="@Model.sPictureUrl" />
+            </td>
+        </tr>
+        <tr>
+            <td>栏目描述：</td>
+            <td colspan="3">
+                <textarea name="sDescription" style="width:690px;height:80px">@Model.sDescription</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>栏目关键字：</td>
+            <td colspan="3">
+                <textarea name="sKeyWord" style="width:690px;height:80px">@Model.sKeyWord</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>栏目内容：</td>
+            <td colspan="3">
+                <textarea id="sContent" name="sContent" style="width:690px;height:400px;">@Model.sContent</textarea>
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $('.bIsShowNav,.bIsRedirect,.bIsContentCategory').iCheck({
+        labelHover: false,
+        cursor: true,
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%'
+    });
+    var pciture = new dpictures();
+    pciture.create("sPictureUrl");
+
+    var bIsRedirect = '@Model.bIsRedirect'=="True"?true:false;
+    var bIsShowNav = '@Model.bIsShowNav'=="True"?true:false;
+    var bIsContentCategory ='@Model.bIsContentCategory'=="True"?true:false;
+
+    if(bIsRedirect)  $('.bIsRedirect').iCheck('check');
+    if(bIsShowNav)  $('.bIsShowNav').iCheck('check');
+    if(bIsContentCategory)  $('.bIsContentCategory').iCheck('check');
+
+
+</script>

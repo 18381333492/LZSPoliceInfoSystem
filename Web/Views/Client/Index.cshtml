@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "客户咨询";
+}
+<table id="Client"></table>
+<div id="Client_toolbar" style="padding:5px;">
+    <form id="searchForm">
+        <div style="margin-bottom:5px">
+            <span>模糊查询</span>
+            <input class="easyui-textbox" name="sKeyWord" data-options="width:180,height:22,required:false,prompt:'客户姓名'">
+            <a class="easyui-linkbutton search" data-options="iconCls:'icon-search'">查 询</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Client");
+
+        //查询操作
+        $('#searchForm .search').on("click", function () {
+            var params = $(admin.searchform).serializeArray().toObject();
+            admin.grid.datagrid({
+                queryParams: params
+            })
+        });
+
+        /*!
+        * method:数据列表(datagrid)的绑定
+        */
+        admin.grid.datagrid({
+            url: admin.route('List'),
+            toolbar: admin.toolbar,
+            fitColumns:false,
+            columns: [[
+                { field: 'sName', title: '客户姓名', align: 'center', width: 120 },
+                { field: 'sPhone', title: '联系电话', align: 'center', width: 150 },
+                { field: 'sContent', title: '咨询内容', align: 'center', width:400 },
+                { field: 'dInsertTime', title: '咨询时间', align: 'center', width: 150 },
+            ]],
+            onLoadSuccess: function () {
+                admin.grid.datagrid('resize');
+            }
+        });
+
+    });
+
+
+
+
+</script>
+
+

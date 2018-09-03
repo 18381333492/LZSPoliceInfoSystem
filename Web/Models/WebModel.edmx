@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CmsSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TG_Article">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iCategoryId" Type="int" Nullable="false" />
+          <Property Name="iTemplateId" Type="int" Nullable="false" />
+          <Property Name="sTitle" Type="varchar" MaxLength="255" />
+          <Property Name="sEnTitle" Type="varchar" MaxLength="255" />
+          <Property Name="sAuthor" Type="varchar" MaxLength="255" />
+          <Property Name="sSize" Type="varchar" MaxLength="255" />
+          <Property Name="sLang" Type="varchar" MaxLength="255" />
+          <Property Name="sVersion" Type="varchar" MaxLength="255" />
+          <Property Name="sSummary" Type="varchar" MaxLength="255" />
+          <Property Name="sPictureSize" Type="varchar" MaxLength="255" />
+          <Property Name="sPictureUrl" Type="varchar(max)" />
+          <Property Name="bIsTop" Type="bit" />
+          <Property Name="bIsSlide" Type="bit" />
+          <Property Name="bIsHot" Type="bit" />
+          <Property Name="dPublishTime" Type="datetime" />
+          <Property Name="sDescription" Type="varchar(max)" />
+          <Property Name="sKeyword" Type="varchar(max)" />
+          <Property Name="sContent" Type="varchar(max)" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" />
+          <Property Name="bIsRelease" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TG_Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="sName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sEnName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sEnNick" Type="nvarchar" MaxLength="255" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="iTemplateId" Type="int" />
+          <Property Name="iArticleTemplateId" Type="int" />
+          <Property Name="bIsRedirect" Type="bit" />
+          <Property Name="sRedirectUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="bIsShowNav" Type="bit" Nullable="false" />
+          <Property Name="bIsContentCategory" Type="bit" />
+          <Property Name="sPictureSize" Type="nvarchar" MaxLength="255" />
+          <Property Name="sPictureUrl" Type="nvarchar(max)" />
+          <Property Name="sDescription" Type="nvarchar(max)" />
+          <Property Name="sKeyWord" Type="nvarchar(max)" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TG_Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sName" Type="nvarchar" MaxLength="100" />
+          <Property Name="sPhone" Type="nvarchar" MaxLength="100" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="sEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="sQQ" Type="nvarchar" MaxLength="255" />
+          <Property Name="sAddress" Type="nvarchar(max)" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TG_LoginLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="Ip" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TG_Templet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sTempletName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sTempletEnName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sTempletContent" Type="nvarchar(max)" />
+          <Property Name="sTempletUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="bIsCompile" Type="bit" />
+        </EntityType>
+        <EntityType Name="TG_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sPhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="sRealName" Type="nvarchar" MaxLength="50" />
+          <Property Name="iUserType" Type="int" Nullable="false" />
+          <Property Name="bIsSuper" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TG_WebSite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sSiteName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sSiteDNS" Type="nvarchar" MaxLength="255" />
+          <Property Name="sEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="sMobile" Type="nvarchar" MaxLength="255" />
+          <Property Name="sFax" Type="nvarchar" MaxLength="255" />
+          <Property Name="sPhone" Type="nvarchar" MaxLength="255" />
+          <Property Name="sQQNum" Type="nvarchar" MaxLength="255" />
+          <Property Name="sAddress" Type="nvarchar" MaxLength="300" />
+          <Property Name="sKeyWord" Type="nvarchar" MaxLength="255" />
+          <Property Name="sDescription" Type="nvarchar(max)" />
+          <Property Name="sCopyRight" Type="nvarchar(max)" />
+          <Property Name="sFiling" Type="nvarchar(max)" />
+          <Property Name="IsNeedVerify" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="CmsSystemModelStoreContainer">
+          <EntitySet Name="TG_Article" EntityType="Self.TG_Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TG_Category" EntityType="Self.TG_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TG_Client" EntityType="Self.TG_Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TG_LoginLog" EntityType="Self.TG_LoginLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TG_Templet" EntityType="Self.TG_Templet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TG_User" EntityType="Self.TG_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TG_WebSite" EntityType="Self.TG_WebSite" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CmsSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TG_Article">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="iTemplateId" Type="Int32" Nullable="false" />
+          <Property Name="sTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sEnTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sAuthor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sSize" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sLang" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sVersion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sSummary" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sPictureSize" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sPictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="bIsTop" Type="Boolean" />
+          <Property Name="bIsSlide" Type="Boolean" />
+          <Property Name="bIsHot" Type="Boolean" />
+          <Property Name="dPublishTime" Type="DateTime" Precision="3" />
+          <Property Name="sDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sKeyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Precision="3" />
+          <Property Name="bIsRelease" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TG_Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="sName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sEnName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sEnNick" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="iTemplateId" Type="Int32" />
+          <Property Name="iArticleTemplateId" Type="Int32" />
+          <Property Name="bIsRedirect" Type="Boolean" />
+          <Property Name="sRedirectUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="bIsShowNav" Type="Boolean" Nullable="false" />
+          <Property Name="bIsContentCategory" Type="Boolean" />
+          <Property Name="sPictureSize" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sPictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sKeyWord" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TG_Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sQQ" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="TG_LoginLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TG_Templet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sTempletName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sTempletEnName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sTempletContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sTempletUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="bIsCompile" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="TG_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sRealName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iUserType" Type="Int32" Nullable="false" />
+          <Property Name="bIsSuper" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TG_WebSite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sSiteName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sSiteDNS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sMobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sFax" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sQQNum" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sAddress" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="sKeyWord" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sCopyRight" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sFiling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsNeedVerify" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TG_Article" EntityType="Self.TG_Article" />
+          <EntitySet Name="TG_Category" EntityType="Self.TG_Category" />
+          <EntitySet Name="TG_Client" EntityType="Self.TG_Client" />
+          <EntitySet Name="TG_LoginLog" EntityType="Self.TG_LoginLog" />
+          <EntitySet Name="TG_Templet" EntityType="Self.TG_Templet" />
+          <EntitySet Name="TG_User" EntityType="Self.TG_User" />
+          <EntitySet Name="TG_WebSite" EntityType="Self.TG_WebSite" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CmsSystemModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="TG_Article">
+            <EntityTypeMapping TypeName="CmsSystemModel.TG_Article">
+              <MappingFragment StoreEntitySet="TG_Article">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="iCategoryId" ColumnName="iCategoryId" />
+                <ScalarProperty Name="iTemplateId" ColumnName="iTemplateId" />
+                <ScalarProperty Name="sTitle" ColumnName="sTitle" />
+                <ScalarProperty Name="sEnTitle" ColumnName="sEnTitle" />
+                <ScalarProperty Name="sAuthor" ColumnName="sAuthor" />
+                <ScalarProperty Name="sSize" ColumnName="sSize" />
+                <ScalarProperty Name="sLang" ColumnName="sLang" />
+                <ScalarProperty Name="sVersion" ColumnName="sVersion" />
+                <ScalarProperty Name="sSummary" ColumnName="sSummary" />
+                <ScalarProperty Name="sPictureSize" ColumnName="sPictureSize" />
+                <ScalarProperty Name="sPictureUrl" ColumnName="sPictureUrl" />
+                <ScalarProperty Name="bIsTop" ColumnName="bIsTop" />
+                <ScalarProperty Name="bIsSlide" ColumnName="bIsSlide" />
+                <ScalarProperty Name="bIsHot" ColumnName="bIsHot" />
+                <ScalarProperty Name="dPublishTime" ColumnName="dPublishTime" />
+                <ScalarProperty Name="sDescription" ColumnName="sDescription" />
+                <ScalarProperty Name="sKeyword" ColumnName="sKeyword" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="bIsRelease" ColumnName="bIsRelease" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TG_Category">
+            <EntityTypeMapping TypeName="CmsSystemModel.TG_Category">
+              <MappingFragment StoreEntitySet="TG_Category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="sName" ColumnName="sName" />
+                <ScalarProperty Name="sEnName" ColumnName="sEnName" />
+                <ScalarProperty Name="sEnNick" ColumnName="sEnNick" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="iTemplateId" ColumnName="iTemplateId" />
+                <ScalarProperty Name="iArticleTemplateId" ColumnName="iArticleTemplateId" />
+                <ScalarProperty Name="bIsRedirect" ColumnName="bIsRedirect" />
+                <ScalarProperty Name="sRedirectUrl" ColumnName="sRedirectUrl" />
+                <ScalarProperty Name="bIsShowNav" ColumnName="bIsShowNav" />
+                <ScalarProperty Name="bIsContentCategory" ColumnName="bIsContentCategory" />
+                <ScalarProperty Name="sPictureSize" ColumnName="sPictureSize" />
+                <ScalarProperty Name="sPictureUrl" ColumnName="sPictureUrl" />
+                <ScalarProperty Name="sDescription" ColumnName="sDescription" />
+                <ScalarProperty Name="sKeyWord" ColumnName="sKeyWord" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TG_Client">
+            <EntityTypeMapping TypeName="CmsSystemModel.TG_Client">
+              <MappingFragment StoreEntitySet="TG_Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sName" ColumnName="sName" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="sEmail" ColumnName="sEmail" />
+                <ScalarProperty Name="sQQ" ColumnName="sQQ" />
+                <ScalarProperty Name="sAddress" ColumnName="sAddress" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TG_LoginLog">
+            <EntityTypeMapping TypeName="CmsSystemModel.TG_LoginLog">
+              <MappingFragment StoreEntitySet="TG_LoginLog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sUserName" ColumnName="sUserName" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TG_Templet">
+            <EntityTypeMapping TypeName="CmsSystemModel.TG_Templet">
+              <MappingFragment StoreEntitySet="TG_Templet">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sTempletName" ColumnName="sTempletName" />
+                <ScalarProperty Name="sTempletEnName" ColumnName="sTempletEnName" />
+                <ScalarProperty Name="sTempletContent" ColumnName="sTempletContent" />
+                <ScalarProperty Name="sTempletUrl" ColumnName="sTempletUrl" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="bIsCompile" ColumnName="bIsCompile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TG_User">
+            <EntityTypeMapping TypeName="CmsSystemModel.TG_User">
+              <MappingFragment StoreEntitySet="TG_User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sUserName" ColumnName="sUserName" />
+                <ScalarProperty Name="sPassword" ColumnName="sPassword" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sRealName" ColumnName="sRealName" />
+                <ScalarProperty Name="iUserType" ColumnName="iUserType" />
+                <ScalarProperty Name="bIsSuper" ColumnName="bIsSuper" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TG_WebSite">
+            <EntityTypeMapping TypeName="CmsSystemModel.TG_WebSite">
+              <MappingFragment StoreEntitySet="TG_WebSite">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sSiteName" ColumnName="sSiteName" />
+                <ScalarProperty Name="sSiteDNS" ColumnName="sSiteDNS" />
+                <ScalarProperty Name="sEmail" ColumnName="sEmail" />
+                <ScalarProperty Name="sMobile" ColumnName="sMobile" />
+                <ScalarProperty Name="sFax" ColumnName="sFax" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sQQNum" ColumnName="sQQNum" />
+                <ScalarProperty Name="sAddress" ColumnName="sAddress" />
+                <ScalarProperty Name="sKeyWord" ColumnName="sKeyWord" />
+                <ScalarProperty Name="sDescription" ColumnName="sDescription" />
+                <ScalarProperty Name="sCopyRight" ColumnName="sCopyRight" />
+                <ScalarProperty Name="sFiling" ColumnName="sFiling" />
+                <ScalarProperty Name="IsNeedVerify" ColumnName="IsNeedVerify" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

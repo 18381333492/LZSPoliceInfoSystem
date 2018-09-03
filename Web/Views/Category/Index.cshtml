@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "栏目数据列表";
+}
+<link href="~/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Content/icheck/icheck.min.js"></script>
+<script src="~/Content/kindeditor/kindeditor.js"></script>
+<script src="~/Scripts/plug-in/kindeditor.js"></script>
+<link href="~/Scripts/plug-in/dpictures/dpictures.css" rel="stylesheet" />
+<script src="~/Scripts/plug-in/dpictures/dpictures.js"></script>
+<table id="Category"></table>
+<div id="Category_toolbar" style="padding:5px;">
+    <a class="easyui-linkbutton add" data-options="iconCls:'icon-add',plain:true">新增栏目</a>
+    <a class="easyui-linkbutton edit" data-options="iconCls:'icon-edit',plain:true">编辑栏目</a>
+    <a class="easyui-linkbutton cancel" data-options="iconCls:'icon-cancel',plain:true">删除栏目</a>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Category");
+        var editor = new kindeditor();
+      
+        //新增操作
+        $('.add').on("click", function () {
+            var dialog = admin.dialog(admin.route('Add'), "新增栏目", function (r) {
+                if ($(admin.form).form('validate')) {
+                    admin.button.disable();
+                    var data = $(admin.form).serializeArray().toObject();
+                    data.sContent = editor.gethtml();
+              
+                    admin.Ajax(admin.route('Insert'), data, function (r) {
+                        admin.alert("添加成功");
+                        dialog.dialog('close');
+                        admin.grid.treegrid("reload");
+                    });
+                }
+            }, 850, 650, function () {
+                editor.create("#sContent", { items: editor.items.defaults });
+            });
+        });
+
+        //编辑操作
+        $('.edit').on("click", function () {
+            var selected = admin.grid.treegrid('getSelections');
+            if (selected.length == 1) {
+                UpdateCategory(selected[0].ID);
+            }
+            else {
+                admin.alert("请选择一条数据进行操作!");
+            }
+        });
+
+        //编辑栏目
+        function UpdateCategory(ID) {
+            var dialog = admin.dialog(admin.route('Edit') + "?ID=" +ID, "编辑栏目", function (r) {
+                if ($(admin.form).form('validate')) {
+                    admin.button.disable();
+                    var data = $(admin.form).serializeArray().toObject();
+                    data.sContent = editor.gethtml();
+                    debugger
+                    admin.Ajax(admin.route('Update'), data, function (r) {
+                        admin.alert("编辑成功");
+                        dialog.dialog('close');
+                        admin.grid.treegrid("reload");
+                    });
+                }
+            }, 850, 650, function () {
+                editor.create("#sContent", { items: editor.items.defaults });
+            });
+        }
+
+
+        //删除操作
+        $('.cancel').on("click", function () {
+            var selected = admin.grid.treegrid('getSelections');
+            if (selected.length > 0) {
+                admin.confirm("确定要删除选择的栏目", function () {
+                    var Ids = [];
+                    $(selected).each(function () {
+                        Ids.push(this.ID);
+                    });
+                    admin.Ajax(admin.route("Cancel"), { Ids: Ids.join() }, function (r) {
+                        admin.alert("删除成功");
+                        admin.grid.treegrid("reload");
+                        admin.grid.treegrid("clearSelections");
+                    });
+                });
+            }
+            else {
+                admin.alert("请选择数据进行操作!");
+            }
+        });
+
+
+        //数据列表的绑定
+        admin.grid.treegrid({
+            url: admin.route("List"),
+            idField: 'ID',
+            treeField: 'sName',
+            toolbar: admin.toolbar,
+            loadMsg: "正在加载...",
+            striped: true,
+            fit: true,
+            singleSelect: true,
+            border: false,
+            columns: [[
+                { field: 'sName', title: '栏目名称', width: 150, align: 'left' },
+                { field: 'sEnName', title: '栏目标识', width: 120, align: 'center' },
+                { field: 'iOrder', title: '栏目排序', width: 80, align: 'center' },
+            ]],
+            onDblClickRow: function (row) {
+                UpdateCategory(row.ID);
+            }
+        });
+
+
+    });
+</script>
+
+

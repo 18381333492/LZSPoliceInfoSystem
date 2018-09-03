@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "生成页面";
+}
+<link href="~/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Content/icheck/icheck.min.js"></script>
+<div id="layout" class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'west',border:false" style="width:250px;padding-top:15px;padding-left:15px;">
+        <ul id="MakeHtml"></ul>
+    </div>
+    <!--Center-->
+    <div data-options="region:'center',border:false" style="padding-top:15px;padding-left:15px;border-left:1px solid #95B8E7">
+        <input type="checkbox" class="bIsAllSelect" />&nbsp;
+        <a id="MakeCategoryPage" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">生成栏目页</a>&nbsp;
+        <a id="MakeArticlePage" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">生成栏目下的文章页</a>
+        <div style="margin-top:20px;">
+            <p id="TipCategory"></p>
+            <p id="TipArticle"></p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.bIsAllSelect').iCheck({
+            labelHover: false,
+            cursor: true,
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+       var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("MakeHtml");
+
+        //生成栏目页
+        $('#MakeCategoryPage').on("click", function () {
+            //获取选中的节点
+            var selected = $(admin.grid).tree("getChecked");
+            if (selected.length == 0) return admin.alert("请选择要生成的栏目");
+            var tip ="确定要生成选中的栏目页？" 
+            admin.confirm(tip, function () {
+                $('#TipCategory').html("栏目页生成中.....");
+                var Ids = [];
+                $(selected).each(function () {
+                    Ids.push(this.id);
+                });
+                admin.Ajax(admin.route("MakeCategoryPage"), { Ids: Ids.join() }, function (r) {
+                    $('#TipCategory').html('生成栏目页:【成功<span style="color:green">' + r.data.iSuccessCount + '</span>次，失败<span style="color:red">' + r.data.iFalseCount + '</span>次】');
+                });
+            });
+        });
+
+
+        //生成文章页
+        $('#MakeArticlePage').on("click", function () {
+            //获取选中的节点
+            var selected = $(admin.grid).tree("getChecked");
+            if (selected.length == 0) return admin.alert("请选择要生成的栏目");
+            var tip = "确定要生成选中的栏目下的文章页？";
+            admin.confirm(tip, function () {
+                $('#TipArticle').html("文章页生成中.....");
+                var Ids = [];
+                $(selected).each(function () {
+                    Ids.push(this.id);
+                });
+                admin.Ajax(admin.route("MakeArticlePage"), { Ids: Ids.join() }, function (r) {
+                    $('#TipArticle').html('生成文章页:【成功<span style="color:green">' + r.data.iSuccessCount + '</span>次，失败<span style="color:red">' + r.data.iFalseCount + '</span>次】');
+                });
+            });
+
+        });
+
+        //树形数据的绑定
+        $(admin.grid).tree({
+            url: '/Category/CategoryComtreeData?IsGen=0',
+            animate: true,
+            checkbox: true,
+            cascadeCheck:false
+        });
+
+        var node = [];
+        //全选切换
+        $('.bIsAllSelect').on("ifClicked",function () {
+            if (!$(this).prop("checked")) {
+                var parent = $(admin.grid).tree("getRoots");
+                $(parent).each(function () {
+                    node.push(this.target);
+                    var children = $(admin.grid).tree("getChildren", this.target);
+                    $(children).each(function () {
+                        node.push(this.target);
+                    })
+                });
+                //选中所有节点
+                $(node).each(function () {
+                    $(admin.grid).tree("check", this);
+                });
+            }
+            else {
+                //取消所有选中的节点
+                $(node).each(function () {
+                    $(admin.grid).tree("uncheck", this);
+                });
+            }
+        })
+
+    });
+</script>

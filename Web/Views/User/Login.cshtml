@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>泸州市公安信息网管理系统</title>
+    <link href="~/Content/login/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login_box">
+        <div class="login_l_img"><img src="~/Content/login/images/login-img.png" /></div>
+        <div class="login">
+            <div class="login_logo"><a href="#"><img src="~/Content/login/images/login_logo.png" /></a></div>
+            <div class="login_name">
+                <p>泸州市公安信息网管理员登录</p>
+            </div>
+            <form>
+                <input name="username" type="text" placeholder="用户名">
+                <input name="password" type="password" placeholder="密码" />
+                <input name="code" type="text" placeholder="验证码"  style="width:150px;height:40px;"/>
+                <img id="code" src="/User/MakePictureCode" style="height:40px;width:100px;margin-left:10px;cursor:pointer;float:right;margin-right:30px" />
+            </form>
+            <input id="commit" value="登录" style="width:100%;" type="submit">
+        </div>
+        <div class="copyright">某某有限公司 版权所有©2016-2018 技术支持电话：000-00000000</div>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/common.client.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //绑定登录事件
+        $('#commit').on("click", function () {
+            var username = $.trim($('input[name=username]').val());
+            var password = $.trim($('input[name=password]').val());
+            var code = $.trim($('input[name=code]').val());
+            if (username.length == 0 || password.length == 0)
+                return alert("请输入帐号和密码");
+            if (code.length == 0)
+                return alert("请输入图像验证码");
+            client.ajax.postRequest("/User/Login", { sUserName: username, sPassword: password, sCode: code }, function (r) {
+                location.href = "/Home/Index";
+                //alert("登录成功");
+                //setTimeout(function () {
+                //    location.href = "/Home/Index";
+                //},1500)
+            }, function (r) {
+                alert(r.info);
+                GetCode();
+            });
+        });
+
+        //点击切换验证码
+        $('#code').on("click", function () {
+            GetCode();
+        });
+
+        //刷新验证码
+        function GetCode() {
+            $('#code').attr("src", '/User/MakePictureCode/' + new Date().getTime());
+        }
+    });
+</script>

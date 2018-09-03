@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "模板列表";
+}
+<table id="Templet"></table>
+<div id="Templet_toolbar" style="padding:5px;">
+    <form id="searchForm">
+        <div style="margin-bottom:5px">
+            <span>模糊查询</span>
+            <input class="easyui-textbox" name="sKeyWord" data-options="width:180,height:22,required:false,prompt:'模板标识/模板名称'">
+            <a class="easyui-linkbutton search" data-options="iconCls:'icon-search'">查 询</a>
+        </div>
+    </form>
+    <a class="easyui-linkbutton add" data-options="iconCls:'icon-add',plain:true">新增</a>
+    <a class="easyui-linkbutton edit" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+    <a class="easyui-linkbutton cancel" data-options="iconCls:'icon-cancel',plain:true">删除</a>
+    <a class="easyui-linkbutton make" data-options="iconCls:'icon-more',plain:true">生成所有模板</a>
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Templet");
+
+        //查询操作
+        $('#searchForm .search').on("click", function () {
+            var params = $(admin.searchform).serializeArray().toObject();
+            admin.grid.datagrid({
+                queryParams: params
+            })
+        });
+
+        //新增操作
+        $('.add').on("click", function () {
+            var dialog = admin.dialog(admin.route('Add'), "新增模板", function (r) {
+                if ($(admin.form).form('validate')) {
+                    admin.button.disable();
+                    var data = $(admin.form).serialize();
+                    admin.Ajax(admin.route('Insert'), data, function (r) {
+                        admin.alert("添加成功");
+                        dialog.dialog('close');
+                        admin.grid.datagrid("reload");
+                    });
+                }
+            }, 800, 670);
+        });
+
+        //编辑模板操作
+        function UpdateTemplet(ID) {
+            var dialog = admin.dialog(admin.route('Add') + "?ID=" +ID, "编辑模板", function (r) {
+                if ($(admin.form).form('validate')) {
+                    admin.button.disable();
+                    var data = $(admin.form).serialize();
+                    admin.Ajax(admin.route('Update'), data, function (r) {
+                        admin.alert("编辑成功");
+                        dialog.dialog('close');
+                        admin.grid.datagrid("reload");
+                    });
+                }
+            }, 800, 670);
+        }
+
+        //编辑操作
+        $('.edit').on("click", function () {
+            var selected = admin.grid.datagrid('getSelections');
+            if (selected.length == 1) {
+                UpdateTemplet(selected[0].ID);
+            }
+            else {
+                admin.alert("请选择一条数据进行操作!");
+            }
+        });
+
+        //删除操作
+        $('.cancel').on("click", function () {
+            var selected = admin.grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                admin.confirm("确定要删除选择的模板", function () {
+                    var Ids = [];
+                    $(selected).each(function () {
+                        Ids.push(this.ID);
+                    });
+                    admin.Ajax(admin.route("Cancel"), { Ids: Ids.join() }, function (r) {
+                        admin.alert("删除成功");
+                        admin.grid.datagrid("reload");
+                        admin.grid.datagrid("clearSelections");
+                    });
+                });
+            }
+            else {
+                admin.alert("请选择数据进行操作!");
+            }
+        });
+
+        //模板生成操作
+        $('.make').on("click", function () {
+            admin.confirm("确定要生成所有模板", function () {
+                admin.Ajax(admin.route("MakeAllTempletHtml"), null, function () {
+                    admin.alert("全部生成成功");
+                });
+            });
+        });
+
+        /*!
+        * method:数据列表(datagrid)的绑定
+        */
+        admin.grid.datagrid({
+            url: admin.route('List'),
+            toolbar: admin.toolbar,
+            fitColumns: false,
+            singleSelect: true,
+            columns: [[
+                { field: 'sTempletName', title: '模板名称', align: 'center', width: 150 },
+                { field: 'sTempletEnName', title: '模板标识', align: 'center', width: 100 },
+                //{ field: 'sTempletUrl', title: '生成路径', align: 'center', width: 180 },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 150 }
+            ]],
+            onLoadSuccess: function (data) {
+                admin.grid.datagrid('resize');
+            },
+            onDblClickRow: function (index,row) {
+                UpdateTemplet(row.ID);
+            }
+        });
+    });
+</script>
+
+

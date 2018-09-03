@@ -1,0 +1,52 @@
+﻿
+<!--添加/编辑模板-->
+@using Web.Models;
+@model TG_Templet
+<style>
+textarea {
+        width: 750px;
+        background-color: #373737;
+        height: 480px;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        overflow: auto;
+        color: white;
+        font-size: 16px;
+    }
+</style>
+<script src="~/Content/auto-line-number.js"></script>
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <input type="hidden" name="sTempletUrl" value="@Model.sTempletUrl" />
+    <input type="hidden" name="dInsertTime" value="@Model.dInsertTime" />
+    <table class="gridtable">
+        <tr>
+            <td>模板名称</td>
+            <td>
+                <input class="easyui-textbox" name="sTempletName" data-options="required:true" value="@Model.sTempletName">
+            </td>
+        </tr>
+        <tr>
+            <td>模板标识</td>
+            <td>
+                <input class="easyui-textbox" name="sTempletEnName" data-options="required:true" value="@Model.sTempletEnName">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <textarea id="text" name="sTempletContent">@(Model.sTempletContent)</textarea>
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $("#text").setTextareaCount({
+        width: "30px",
+        bgColor: "#000",
+        color: "#FFF",
+        display: "inline-block"
+    });
+</script>
+
