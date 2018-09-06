@@ -15,8 +15,8 @@ body{min-width:1200px; background:#d6e8f4;}
 .search a:hover{background:#0594c9;}
 
 .nav{width:1220px; margin:0 auto; height:60px; background:#004c73;}
-.nav li{width:152px; float:left; height:60px; position:relative;}
-.nav li a{display:block; text-align:center; line-height:60px; font-size:16px; color:#fff; transition:all .3s ease;}
+.nav li{width:110px; float:left; height:60px; position:relative;}
+.nav li a{display:block; text-align:center; line-height:60px; font-size:15px; color:#fff; transition:all .3s ease;}
 .nav li a:hover,.nav li.active a{background:#0594c9; color:#FF0;}
 #navul li ul{display:none;position:absolute;z-index:999; left:0; top:60px;}
 #navul li.navmoon{background:#004f7a;}

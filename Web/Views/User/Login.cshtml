@@ -32,6 +32,17 @@
 <script src="~/Scripts/common.client.js"></script>
 <script type="text/javascript">
     $(function () {
+        var State = true;
+
+        $(document).bind("keydown", function (e) {
+            // 兼容FF和IE和Opera    
+            var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if (code == 13) {
+                //回车执行查询
+                $("#commit").click();
+            }
+        });
 
         //绑定登录事件
         $('#commit').on("click", function () {
@@ -42,16 +53,23 @@
                 return alert("请输入帐号和密码");
             if (code.length == 0)
                 return alert("请输入图像验证码");
-            client.ajax.postRequest("/User/Login", { sUserName: username, sPassword: password, sCode: code }, function (r) {
-                location.href = "/Home/Index";
-                //alert("登录成功");
-                //setTimeout(function () {
-                //    location.href = "/Home/Index";
-                //},1500)
-            }, function (r) {
-                alert(r.info);
-                GetCode();
-            });
+            if (State) {
+                State = false;
+                $("#commit").css("background-color", "#6098d4");
+                $("#commit").val("正在登录...");
+                client.ajax.postRequest("/User/Login", { sUserName: username, sPassword: password, sCode: code }, function (r) {
+                    $("#commit").val("登录成功,即将跳转");
+                    setTimeout(function () {
+                        location.href = "/Home/Index";
+                    }, 1000);
+                }, function (r) {
+                    State = true;
+                    $("#commit").css("background-color", "#0d60b9");
+                    $("#commit").val("登录");
+                    alert(r.info);
+                    GetCode();
+                });
+            }
         });
 
         //点击切换验证码

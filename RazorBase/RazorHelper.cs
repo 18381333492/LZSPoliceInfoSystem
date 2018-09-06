@@ -24,6 +24,22 @@ namespace RazorBase
 
         private static ILogger logger = LoggerManager.Instance.GetSLogger("RazorHelper");
 
+        private static IRazorEngineService service;
+
+        static RazorHelper()
+        {
+            service = RazorEngineService.Create();
+        }
+
+        /// <summary>
+        /// 初始话服务
+        /// </summary>
+        public static void InitService()
+        {
+            service.Dispose();
+            service = RazorEngineService.Create();
+        }
+
         /// <summary>
         /// 预编译模板
         /// </summary>
@@ -34,8 +50,8 @@ namespace RazorBase
         {
             try
             {
-                Engine.Razor.AddTemplate(sKey, sTemplateStr);
-                Engine.Razor.Compile(sKey);
+                service.AddTemplate(sKey, sTemplateStr);
+                service.Compile(sKey);
                 return true;
             }
             catch (Exception ex)
@@ -67,7 +83,7 @@ namespace RazorBase
         {
             try
             {
-                string str = Engine.Razor.Run(sTemplateName, null, Model);
+                string str = service.Run(sTemplateName, null, Model);
                 return str;
             }
             catch (Exception ex)
@@ -100,6 +116,8 @@ namespace RazorBase
             }
             catch (Exception ex)
             {
+                logger.Info("sfilePath=" + sfilePath);
+                logger.Info("sFileName=" + sFileName);
                 logger.Info(ex.Message);
                 logger.Fatal(ex);
                 return false;

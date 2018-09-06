@@ -116,7 +116,6 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public void Update(TG_Templet templet)
         {
-            if (templet.bIsCompile == null) templet.bIsCompile = false;
             templet.sTempletEnName = templet.sTempletEnName.Trim();
             if (mangae.db.TG_Templet.Where(m => m.ID != templet.ID).Any(m => m.sTempletEnName == templet.sTempletEnName || m.sTempletName == templet.sTempletName))
             {//存在重复模板名称或者模板标识
@@ -163,8 +162,6 @@ namespace Web.Controllers
             {
                 string sFileName = templet.sTempletEnName + ".cshtml";
                 System.IO.File.WriteAllText(path + sFileName, templet.sTempletContent);
-                //预编译模板
-                RazorHelper.PrevCompileTemplate(templet.sTempletEnName,templet.sTempletContent);
             }
         }
 
@@ -185,10 +182,9 @@ namespace Web.Controllers
                 {
                     string sFileName = item.sTempletEnName + ".cshtml";
                     System.IO.File.WriteAllText(path + sFileName, item.sTempletContent);
-                    //预编译模板
-                    RazorHelper.PrevCompileTemplate(item.sTempletEnName,item.sTempletContent);
                 }
             }
+            result.success = true;
         }
 
 

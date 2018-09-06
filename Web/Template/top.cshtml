@@ -1,70 +1,32 @@
 @using Web.Server;
-@using Web.Models;
-@{
-    var Category = Model as TG_Category;
-}
-<div class="bodyMask"></div>
-<div id="header">
-    <div class="wrapper">
-        <div class="content">
-            <div id="headTop">
-                <a href="index.html" id="logo"><img src="~/page/statics/images/1490089038970.png" height="44" /></a>
-                <div id="hcontact" class="fr">
-                    <i class="fa fa-phone"></i>
-                    <p>
-                        <span class="telNum">8888888888</span><br />
-                        <a href="mailto:986482@qq.com">986482@qq.com</a>
-                    </p>
-                </div>
-                <div id="openBtn" class="fl btn">
-                    <div class="lcbody">
-                        <div class="lcitem top">
-                            <div class="rect top"></div>
-                        </div>
-                        <div class="lcitem bottom">
-                            <div class="rect bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="navWrapper">
-                <div class="content">
-                    <ul class="nav movedx" data-movedx-mid="1">
-                        @foreach (var item in FuncHelper.Instance.GetShowCategory())
-                        {
-                        var list = FuncHelper.Instance.GetChildCategory(item.ID);
-                        if (list.Count == 0)
-                        {
-                        if (item.ID == Category.ID)
-                        {
-                        <li class="navitem">
-                            <a class="active" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" target="_self"> <span data-title="@item.sName">@item.sName</span></a>
-                        </li>
-                        }
-                        else
-                        {
-                        <li class="navitem">
-                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" target="_self"> <span data-title="@item.sName">@item.sName</span></a>
-                        </li>
-                        }
-                        }
-                        else
-                        {
-                        <a href="javascript:;" target=""><span data-title="@item.sName">@item.sName</span> <i class="fa fa-angle-down"></i></a>
-                        <ul class="subnav">
-                            @foreach (var m in list)
-                            {
-                            <li>
-                                <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(m.ID)" target="_self">@m.sName</a>
-                            </li>
-                            }
-                        </ul>
-                        }
-                        }
-                    </ul>
-                </div>
-            </div>
-            <div class="clear"></div>
+<div class="header">
+    <div class="container">
+        <div id="weather"></div>
+        <div class="toptxt"><a href="#">管理员登陆</a>|<a href="#">天气</a></div>
+        <div class="logo"><a href="#"><img src="images/logo.png" /></a></div>
+        <div class="search">
+            <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
+            <a href="javascript:;">搜索</a>
         </div>
     </div>
+</div>
+<div class="nav">
+    <ul class="" id="navul">
+        @foreach (var category in FuncHelper.Instance.GetShowCategory())
+        {
+        <li>
+            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(category.ID)">@category.sName</a>
+            @{ var childList = FuncHelper.Instance.GetChildCategory(category.ID); }
+            @if (childList.Count > 0)
+            {
+            <ul>
+                @foreach (var item in childList)
+                {
+                <li><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a></li>
+                }
+            </ul>
+            }
+        </li>
+        }
+    </ul>
 </div>

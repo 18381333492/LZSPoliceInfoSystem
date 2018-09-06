@@ -32,6 +32,40 @@ namespace Web.Server
             return sPath;
         }
 
+        /// <summary>
+        /// 根据获取文章的链接
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        public string GetArticleHtmlUrl(int articleId)
+        {
+            using (var db = new Entities())
+            {
+                string sUrl = string.Empty;
+                var article = db.TG_Article.Find(articleId);
+                var category = db.TG_Category.Find(article.iCategoryId);
+                var categoryList = db.TG_Category.ToList();
+                if (category.CategoryId != 0)
+                {
+                    sUrl = category.sEnName.ToLower();
+                    TG_Category parentCategory = null;
+                    do
+                    {
+                        parentCategory = categoryList.FirstOrDefault(m => m.ID == category.CategoryId);
+                        sUrl = parentCategory.sEnName.ToLower() + "/" + sUrl;
+                    }
+                    while (parentCategory != null && parentCategory.CategoryId != 0);
+                    sUrl = sHtmlBasePath + "/" + sUrl;
+                }
+                else
+                {
+                    sUrl = string.Format("/{0}/{1}", sHtmlBasePath, category.sEnName.ToLower());
+                }
+                sUrl = string.Format("{0}/{1}.html", sUrl, articleId);
+                return sUrl;
+            }
+        }
+
 
         /// <summary>
         /// 根据栏目ID获取栏目网络连接
@@ -41,7 +75,7 @@ namespace Web.Server
 
         public string GetCategoryHtmlUrl(int categoryId)
         {
-            using (var db=new Entities())
+            using (var db = new Entities())
             {
                 string sUrl = string.Empty;
                 var category = db.TG_Category.Find(categoryId);
@@ -53,7 +87,7 @@ namespace Web.Server
                     do
                     {
                         parentCategory = categoryList.FirstOrDefault(m => m.ID == category.CategoryId);
-                        sUrl =parentCategory.sEnName.ToLower()+"/"+sUrl;
+                        sUrl = parentCategory.sEnName.ToLower() + "/" + sUrl;
                     }
                     while (parentCategory != null && parentCategory.CategoryId != 0);
                     sUrl = sHtmlBasePath + "/" + sUrl + ".html";
@@ -64,7 +98,27 @@ namespace Web.Server
                 }
                 return sUrl;
             }
-           
+
         }
+
+        /// <summary>
+        /// 分页获取栏目文章
+        /// </summary>
+        /// <param name="pageInfo"></param>
+        /// <param name="iCategoryId"></param>
+        /// <returns></returns>
+        public string GetPageArticleByCategoryPageId(PageInfo pageInfo, int iCategoryId)
+        {
+            using (var db =new Entities())
+            {
+                var result = new PagingRet();
+                var query = db.TG_Article.Where(m => m.iCategoryId == iCategoryId).OrderByDescending(m => m.dInsertTime).AsQueryable();
+                result.total = query.Count();
+                query = query.Skip((pageInfo.page - 1) * pageInfo.rows).Take(pageInfo.rows);
+                result.rows = query;
+                return result.toJson();
+            }
+        }
+
     }
 }

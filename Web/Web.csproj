@@ -1205,7 +1205,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Template\测试页面.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -1225,20 +1224,9 @@
     <Content Include="Views\MakeHtml\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Client\Index.cshtml" />
-    <Content Include="Template\about.cshtml" />
-    <Content Include="Template\bottom.cshtml" />
-    <Content Include="Template\index.cshtml" />
-    <Content Include="Template\link.cshtml" />
-    <Content Include="Template\list.cshtml" />
-    <Content Include="Template\project.cshtml" />
-    <Content Include="Template\quote.cshtml" />
-    <Content Include="Template\service.cshtml" />
-    <Content Include="Template\team.cshtml" />
-    <Content Include="Template\top.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Html\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1277,6 +1265,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\LogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Template\top.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Template\A.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

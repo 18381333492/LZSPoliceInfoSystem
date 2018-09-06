@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Web.App_Start;
 using Web.Models;
+using Web.Server;
 
 namespace Web.Controllers
 {
@@ -29,7 +30,6 @@ namespace Web.Controllers
         {
             return View(mangae.db.TG_Article.Find(ID));
         }
-
 
         /// <summary>
         /// 分页获取文章数据列表
@@ -84,7 +84,6 @@ namespace Web.Controllers
             result.success = mangae.SaveChange();
         }
 
-
         /// <summary>
         /// 编辑文章
         /// </summary>
@@ -95,7 +94,6 @@ namespace Web.Controllers
             mangae.Edit<TG_Article>(article);
             result.success = mangae.SaveChange();
         }
-
 
         /// <summary>
         /// 删除文章
@@ -117,6 +115,19 @@ namespace Web.Controllers
             var res=mangae.ExcuteBySql(string.Format("update TG_Article set bIsRelease=1 where ID IN ({0})", Ids));
             if (res > 0)
                 result.success = true;
+        }
+
+        [NoLogin]
+        /// <summary>
+        /// 分页获取栏目下的文章
+        /// </summary>
+        /// <param name="pageInfo"></param>
+        /// <param name="iCategoryId"></param>
+        /// <returns></returns>
+        public ActionResult GetPageArticleByCategoryPageId(PageInfo pageInfo, int iCategoryId)
+        {
+            string res = FuncHelper.Instance.GetPageArticleByCategoryPageId(pageInfo, iCategoryId);
+            return Content(res);
         }
     }
 }

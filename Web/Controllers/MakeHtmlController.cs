@@ -43,8 +43,7 @@ namespace Web.Controllers
             {
                 var templet = allTempletList.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
                 if (templet != null)
-                {//模板存在
-                   
+                {//模板存在                  
                     string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
                     string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
                     if (RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString))
