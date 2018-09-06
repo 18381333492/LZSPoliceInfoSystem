@@ -107,14 +107,14 @@ namespace Web.Server
         /// <param name="pageInfo"></param>
         /// <param name="iCategoryId"></param>
         /// <returns></returns>
-        public string GetPageArticleByCategoryPageId(PageInfo pageInfo, int iCategoryId)
+        public string GetPageArticleByCategoryPageId(int page, int iCategoryId)
         {
             using (var db =new Entities())
             {
                 var result = new PagingRet();
                 var query = db.TG_Article.Where(m => m.iCategoryId == iCategoryId).OrderByDescending(m => m.dInsertTime).AsQueryable();
                 result.total = query.Count();
-                query = query.Skip((pageInfo.page - 1) * pageInfo.rows).Take(pageInfo.rows);
+                query = query.Skip((page - 1) * 20).Take(20);
                 result.rows = query;
                 return result.toJson();
             }

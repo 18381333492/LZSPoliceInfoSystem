@@ -116,18 +116,5 @@ namespace Web.Controllers
             if (res > 0)
                 result.success = true;
         }
-
-        [NoLogin]
-        /// <summary>
-        /// 分页获取栏目下的文章
-        /// </summary>
-        /// <param name="pageInfo"></param>
-        /// <param name="iCategoryId"></param>
-        /// <returns></returns>
-        public ActionResult GetPageArticleByCategoryPageId(PageInfo pageInfo, int iCategoryId)
-        {
-            string res = FuncHelper.Instance.GetPageArticleByCategoryPageId(pageInfo, iCategoryId);
-            return Content(res);
-        }
     }
 }

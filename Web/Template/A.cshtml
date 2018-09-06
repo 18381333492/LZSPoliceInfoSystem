@@ -1,6 +1,6 @@
 ﻿@using Web.Server;
 @using Web.Models;
-@{  var CurrentCategory=Model as TG_Category }
+@{  var pageCategory = Model as PageCategory }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -21,7 +21,7 @@
             <div class="news-txt ny mg-t-b">
                 <div class="news-con">
                     <ul class="newslist ny">
-                        @foreach (var article in FuncHelper.Instance.GetCategoryAllArticleList(CurrentCategory.ID))
+                        @foreach (var article in FuncHelper.Instance.GetPageArticleByCategoryPageId(pageCategory.Page,pageCategory.Category.ID))
                         {
                             <li>
                                 <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>

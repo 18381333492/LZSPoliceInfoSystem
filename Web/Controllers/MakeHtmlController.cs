@@ -43,17 +43,43 @@ namespace Web.Controllers
             {
                 var templet = allTempletList.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
                 if (templet != null)
-                {//模板存在                  
-                    string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
-                    string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
-                    if (RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString))
-                    {
-                        iSuccessCount++;
+                {//模板存在               
+                    //判断栏目是或否内容栏目
+                    if (category.bIsContentCategory == null)
+                    {//内容栏目直接生成页面
+                        string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
+                        string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
+                        if (RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString))
+                        {
+                            iSuccessCount++;
+                        }
+                        else
+                        {
+                            iFalseCount++;
+                        }
                     }
                     else
-                    {
-                        iFalseCount++;
-                    }
+                    { //文章分页栏目
+                      //获取栏目下面所有文章数量
+                        var articleTotalCount = mangae.db.TG_Article.Where(m => m.iCategoryId == category.ID).Count();
+                        int categoryHtmlCount = articleTotalCount / 20; //生成栏目页的个数
+                        var pageCategory = new PageCategory();
+                        pageCategory.Category = category;
+                        for (var i=1;i<=categoryHtmlCount; i++)
+                        {
+                            pageCategory.Page = i;
+                            string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, pageCategory);
+                            string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
+                            if (RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString))
+                            {
+                                iSuccessCount++;
+                            }
+                            else
+                            {
+                                iFalseCount++;
+                            }
+                        }
+                    }     
                 }
             }
             result.success = true;

@@ -186,6 +186,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginCacheInfo.cs" />
+    <Compile Include="Models\PageCategory.cs" />
     <Compile Include="Models\PagingRet.cs" />
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\Result.cs" />
