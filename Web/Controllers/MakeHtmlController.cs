@@ -45,7 +45,7 @@ namespace Web.Controllers
                 if (templet != null)
                 {//模板存在               
                     //判断栏目是或否内容栏目
-                    if (category.bIsContentCategory == null)
+                    if (category.bIsContentCategory != null)
                     {//内容栏目直接生成页面
                         string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
                         string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
@@ -61,16 +61,19 @@ namespace Web.Controllers
                     else
                     { //文章分页栏目
                       //获取栏目下面所有文章数量
-                        var articleTotalCount = mangae.db.TG_Article.Where(m => m.iCategoryId == category.ID).Count();
-                        int categoryHtmlCount = articleTotalCount / 20; //生成栏目页的个数
+                        var articleTotalCount = mangae.db.TG_Article.
+                            Where(m => m.iCategoryId == category.ID&& m.bIsDeleted == false && m.bIsRelease == true).Count();
+                        int categoryHtmlCount = (int)Math.Ceiling((double)articleTotalCount / (double)20); //生成栏目页的个数
                         var pageCategory = new PageCategory();
                         pageCategory.Category = category;
+                        pageCategory.Rows = categoryHtmlCount;//总页数
                         for (var i=1;i<=categoryHtmlCount; i++)
                         {
                             pageCategory.Page = i;
                             string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, pageCategory);
                             string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
-                            if (RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString))
+                            string sFileName = string.Format("{0}_{1}", category.sEnName,i);
+                            if (RazorHelper.MakeHtml(sHtmlPath, sFileName, templetHtmlString))
                             {
                                 iSuccessCount++;
                             }
@@ -116,7 +119,7 @@ namespace Web.Controllers
                 //获取栏目下的文章模板
                 TG_Templet templetArticle = allTempletList.Where(m => m.ID == category.iArticleTemplateId).SingleOrDefault();
                 //获取当前栏目下的文章数据列表
-                var CurrentArticleList = ArticleList.Where(m => m.iCategoryId == category.ID).ToList();
+                var CurrentArticleList = ArticleList.Where(m => m.iCategoryId == category.ID&&m.bIsDeleted==false&&m.bIsRelease==true).ToList();
                 //遍历当前栏目下的文章
                 foreach (var article in CurrentArticleList)
                 {

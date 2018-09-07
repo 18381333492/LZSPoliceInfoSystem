@@ -32,6 +32,7 @@ namespace Web.Server
             return sPath;
         }
 
+
         /// <summary>
         /// 根据获取文章的链接
         /// </summary>
@@ -66,6 +67,38 @@ namespace Web.Server
             }
         }
 
+        /// <summary>
+        /// 根据栏目ID和分页数获取栏目网络连接
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public string GetCategoryHtmlUrl(int categoryId,int page)
+        {
+            using (var db = new Entities())
+            {
+                string sUrl = string.Empty;
+                var category = db.TG_Category.Find(categoryId);
+                var categoryList = db.TG_Category.ToList();
+                if (category.CategoryId != 0)
+                {
+                    sUrl = category.sEnName.ToLower();
+                    TG_Category parentCategory = null;
+                    do
+                    {
+                        parentCategory = categoryList.FirstOrDefault(m => m.ID == category.CategoryId);
+                        sUrl = parentCategory.sEnName.ToLower() + "/" + sUrl;
+                    }
+                    while (parentCategory != null && parentCategory.CategoryId != 0);
+                    sUrl = string.Format("/{0}/{1}_{2}.html",sHtmlBasePath, sUrl, page);
+                }
+                else
+                {
+                    sUrl = string.Format("/{0}/{1}_{2}.html", sHtmlBasePath, category.sEnName.ToLower(), page);
+                }
+                return sUrl;
+            }
+        }          
 
         /// <summary>
         /// 根据栏目ID获取栏目网络连接
@@ -98,27 +131,41 @@ namespace Web.Server
                 }
                 return sUrl;
             }
-
         }
 
+                
         /// <summary>
-        /// 分页获取栏目文章
+        /// 获取栏目位置
         /// </summary>
-        /// <param name="pageInfo"></param>
-        /// <param name="iCategoryId"></param>
+        /// <param name="categoryId"></param>
         /// <returns></returns>
-        public string GetPageArticleByCategoryPageId(int page, int iCategoryId)
+        public List<string> GetCategoryLocation(int categoryId)
         {
-            using (var db =new Entities())
+            using (var db = new Entities())
             {
-                var result = new PagingRet();
-                var query = db.TG_Article.Where(m => m.iCategoryId == iCategoryId).OrderByDescending(m => m.dInsertTime).AsQueryable();
-                result.total = query.Count();
-                query = query.Skip((page - 1) * 20).Take(20);
-                result.rows = query;
-                return result.toJson();
+                List<string> LocationArray = new List<string>();
+                string sUrl = string.Empty;
+                var category = db.TG_Category.Find(categoryId);
+                var categoryList = db.TG_Category.ToList();
+                if (category.CategoryId != 0)
+                {
+                    TG_Category parentCategory = null;
+                    do
+                    {
+                        parentCategory = categoryList.FirstOrDefault(m => m.ID == category.CategoryId);
+                        LocationArray.Add(parentCategory.sName);
+                    }
+                    while (parentCategory != null && parentCategory.CategoryId != 0);
+                }
+                else
+                {
+                    LocationArray.Add(category.sName);
+                }
+                return LocationArray;
             }
         }
+
+
 
     }
 }

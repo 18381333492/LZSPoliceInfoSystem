@@ -1,6 +1,6 @@
 @using Web.Server;
 @using Web.Models;
-@{  var CurrentCategory=Model as TG_Category }
+@{  var pageCategory = Model as PageCategory; }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,18 +10,26 @@
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/nav.js"></script>
-    <script src="js/Tabs.js"></script>
-    <script src="js/jquery.page.js"></script>
 </head>
 <body>
     @Include("top")
     <div class="container mg-t-b container_col">
         <div class="page-right" style="padding:0 30px;float:none;width:auto">
-            <div class="pagelujing"><div class="name">警务动态</div><span>您当前所在位置：<a>首页</a> > <a>新闻动态</a> > <a>警务动态</a></span></div>
+            <div class="pagelujing">
+                <div class="name">@pageCategory.Category.sName</div>
+                <span>
+                    您当前所在位置：
+                    <a>首页</a>
+                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(pageCategory.Category.ID))
+                    {
+                    @:><a>@location</a>
+                    }
+                </span>
+            </div>
             <div class="news-txt ny mg-t-b">
                 <div class="news-con">
                     <ul class="newslist ny">
-                        @foreach (var article in FuncHelper.Instance.GetCategoryAllArticleList(CurrentCategory.ID))
+                        @foreach (var article in FuncHelper.Instance.GetPageArticleByCategoryPageId(pageCategory.Page,pageCategory.Category.ID))
                         {
                         <li>
                             <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
@@ -29,7 +37,38 @@
                         </li>
                         }
                     </ul>
-                    <div class="tcdPageCode"></div>
+                    <div class="tcdPageCode">
+                        <!--上一页-->
+                        @if (pageCategory.Page == 1)
+                        {
+                        <span class="disabled">上一页</span>
+                        }
+                        else
+                        {
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page-1)" class="tcdNumber">上一页</a>
+                        }
+                        <!--页面数-->
+                        @for (var i = 1; i <= pageCategory.Rows; i++)
+                        {
+                        if (pageCategory.Page == i)
+                        {
+                        <span class="current">@i</span>
+                        }
+                        else
+                        {
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID, i)" class="tcdNumber">@i</a>
+                        }
+                        }
+                        <!--下一页-->
+                        @if (pageCategory.Page == 1)
+                        {
+                        <span class="disabled">下一页</span>
+                        }
+                        else
+                        {
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page+1)" class="tcdNumber">下一页</a>
+                        }
+                    </div>
                 </div>
             </div>
 
@@ -39,13 +78,3 @@
     @Include("bottom")
 </body>
 </html>
-<script type="text/javascript">
-    //初始化分页器
-    $(".tcdPageCode").createPage({
-        pageCount:100,
-        current:1,
-        backFn:function(p){
-            //console.log(p);
-        }
-    });
-</script>

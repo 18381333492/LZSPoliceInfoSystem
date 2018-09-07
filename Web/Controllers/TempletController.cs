@@ -178,10 +178,13 @@ namespace Web.Controllers
             }
             else
             {
+                RazorHelper.InitService();
                 foreach (var item in list)
                 {
                     string sFileName = item.sTempletEnName + ".cshtml";
                     System.IO.File.WriteAllText(path + sFileName, item.sTempletContent);
+                    //预编译模板
+                    RazorHelper.PrevCompileTemplate(item.sTempletEnName, item.sTempletContent);
                 }
             }
             result.success = true;

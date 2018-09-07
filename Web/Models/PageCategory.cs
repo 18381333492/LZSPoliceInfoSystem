@@ -25,5 +25,10 @@ namespace Web.Models
         {
             get;set;
         }
+
+        public int Rows
+        {
+            get; set;
+        }
     }
 }

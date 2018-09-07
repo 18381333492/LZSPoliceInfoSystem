@@ -1,12 +1,11 @@
 ﻿
-
-
 @using Web.Models;
 @model TG_Article
 @{ string iTemplateId = Model.iTemplateId == 0 ? string.Empty : Model.iTemplateId.ToString(); }
 <!--编辑文章视图-->
 <form id="dataForm">
     <input type="hidden" name="ID" value="@Model.ID" />
+    <input type="hidden" name="dInsertTime" value="@Model.dInsertTime" />
     @if (Model.bIsRelease)
     {
         <input type="hidden" name="bIsRelease" value="true" />

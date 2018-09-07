@@ -14,19 +14,19 @@
     <ul class="" id="navul">
         @foreach (var category in FuncHelper.Instance.GetShowCategory())
         {
-        <li>
-            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(category.ID)">@category.sName</a>
-            @{ var childList = FuncHelper.Instance.GetChildCategory(category.ID); }
-            @if (childList.Count > 0)
-            {
-            <ul>
-                @foreach (var item in childList)
+            <li>
+                <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(category.ID)">@category.sName</a>
+                @{ var childList = FuncHelper.Instance.GetChildCategory(category.ID); }
+                @if (childList.Count > 0)
                 {
-                <li><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a></li>
+                    <ul>
+                        @foreach (var item in childList)
+                        {
+                            <li><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a></li>
+                        }
+                    </ul>
                 }
-            </ul>
-            }
-        </li>
-        }
+            </li>
+         }
     </ul>
 </div>

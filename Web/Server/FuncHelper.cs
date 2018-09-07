@@ -169,5 +169,23 @@ namespace Web.Server
             }
         
         }
+
+        /// <summary>
+        /// 分页获取栏目文章
+        /// </summary>
+        /// <param name="pageInfo"></param>
+        /// <param name="iCategoryId"></param>
+        /// <returns></returns>
+        public List<TG_Article> GetPageArticleByCategoryPageId(int page, int iCategoryId)
+        {
+            using (var db = new Entities())
+            {
+                var result = new PagingRet();
+                var query = db.TG_Article.Where(m => m.iCategoryId == iCategoryId).OrderByDescending(m => m.dInsertTime).AsQueryable();
+                result.total = query.Count();
+                query = query.Skip((page - 1) * 20).Take(20);
+                return query.ToList();
+            }
+        }
     }
 }
