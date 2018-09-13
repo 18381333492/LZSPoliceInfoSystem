@@ -32,6 +32,31 @@ namespace Web.Server
             return sPath;
         }
 
+        /// <summary>
+        /// 获取文章文件的路径
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="categoryList"></param>
+        /// <returns></returns>
+        public string GetArticleHtmlPath(TG_Category category, List<TG_Category> categoryList)
+        {
+            string sPath = string.Empty;
+            if (category.CategoryId != 0)
+            {//子级栏目
+                TG_Category parentCategory = null;
+                do
+                {
+                    parentCategory = categoryList.FirstOrDefault(m => m.ID == category.CategoryId);
+                    sPath = sPath + "\\" + parentCategory.sEnName.ToLower();
+                }
+                while (parentCategory != null && parentCategory.CategoryId != 0);
+                sPath = sPath.TrimStart('\\');
+            }
+            sPath = sPath + "\\" + category.sEnName.ToLower();
+            sPath = sPath.TrimStart('\\');
+            return sPath;
+        }
+
 
         /// <summary>
         /// 根据获取文章的链接
@@ -60,9 +85,9 @@ namespace Web.Server
                 }
                 else
                 {
-                    sUrl = string.Format("/{0}/{1}", sHtmlBasePath, category.sEnName.ToLower());
+                    sUrl = string.Format("{0}/{1}", sHtmlBasePath, category.sEnName.ToLower());
                 }
-                sUrl = string.Format("{0}/{1}.html", sUrl, articleId);
+                sUrl = string.Format("/{0}/{1}.html", sUrl, articleId);
                 return sUrl;
             }
         }
@@ -123,7 +148,7 @@ namespace Web.Server
                         sUrl = parentCategory.sEnName.ToLower() + "/" + sUrl;
                     }
                     while (parentCategory != null && parentCategory.CategoryId != 0);
-                    sUrl = sHtmlBasePath + "/" + sUrl + ".html";
+                    sUrl = "/"+sHtmlBasePath + "/" + sUrl + ".html";
                 }
                 else
                 {

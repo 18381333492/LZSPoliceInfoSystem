@@ -82,6 +82,13 @@
             </td>
         </tr>
         <tr>
+            <td>上传文件:</td>
+            <td colspan="3">
+                <a id="UploadFileName" class="easyui-linkbutton">上传文件</a><span id="FileValue">@Model.sFileName</span>
+                <input type="hidden" name="sFileName" value="@Model.sFileName" />
+            </td>
+        </tr>
+        <tr>
             <td>文章导图:</td>
             <td colspan="3">
                 <div id="sPictureUrl"></div>
@@ -108,6 +115,10 @@
         </tr>
     </table>
 </form>
+<form id="upload_form" enctype="multipart/form-data" method="post" style="display:none">
+    <input type="file" name="upload_input" />
+</form>
+
 <script type="text/javascript">
     $('.bIsRelease,.bIsTop,.bIsSlide,.bIsHot').iCheck({
         labelHover: false,
@@ -130,4 +141,29 @@
 
     var pciture = new dpictures();
     pciture.create("sPictureUrl");
+
+    //上传文件
+    $('#UploadFileName').on("click", function () {
+        $('input[name=upload_input]').val('');
+        $('input[name=upload_input]').click();
+    });
+
+    //文件上传
+    $('input[name=upload_input]').on("change", function () {
+        if ($(this).val() != "") {
+            $('#upload_form').form('submit', {
+                url: '/FileUpload.ashx',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.error == 0) {
+                        $('input[name=sFileName]').val(data.name);
+                        $('#FileValue').text(data.name);
+                        alert("上传成功");
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+    });
 </script>

@@ -29,7 +29,7 @@ body{min-width:1200px; background:#d6e8f4;}
 
 
 
-.news-notice{ margin:20px 0;}
+.news-notice{ margin:0px 0;}
 .indnews{width: 560px; height: 362px; float: left;}
 .news-pic{width: 560px; height: 362px;}
 .news-pic,.news-pic img{ width: 560px; height: 362px; overflow: hidden;}
@@ -112,7 +112,7 @@ overflow:hidden;}
 .col-2-l .list a.color-5{background:#2876a2;}
 .col-2-l .list a.color-6{background:#2bbe40;}
 .col-2-l .list a.color-7{background:#b363c7;}
-.col-2-l .list a.color-1:hover,.col-2-l .list a.color-2:hover,.col-2-l .list a.color-3:hover,.col-2-l .list a.color-4:hover,.col-2-l .list a.color-5:hover{background:#084466;}
+.col-2-l .list a.color-1:hover,.col-2-l .list a.color-2:hover,.col-2-l .list a.color-3:hover,.col-2-l .list a.color-4:hover,.col-2-l .list a.color-5:hover,.col-2-l .list a.color-6:hover,.col-2-l .list a.color-7:hover{background:#084466;}
 
 .col-2-r{}
 .gsht{float:left; width:400px;}
@@ -125,7 +125,8 @@ display:-webkit-box;
 -webkit-line-clamp:9;
 -webkit-box-orient:vertical;
 overflow:hidden;}
-.sftxt a{display:block; position:absolute; left:0; bottom:-2px; text-align:center; color:#F30;}
+.sftxt a{/*display:block; position:absolute;*/ left:0; bottom:-2px; text-align:center; color:#F30;cursor:pointer}
+.sftxt a span{float:right;}
 .sftxt a:hover{color:#39F;}
 .jisuan{float:right; padding-left:30px; width:270px; border-left:1px dashed #efefef; height:213px; }
 .jisuan h1{color:#084466; line-height:30px; font-size:15px;}

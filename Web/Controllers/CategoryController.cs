@@ -178,6 +178,5 @@ namespace Web.Controllers
             result.success = mangae.Delete<TG_Category>(Ids);
         }
 
-
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CmsSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CmsSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TG_Article">
           <Key>
             <PropertyRef Name="ID" />
@@ -30,6 +30,8 @@
           <Property Name="sContent" Type="varchar(max)" />
           <Property Name="bIsDeleted" Type="bit" Nullable="false" />
           <Property Name="dInsertTime" Type="datetime" />
+          <Property Name="sFileName" Type="varchar" MaxLength="255" />
+          <Property Name="iCount" Type="int" Nullable="false" />
           <Property Name="bIsRelease" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TG_Category">
@@ -128,8 +130,7 @@
           <EntitySet Name="TG_User" EntityType="Self.TG_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TG_WebSite" EntityType="Self.TG_WebSite" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CmsSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -159,6 +160,8 @@
           <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="dInsertTime" Type="DateTime" Precision="3" />
           <Property Name="bIsRelease" Type="Boolean" Nullable="false" />
+          <Property Name="sFileName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="iCount" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TG_Category">
           <Key>
@@ -265,6 +268,8 @@
           <EntitySetMapping Name="TG_Article">
             <EntityTypeMapping TypeName="CmsSystemModel.TG_Article">
               <MappingFragment StoreEntitySet="TG_Article">
+                <ScalarProperty Name="iCount" ColumnName="iCount" />
+                <ScalarProperty Name="sFileName" ColumnName="sFileName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="iCategoryId" ColumnName="iCategoryId" />
                 <ScalarProperty Name="iTemplateId" ColumnName="iTemplateId" />

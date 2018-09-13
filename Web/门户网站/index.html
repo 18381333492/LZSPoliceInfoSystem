@@ -1,405 +1,360 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>泸州公安交警信息网</title>
-<link href="css/base.css" rel="stylesheet" type="text/css" />
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-    <script src="js/jquery.leoweather.min.js"></script>
-<link href="css/jquery.slideBox.css" rel="stylesheet" type="text/css" />
-<script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
-<script type="text/javascript"  src="js/nav.js"></script>
-<script>
-jQuery(function($){
-	$('#newspic').slideBox({
-		duration : 0.3,//滚动持续时间，单位：秒
-		easing : 'linear',//swing,linear//滚动特效
-		delay : 5,//滚动延迟时间，单位：秒
-		hideClickBar : false,//不自动隐藏点选按键
-		clickBarRadius : 10
-	});
-});
-</script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>泸州公安交警信息网</title>
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <link href="css/jquery.slideBox.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.slideBox.min.js" type="text/javascript"></script>
+    <script src="js/Tabs.js"></script>
 </head>
 <body>
 <div class="header">
-  <div class="container">
-    <div id="weather"></div>
-    <div class="toptxt"><a href="#">管理员登陆</a>|<a href="#">天气</a></div>
-    <div class="logo"><a href="#"><img src="images/logo.png" /></a></div>
-    <div class="search">
-      <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
-      <a href="javascript:;">搜索</a> </div>
-  </div>
+    <div class="container">
+        <div id="weather"></div>
+        <div class="toptxt"><a href="#">管理员登陆</a>|<a href="#">天气</a></div>
+        <div class="logo"><a href="#"><img src="images/logo.png" /></a></div>
+        <div class="search">
+            <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
+            <a href="javascript:;">搜索</a> </div>
+    </div>
 </div>
-<div class="nav">
-  <ul class="" id="navul">
-    <li class="active"><a href="#">首页</a></li>
-    <li><a href="#">新闻动态</a>
-        <ul>
-            <li><a href="#">警务动态</a></li>
-            <li><a href="#">警方报道</a></li>
-            <li><a href="#">警务要闻</a></li>
-            <li><a href="#">通知公告</a></li>
-        </ul>
-      </li>
-    <li><a href="#">警务公开</a>
-    	<ul>
-        	<li><a href="#">支队简介</a></li>
-            <li><a href="#">机构设置</a></li>
-            <li><a href="#">服务电话</a></li>
-            <li><a href="#">办事流程</a></li>
-            <li><a href="#">表格下载</a></li>
-		</ul>
-    </li>
-    <li><a href="#">政策法规</a>
-        <ul>
-            <li><a href="#">相关法规</a></li>
-            <li><a href="#">交通法规</a></li>
-        </ul> 
-      </li>
-    <li><a href="#">网上车管所</a>
-        <ul>
-            <li><a href="#">业务咨询</a></li>
-            <li><a href="#">驾驶培训</a></li>
-            <li><a href="#">在线服务</a></li>
-        </ul> 
-      </li>
-    <li><a href="#">交通学堂</a>
-        <ul>
-            <li><a href="#">安全常识</a></li>
-            <li><a href="#">交通标识</a></li>
-            <li><a href="#">警钟长鸣</a></li>
-        </ul> 
-      </li>
-    <li><a href="#">互动交流</a>
-        <ul>
-            <li><a href="#">网络问政</a></li>
-            <li><a href="#">交警在线</a></li>
-            <li><a href="#">交警微博</a></li>
-        </ul> 
-     </li>
-    <li><a href="#">在线调查</a>
-    </li>
-  </ul>
-</div>
-<script  type="text/javascript"> 
-$(".navbg").capacityFixed();
-</script>
 <div class="container container_col">
-  <div class="news-notice">
-    <div class="indnews">
-      <div class="news-pic">
-        <div id="newspic" class="slideBox">
-          <ul class="items">
-            <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
-            <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
-            <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
-            <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
-            <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="news-txt" id="news">
-      <div class="news-title">
-        <div class="news-name tab-nav j-tab-nav">
-        	<a href="javascript:void(0);" class="current">警务动态<i></i></a>
-            <a href="javascript:void(0);" class="">警方报道<i></i></a>
-            <a href="javascript:void(0);" class="">警务要闻<i></i></a>
-            <a href="javascript:void(0);" class="">通知公告<i></i></a>
-        </div>
-        <a href="#" class="more">更多 >></a>
-      </div>
-      <div class="tab-con">
-      <div class="j-tab-con">
-      <div class="tab-con-item news-con" style="display: block;">
-        <ul class="newslist">
-          <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
-          <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
-          <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
-          <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
-          <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
-          <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
-          <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
-          <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
-        </ul>
-      </div>
-      <div class="tab-con-item news-con" style="display: none;">
-              <ul class="newslist">
-                  <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
-                  <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
-                  <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
-                  <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
-                  <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
-                  <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
-                  <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
-                  <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
-              </ul>
-          </div>
-      <div class="tab-con-item news-con" style="display: none;">
-              <ul class="newslist">
-                  <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
-                  <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
-                  <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
-                  <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
-                  <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
-                  <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
-                  <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
-                  <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
-              </ul>
-          </div>
-      <div class="tab-con-item news-con" style="display: none;">
-              <ul class="newslist">
-                  <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
-                  <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
-                  <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
-                  <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
-                  <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
-                  <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
-                  <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
-                  <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
-              </ul>
-          </div>
-      </div>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-  <div class="fwzn">
-    <div class="tit">警<br />
-        务<br />
-        公<br />
-        开</div>
-    <div class="iconlist"> 
-      <a href="#" class="icon1">
-      <div class="pic"><img src="images/zhinan01.png" /></div>
-      <p>支队简介</p>
-      </a>
-      <a href="#" class="icon1">
-      <div class="pic"><img src="images/zhinan06.png" /></div>
-      <p>机构设置</p>
-      </a>
-       <a href="#" class="icon2">
-      <div class="pic"><img src="images/zhinan02.png" /></div>
-      <p>服务电话</p>
-      </a> <a href="#" class="icon3">
-      <div class="pic"><img src="images/zhinan03.png" /></div>
-      <p>办事指南</p>
-      </a> <a href="#" class="icon5">
-      <div class="pic"><img src="images/zhinan05.png" /></div>
-      <p>表格下载</p>
-      </a> <!--<a href="#" class="icon6">
-      <div class="pic"><img src="images/zhinan04.png" /></div>
-      <p>仲裁条款</p>
-      </a> <a href="#" class="icon7">
-      <div class="pic"><img src="images/zhinan07.png" /></div>
-      <p>常用文书</p>
-      </a>--> 
-    </div>
-  </div>
-  <div class="col-box">
-    <div class="news-txt col-3">
-      <div class="news-title">
-        <div class="name">公告信息<i></i></div>
-        <a href="#" class="more">更多 >></a> </div>
-      <div class="news-con">
-        <ul class="newslist">
-          <li><a href="#">机动车驾驶证注销作废公告</a><span>09-10</span></li>
-          <li><a href="#">达到报废标准机动车号牌的作废公告</a><span>09-10</span></li>
-          <li><a href="#">机动车驾驶证作废公告</a><span>09-10</span></li>
-          <li><a href="#">AB类机动车驾驶证连续三个周期未审验公告</a><span>09-10</span></li>
-          <li><a href="#">机动车驾驶证注销作废公告</a><span>09-10</span></li>
-          <li><a href="#">机动车驾驶证增驾实习满分注销公告</a><span>09-10</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="news-txt col-3">
-      <div class="news-title">
-        <div class="name">相关法规<i></i></div>
-        <a href="#" class="more">更多 >></a> </div>
-      <div class="news-con">
-        <ul class="newslist">
-          <li><a href="#">泸州市城市建设项目交通影响评价实施办法</a><span>09-10</span></li>
-          <li><a href="#">道路交通事故社会救助基金政策解答</a><span>09-10</span></li>
-          <li><a href="#">《机动车交通事故责任强制保险条例》（国务院令第462号）</a><span>09-10</span></li>
-          <li><a href="#">《最高人民法院关于审理人身损害赔偿案件适用法律若干问题的解释 》</a><span>09-10</span></li>
-          <li><a href="#">《中华人民共和国国家赔偿法》</a><span>09-10</span></li>
-          <li><a href="#">《中华人民共和国行政诉讼法》</a><span>09-10</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="news-txt col-3 last">
-      <div class="news-title">
-        <div class="name">交通法规<i></i></div>
-        <a href="#" class="more">更多 >></a> </div>
-      <div class="news-con">
-        <ul class="newslist">
-          <li><a href="#">《机动车登记规定》（第 124 号令）</a><span>09-10</span></li>
-          <li><a href="#">《机动车驾驶证申领和使用规定》（第 123 号令）</a><span>09-10</span></li>
-          <li><a href="#">《道路交通安全违法行为处理程序规定》(第105号)</a><span>09-10</span></li>
-          <li><a href="#">《临时入境机动车和驾驶人管理规定》（公安部令第90号）</a><span>09-10</span></li>
-          <li><a href="#">《道路交通安全违法行为处理程序规定》（公安部令第69号）</a><span>09-10</span></li>
-          <li><a href="#">中华人民共和国道路运输条例</a><span>09-10</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-  <div class="col-box">
-    <div class="col-2-l">
-      <div class="tit" style="float:left;width:40%">网上车管所</div>
-      <div class="tit" style="float:left;width:40%">互动交流</div>
-      <div class="list" style="clear:both"> 
-        <div class="ct">
-          <a href="#" class="color_bj color-1"><div class="pic"><img src="images/zxfw1.png" /></div><p>业务咨询留言</p></a>
-        </div>
-        <div class="ct">
-          <a href="#" class="color_bj color-2"><div class="pic"><img src="images/zxfw2.png" /></div><p>驾驶培训考试质量发布平台</p></a>
-        </div>
-        <div class="ct">
-          <a href="#" class="color_bj color-3"><div class="pic"><img src="images/zxfw3.png" /></div><p>在线服务</p></a>
-        </div>
-        <div class="ct">
-          <a href="#" class="color_bj color-4"><div class="pic"><img src="images/zxfw4.png" /></div><p>网络问政</p></a>
-        </div>
-        <div class="ct">
-          <a href="#" class="color_bj color-5"><div class="pic"><img src="images/zxfw5.png" /></div><p>交警微博</p></a>
-        </div>
-        <div class="ct">
-          <a href="#" class="color_bj color-6"><div class="pic"><img src="images/zxfw6.png" /></div><p>我为公安交通管理献计献策</p></a>
-        </div>
-        <div class="ct last">
-          <a href="#" class="color_bj color-7"><div class="pic"><img src="images/zxfw7.png" /></div><p>图片链接</p></a>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-    
-    
-  </div>
-  <div class="col-box">
-    <div class="col-2-r">
-      <div class="tit">安全常识</div>
-      <div class="tit" style="margin-left:307px;">警钟长鸣</div>
-      <div class="tit" style="margin-left:420px; background: url(images/jsq2.png) 0 9px no-repeat;">交通标识</div>
-      <div class="clearfix"></div>
-      <div class="sfbox">
-      	<div class="gsht">
-           <ul class="newslist htlist">
-              <li><a href="#">驾车归来如何自检</a><span>09-10</span></li>
-              <li><a href="#">远离三个误区 助您远离酒驾</a><span>09-10</span></li>
-              <li><a href="#">天冷打火难应清洁四大系统</a><span>09-10</span></li>
-              <li><a href="#">汽车冬季保养“脚”</a><span>09-10</span></li>
-              <li><a href="#">冷天原地热车别超过三分钟</a><span>09-10</span></li>
-              <li><a href="#">缓解驾车疲劳的好方法</a><span>09-10</span></li>
-            </ul>
-        </div>
-        <div class="sftxt">
-          <div class="info">
-              交通事故启示录之——飞跃的代价<br />
-              交通事故警示录之致命的弯道<br />
-              无情车祸夺走儿子儿媳生命 事故救助金助老母渡难关<br />
-              警方提示：珍爱生命 远离“酒驾”<br />
-              盘点2011事故 铭记血的教训<br />
-              轿车迎面“钻”进货车底 致1死4伤<br />
-              货车突然滑行 司机被顶墙上丧命黄泉<br />
-              轿车迎面“钻”进货车底 致1死4伤<br />
-              货车突然滑行 司机被顶墙上丧命黄泉<br />
-          <a href="#">[查看全部]</a> 
-         </div>
-        </div>
-        <div class="jisuan">
-            <div class="info">
-                警示标志(图)<br />
-                警示标志(图)<br />
-                警示标志(图)<br />
-                警示标志(图)<br />
-                警示标志(图)<br />
-                警示标志(图)<br />
-                警示标志(图)<br />
-                警示标志(图)<br />
-                警示标志(图)<br />
-            </div>
-          <!--<div class="xxlinks"> <a href="#" class="fl">案件受理费标准>></a> <a href="#" class="fr">案件处理费标准>></a> </div>-->
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-</div>
-    <div class="foot">
-        <div class="ft-menu">
-            <div class="container">
-                <div class="menu">
-                    <div>
-                        <a style="color: white;font-size: 16px;">友情链接</a>
-                    </div>
-                    <dl>  
-                        <dd>
-                            <a href="#">泸州公安公众信息网</a>
-                            <a href="#">四川道路交通安全网</a>
-                            <a href="#">泸州市人民政府公众信息网</a>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dd>
-                            <a href="#">泸州公安公众信息网</a>
-                            <a href="#">四川道路交通安全网</a>
-                            <a href="#">泸州市人民政府公众信息网</a>
-                        </dd>
-                    </dl>
-                    <dl>
-                      
-                        <dd>
-                            <a href="#">泸州公安公众信息网</a>
-                            <a href="#">四川道路交通安全网</a>
-                            <a href="#">泸州市人民政府公众信息网</a>
-                        </dd>
-                    </dl>
-                    <dl class="last">
-                        <dd>
-                            <p>联系地址：中卫市沙坡头区清风路55号（市财政局后楼四楼）</p>
-                            <p>邮政编码：755000</p>
-                            <p>咨询电话：0955-7674885</p>
-                            <p>电子邮件：zwzcwyh@163.com</p>
-                            <p>网　　址：www.zwzcwyh.com</p>
-                        </dd>
-                    </dl>
-                    <div class="clearfix"></div>
+    <div class="news-notice">
+        <div class="indnews">
+            <div class="news-pic">
+                <div id="newspic" class="slideBox">
+                    <ul class="items">
+                        <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
+                        <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
+                        <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
+                        <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
+                        <li><a href="#" title="泸县交警查获一起面包车严重超员违法行为"><img src="upload/newsimg.jpg"></a></li>
+                    </ul>
                 </div>
-                <div class="ewm">
-                    <img src="images/ewm.png" />
-                    <p>扫码关注公众号</p>
+            </div>
+        </div>
+        <div class="news-txt" id="news">
+            <div class="news-title">
+                <div class="news-name tab-nav j-tab-nav">
+                    <a href="javascript:void(0);" class="current">警务动态<i></i></a>
+                    <a href="javascript:void(0);" class="">警方报道<i></i></a>
+                    <a href="javascript:void(0);" class="">警务要闻<i></i></a>
+                    <a href="javascript:void(0);" class="">通知公告<i></i></a>
+                </div>
+                <a href="#" class="more">更多 >></a>
+            </div>
+            <div class="tab-con">
+                <div class="j-tab-con">
+                    <div class="tab-con-item news-con" style="display: block;">
+                        <ul class="newslist">
+                            <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
+                            <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
+                            <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
+                            <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
+                            <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
+                            <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
+                        </ul>
+                    </div>
+                    <div class="tab-con-item news-con" style="display: none;">
+                        <ul class="newslist">
+                            <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
+                            <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
+                            <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
+                            <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
+                            <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
+                            <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
+                        </ul>
+                    </div>
+                    <div class="tab-con-item news-con" style="display: none;">
+                        <ul class="newslist">
+                            <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
+                            <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
+                            <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
+                            <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
+                            <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
+                            <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
+                        </ul>
+                    </div>
+                    <div class="tab-con-item news-con" style="display: none;">
+                        <ul class="newslist">
+                            <li><a href="#">三轮车怎样安全行驶</a><span>09-10</span></li>
+                            <li><a href="#">公正执法 热心为民</a><span>09-10</span></li>
+                            <li><a href="#">泸县交警查获一起面包车严重超员违法行为</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队争分夺秒抢救伤员 为生命护航</a><span>09-10</span></li>
+                            <li><a href="#">一大队积极组织开展世界杯期间酒后驾驶违法整治行动</a><span>09-10</span></li>
+                            <li><a href="#">泸县大队连续作战速破三起交通肇事逃逸案</a><span>09-10</span></li>
+                            <li><a href="#">交警三大队巡逻民警查获一起故意遮挡号牌行为</a><span>09-10</span></li>
+                            <li><a href="#">交警支队管控大队联合交警三大队为 公务员考生“保驾护</a><span>09-10</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div style="background-color: #f3f3f3;    PADDING-BOTTOM: 12px;PADDING-LEFT: 12px; PADDING-RIGHT: 12px;PADDING-TOP: 12px;">
+        <table style="WIDTH: 100%; BORDER-COLLAPSE: collapse" bordercolor="#999999" cellspacing="0"
+               cellpadding="0" border="0">
+            <tbody>
+            <tr>
+                <td style="text-align: left">
+                    <a >
+                        <img src="images/x_1ae126.gif"
+                             onmouseover=this.src='images/x_f95159.gif'
+                             onmouseout=this.src='images/x_1ae126.gif'
+                           >
+                    </a>
+                </td>
+                <td style="text-align: center; PADDING-LEFT: 1px" rowspan="2">
+                    <a >
+                        <img src="images/x_1ae197.gif"
+                             onmouseover=this.src='images/x_948178.gif'
+                             onmouseout=this.src='images/x_1ae197.gif'>
+                    </a>
+                </td>
+                <td style="text-align: center; PADDING-LEFT: 8px; PADDING-RIGHT: 0">
+                    <a>
+                        <img src="images/x_6cc172.gif"
+                             onmouseover=this.src='images/x_e9b153.gif'
+                             onmouseout=this.src='images/x_6cc172.gif'
+                          >
+                    </a>
+                </td>
+                <td style="text-align: right" rowspan="2">
+                    <a >
+                        <!--<img src="images/x_0ed195.gif"-->
+                             <!--onmouseover=this.src='images/x_e9b174.gif'-->
+                             <!--onmouseout=this.src='images/x_0ed195.gif'-->
+                             <!--&gt;-->
+                        <img src="images/x_0ed195.gif">
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left; PADDING-TOP: 9px">
+                    <a >
+                        <img src="images/x_c0c110.gif"
+                             onmouseover=this.src='images/x_f6e171.gif'
+                             onmouseout=this.src='images/x_c0c110.gif'
+                             >
+                    </a>
+                </td>
+                <td style="text-align: center; PADDING-TOP: 9px; PADDING-LEFT: 8px; PADDING-RIGHT: 0px">
+                    <a >
+                        <img src="images/x_de6165.gif"
+                             onmouseover=this.src='images/x_6be152.gif'
+                             onmouseout=this.src='images/x_de6165.gif'
+                            >
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-box">
+        <div class="news-txt col-3">
+            <div class="news-title">
+                <div class="name">公告信息<i></i></div>
+                <a href="#" class="more">更多 >></a> </div>
+            <div class="news-con">
+                <ul class="newslist">
+                    <li><a href="#">机动车驾驶证注销作废公告</a><span>09-10</span></li>
+                    <li><a href="#">达到报废标准机动车号牌的作废公告</a><span>09-10</span></li>
+                    <li><a href="#">机动车驾驶证作废公告</a><span>09-10</span></li>
+                    <li><a href="#">AB类机动车驾驶证连续三个周期未审验公告</a><span>09-10</span></li>
+                    <li><a href="#">机动车驾驶证注销作废公告</a><span>09-10</span></li>
+                    <li><a href="#">机动车驾驶证增驾实习满分注销公告</a><span>09-10</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="news-txt col-3">
+            <div class="news-title">
+                <div class="name">相关法规<i></i></div>
+                <a href="#" class="more">更多 >></a> </div>
+            <div class="news-con">
+                <ul class="newslist">
+                    <li><a href="#">泸州市城市建设项目交通影响评价实施办法</a><span>09-10</span></li>
+                    <li><a href="#">道路交通事故社会救助基金政策解答</a><span>09-10</span></li>
+                    <li><a href="#">《机动车交通事故责任强制保险条例》（国务院令第462号）</a><span>09-10</span></li>
+                    <li><a href="#">《最高人民法院关于审理人身损害赔偿案件适用法律若干问题的解释 》</a><span>09-10</span></li>
+                    <li><a href="#">《中华人民共和国国家赔偿法》</a><span>09-10</span></li>
+                    <li><a href="#">《中华人民共和国行政诉讼法》</a><span>09-10</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="news-txt col-3 last">
+            <div class="news-title">
+                <div class="name">交通法规<i></i></div>
+                <a href="#" class="more">更多 >></a> </div>
+            <div class="news-con">
+                <ul class="newslist">
+                    <li><a href="#">《机动车登记规定》（第 124 号令）</a><span>09-10</span></li>
+                    <li><a href="#">《机动车驾驶证申领和使用规定》（第 123 号令）</a><span>09-10</span></li>
+                    <li><a href="#">《道路交通安全违法行为处理程序规定》(第105号)</a><span>09-10</span></li>
+                    <li><a href="#">《临时入境机动车和驾驶人管理规定》（公安部令第90号）</a><span>09-10</span></li>
+                    <li><a href="#">《道路交通安全违法行为处理程序规定》（公安部令第69号）</a><span>09-10</span></li>
+                    <li><a href="#">中华人民共和国道路运输条例</a><span>09-10</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="col-box">
+        <div class="col-2-l">
+            <div class="list" style="clear:both">
+                <div class="ct">
+                    <a href="#" class="color_bj color-4"><div class="pic"><img src="images/zxfw4.png" /></div><p>在线服务</p></a>
+                </div>
+                <div class="ct">
+                    <a href="#" class="color_bj color-5"><div class="pic"><img src="images/zxfw5.png" /></div><p>交警微博</p></a>
+                </div>
+                <div class="ct">
+                    <a href="#" class="color_bj color-7"><div class="pic"><img src="images/zxfw7.png" /></div><p>网络问政</p></a>
+                </div>
+                <div class="ct">
+                    <a href="#" class="color_bj color-3"><div class="pic"><img src="images/zxfw3.png" /></div><p>四川交警总队便民中心</p></a>
+                </div>
+                <div class="ct">
+                    <a href="#" class="color_bj color-1"><div class="pic"><img src="images/zxfw1.png" /></div><p>业务咨询留言</p></a>
+                </div>
+                <div class="ct">
+                    <a href="#" class="color_bj color-2"><div class="pic"><img src="images/zxfw2.png" /></div><p>我为公安交通管理献计献策</p></a>
+                </div>
+                <div class="ct last">
+                    <a href="#" class="color_bj color-6"><div class="pic"><img src="images/zxfw6.png" /></div><p>在线调查</p></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
         </div>
-        <div class="cop">
-            <div class="container" style="text-align:center">Copyright © 2013 - 2017 www.zwzcwyh.com All Rights Reserved  ICP备14031554号-4 公网安备32131102000333号</div>
+    </div>
+    <div class="col-box">
+        <div class="col-2-r">
+            <div class="tit">安全常识</div>
+            <div class="tit" style="margin-left:307px;">警钟长鸣</div>
+            <div class="tit" style="margin-left:420px; background: url(images/jsq2.png) 0 9px no-repeat;">交通标识</div>
+            <div class="clearfix"></div>
+            <div class="sfbox">
+                <div class="gsht">
+                    <ul class="newslist htlist">
+                        <li><a href="#">驾车归来如何自检</a><span>09-10</span></li>
+                        <li><a href="#">远离三个误区 助您远离酒驾</a><span>09-10</span></li>
+                        <li><a href="#">天冷打火难应清洁四大系统</a><span>09-10</span></li>
+                        <li><a href="#">汽车冬季保养“脚”</a><span>09-10</span></li>
+                        <li><a href="#">冷天原地热车别超过三分钟</a><span>09-10</span></li>
+                        <li><a href="#">缓解驾车疲劳的好方法</a><span>09-10</span></li>
+                    </ul>
+                </div>
+                <div class="sftxt">
+                    <div class="info">
+                        <a>交通事故启示录之——飞跃的代价<span>09-10</span></a><br />
+                        <a>交通事故警示录之致命的弯道<span>09-10</span></a><br />
+                        <a>无情车祸夺走儿子儿媳生命事故救助金助老母渡难关<span>09-10</span> </a><br />
+                        <a>警方提示：珍爱生命 远离“酒驾”<span>09-10</span> </a><br />
+                        <a>盘点2011事故 铭记血的教训<span>09-10</span> </a><br />
+                        <a>轿车迎面“钻”进货车底 致1死4伤<span>09-10</span> </a><br />
+                        <a>货车突然滑行 司机被顶墙上丧命黄泉<span>09-10</span> </a><br />
+                        <a>轿车迎面“钻”进货车底 致1死4伤<span>09-10</span> </a><br />
+                        <a>货车突然滑行 司机被顶墙上丧命黄泉<span>09-10</span> </a><br />
+                        <a href="#">[查看全部]</a>
+                    </div>
+                </div>
+                <div class="jisuan">
+                    <div class="info">
+                        <a>交通事故启示录之——飞跃的代价</a><br />
+                        <a>交通事故警示录之致命的弯道</a><br />
+                        <a>无情车祸夺走儿子儿媳生命事故救助金助老母渡难关<span>09-10</span> </a><br />
+                        <a>警方提示：珍爱生命 远离“酒驾”<span>09-10</span> </a><br />
+                        <a>盘点2011事故 铭记血的教训<span>09-10</span> </a><br />
+                        <a>轿车迎面“钻”进货车底 致1死4伤<span>09-10</span> </a><br />
+                        <a>货车突然滑行 司机被顶墙上丧命黄泉<span>09-10</span> </a><br />
+                        <a>轿车迎面“钻”进货车底 致1死4伤<span>09-10</span> </a><br />
+                        <a>货车突然滑行 司机被顶墙上丧命黄泉<span>09-10</span> </a><br />
+                        <a href="#">[查看全部]</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="foot">
+    <div class="ft-menu">
+        <div class="container">
+            <div class="menu">
+                <div>
+                    <a style="color: white;font-size: 16px;">友情链接</a>
+                </div>
+                <dl>
+                    <dd>
+                        <a href="#">泸州公安公众信息网</a>
+                        <a href="#">四川道路交通安全网</a>
+                        <a href="#">泸州市人民政府公众信息网</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dd>
+                        <a href="#">泸州公安公众信息网</a>
+                        <a href="#">四川道路交通安全网</a>
+                        <a href="#">泸州市人民政府公众信息网</a>
+                    </dd>
+                </dl>
+                <dl>
+
+                    <dd>
+                        <a href="#">泸州公安公众信息网</a>
+                        <a href="#">四川道路交通安全网</a>
+                        <a href="#">泸州市人民政府公众信息网</a>
+                    </dd>
+                </dl>
+                <dl class="last">
+                    <dd>
+                        <p>联系地址：中卫市沙坡头区清风路55号（市财政局后楼四楼）</p>
+                        <p>邮政编码：755000</p>
+                        <p>咨询电话：0955-7674885</p>
+                        <p>电子邮件：zwzcwyh@163.com</p>
+                        <p>网　　址：www.zwzcwyh.com</p>
+                    </dd>
+                </dl>
+                <div class="clearfix"></div>
+            </div>
+            <div class="ewm">
+                <img src="images/ewm.png" />
+                <p>扫码关注公众号</p>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
-<script src="js/Tabs.js"></script> 
-<script type="text/javascript">
-	$(function() {
-		$("#link").rTabs({
-			bind : 'hover',
-			animation : 'fadein',
-			auto:false
-		});
-	})
-</script>
-<script type="text/javascript">
-	$(function() {
-		$("#news").rTabs({
-			bind : 'hover',
-			animation : 'fadein',
-			auto:false
-		});
-	})
-</script>
-
+    <div class="cop">
+        <div class="container" style="text-align:center">Copyright © 2013 - 2017 www.zwzcwyh.com All Rights Reserved  ICP备14031554号-4 公网安备32131102000333号</div>
+    </div>
+</div>
 </body>
 </html>
+<script type="text/javascript">
+    $(function () {
+        jQuery(function ($) {
+            $('#newspic').slideBox({
+                duration: 0.3,//滚动持续时间，单位：秒
+                easing: 'linear',//swing,linear//滚动特效
+                delay: 5,//滚动延迟时间，单位：秒
+                hideClickBar: false,//不自动隐藏点选按键
+                clickBarRadius: 10
+            });
+        });
+        $("#news").rTabs({
+            bind : 'hover',
+            animation : 'fadein',
+            auto:false
+        });
+    })
+</script>

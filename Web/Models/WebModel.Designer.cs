@@ -1,4 +1,4 @@
-﻿// 为模型“F:\CmsSystem\Web\Models\WebModel.edmx”启用了 T4 代码生成。
+﻿// 为模型“F:\汤台的项目\泸州市公安信息网-向浩\LZSPoliceInfoSystem\Web\Models\WebModel.edmx”启用了 T4 代码生成。
 // 要启用旧代码生成功能，请将“代码生成策略”设计器属性的值
 // 更改为“旧的 ObjectContext”。当在设计器中打开该模型时，此属性会出现在
 // “属性”窗口中。

@@ -60,7 +60,7 @@ function kindeditor() {
         var defaults = {
             items: items.single,
             /*服务端图片上传路径*/
-            uploadJson: "/HandleProgram/PictureUpload.ashx",
+            uploadJson: "/Upload/Upload.ashx",
             afterCreate: null
         }
         defaults = $.extend(defaults, param);

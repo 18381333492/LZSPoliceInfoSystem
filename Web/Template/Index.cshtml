@@ -1,0 +1,365 @@
+@using Web.Server;
+@using Web.Models;
+@{  var Category = Model as TG_Category; }
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>泸州市公安交警信息网</title>
+    <link href="/Html/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/Html/css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Html/js/jquery-1.8.3.min.js"></script>
+    <link href="/Html/css/jquery.slideBox.css" rel="stylesheet" type="text/css" />
+    <script src="/Html/js/jquery.slideBox.min.js" type="text/javascript"></script>
+    <script src="/Html/js/Tabs.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div id="weather"></div>
+            <div class="toptxt"><a href="#">管理员登陆</a>|<a href="#">天气</a></div>
+            <div class="logo"><a href="#"><img src="/Html/images/logo.png" /></a></div>
+            <div class="search">
+                <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
+                <a href="javascript:;">搜索</a>
+            </div>
+        </div>
+    </div>
+    <div class="container container_col">
+        <div class="news-notice">
+            <!--导航图-->
+            <div class="indnews">
+                <div class="news-pic">
+                    <div id="newspic" class="slideBox">
+                        <ul class="items">
+                            <!--首页导航图-->
+                            @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(Category.ID, 5))
+                            {
+                            <li>
+                                <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)" title="@article.sTitle">
+                                    <img src="@article.sPictureUrl.Split(',')[0]" />
+                                </a>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="news-txt" id="news">
+                <div class="news-title">
+                    <div class="news-name tab-nav j-tab-nav">
+                        <a href="javascript:void(0);" class="current">@FuncHelper.Instance.GetCategoryByEnName("xwdt").sName<i></i></a>
+                        <a href="javascript:void(0);" class="">@FuncHelper.Instance.GetCategoryByEnName("ggxx").sName<i></i></a>
+                        <a href="javascript:void(0);" class="">@FuncHelper.Instance.GetCategoryByEnName("jtfg").sName<i></i></a>
+                        <a href="javascript:void(0);" class="">@FuncHelper.Instance.GetCategoryByEnName("xgfg").sName<i></i></a>
+                    </div>
+                    <a href="#" class="more">更多 >></a>
+                </div>
+                <div class="tab-con">
+                    <div class="j-tab-con">
+                        <div class="tab-con-item news-con" style="display: block;">
+                            <ul class="newslist">
+                                <!--新闻动态-->
+                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("xwdt", 8))
+                                {
+                                <li>
+                                    <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                                    <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                                </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="tab-con-item news-con" style="display: none;">
+                            <ul class="newslist">
+                                <!--公告信息-->
+                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("ggxx", 8))
+                                {
+                                <li>
+                                    <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                                    <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                                </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="tab-con-item news-con" style="display: none;">
+                            <ul class="newslist">
+                                <!--交通法规-->
+                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("jtfg", 8))
+                                {
+                                <li>
+                                    <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                                    <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                                </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="tab-con-item news-con" style="display: none;">
+                            <ul class="newslist">
+                                <!--相关法规-->
+                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("xgfg", 8))
+                                {
+                                <li>
+                                    <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                                    <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                                </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--中间banner图片-->
+        <div style="background-color: #f3f3f3;    PADDING-BOTTOM: 12px;PADDING-LEFT: 12px; PADDING-RIGHT: 12px;PADDING-TOP: 12px;">
+            <table style="WIDTH: 100%; BORDER-COLLAPSE: collapse" bordercolor="#999999" cellspacing="0"
+                   cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <td style="text-align: left">
+                            <a>
+                                <img src="/Html/images/x_1ae126.gif"
+                                     onmouseover=this.src ='/Html/images/x_f95159.gif'
+                                     onmouseout=this.src ='/Html/images/x_1ae126.gif' />
+                            </a>
+                        </td>
+                        <td style="text-align: center; PADDING-LEFT: 1px" rowspan="2">
+                            <a>
+                                <img src="images/x_1ae197.gif"
+                                     onmouseover=this.src ='images/x_948178.gif'
+                                     onmouseout=this.src ='images/x_1ae197.gif' />
+                            </a>
+                        </td>
+                        <td style="text-align: center; PADDING-LEFT: 8px; PADDING-RIGHT: 0">
+                            <a>
+                                <img src="images/x_6cc172.gif"
+                                     onmouseover=this.src ='images/x_e9b153.gif'
+                                     onmouseout=this.src ='images/x_6cc172.gif' />
+                            </a>
+                        </td>
+                        <td style="text-align: right" rowspan="2">
+                            <a>
+                                <!--<img src="images/x_0ed195.gif"-->
+                                <!--onmouseover=this.src='images/x_e9b174.gif'-->
+                                <!--onmouseout=this.src='images/x_0ed195.gif'-->
+                                <!--&gt;-->
+                                <img src="images/x_0ed195.gif" />
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; PADDING-TOP: 9px">
+                            <a>
+                                <img src="images/x_c0c110.gif"
+                                     onmouseover=this.src ='images/x_f6e171.gif'
+                                     onmouseout=this.src ='images/x_c0c110.gif' />
+                            </a>
+                        </td>
+                        <td style="text-align: center; PADDING-TOP: 9px; PADDING-LEFT: 8px; PADDING-RIGHT: 0px">
+                            <a>
+                                <img src="images/x_de6165.gif"
+                                     onmouseover=this.src ='images/x_6be152.gif'
+                                     onmouseout=this.src ='images/x_de6165.gif' />
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-box">
+            <div class="news-txt col-3">
+                <div class="news-title">
+                    <!--办事指南-->
+                    @{  var bszn = FuncHelper.Instance.GetCategoryByEnName("bszn"); }
+                    <div class="name">@bszn.sName<i></i></div>
+                    <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(bszn.ID, 1)" class="more">更多 >></a>
+                </div>
+                <div class="news-con">
+                    <ul class="newslist">
+                        @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(bszn.ID, 6))
+                        {
+                        <li>
+                            <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                            <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="news-txt col-3">
+                <div class="news-title">
+                    <!--表格下载-->
+                    @{  var bgxz = FuncHelper.Instance.GetCategoryByEnName("bgxz"); }
+                    <div class="name">@bgxz.sName<i></i></div>
+                    <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(bgxz.ID, 1)" class="more">更多 >></a>
+                </div>
+                <div class="news-con">
+                    <ul class="newslist">
+                        @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(bgxz.ID, 6))
+                        {
+                        <li>
+                            <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                            <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="news-txt col-3 last">
+                <div class="news-title">
+                    <!--驾驶培训考试-->
+                    @{  var jxpxks = FuncHelper.Instance.GetCategoryByEnName("jxpxks"); }
+                    <div class="name">@jxpxks.sName<i></i></div>
+                    <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(jxpxks.ID, 1)" class="more">更多 >></a>
+                </div>
+                <div class="news-con">
+                    <ul class="newslist">
+                        @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(jxpxks.ID, 6))
+                        {
+                        <li>
+                            <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                            <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-box">
+            <div class="col-2-l">
+                <div class="list" style="clear:both">
+                    @{
+                    var zxfw = FuncHelper.Instance.GetCategoryByEnName("zxfw");//在线服务
+                    var jjwb = FuncHelper.Instance.GetCategoryByEnName("jjwb");//交警微博
+                    var wlwz = FuncHelper.Instance.GetCategoryByEnName("wlwz");//网络问政
+                    var scjjzdbmzx = FuncHelper.Instance.GetCategoryByEnName("scjjzdbmzx");//四川交警总队便民中心
+                    var ywzxly = FuncHelper.Instance.GetCategoryByEnName("ywzxly");//业务咨询留言
+                    var wwgajtglxjxc = FuncHelper.Instance.GetCategoryByEnName("wwgajtglxjxc");//我为公安交通管理献计献策
+                    var zxtc = FuncHelper.Instance.GetCategoryByEnName("zxtc");//在线调查
+                    }
+                    <div class="ct">
+                        <a href="@zxfw.sRedirectUrl" class="color_bj color-4">
+                            <div class="pic"><img src="images/zxfw4.png" /></div>
+                            <p>@zxfw.sName</p>
+                        </a>
+                    </div>
+                    <div class="ct">
+                        <a href="@jjwb.sRedirectUrl" class="color_bj color-5">
+                            <div class="pic"><img src="images/zxfw5.png" /></div>
+                            <p>@jjwb.sName</p>
+                        </a>
+                    </div>
+                    <div class="ct">
+                        <a href="@wlwz.sRedirectUrl" class="color_bj color-7">
+                            <div class="pic"><img src="images/zxfw7.png" /></div>
+                            <p>@wlwz.sName</p>
+                        </a>
+                    </div>
+                    <div class="ct">
+                        <a href="@scjjzdbmzx.sRedirectUrl" class="color_bj color-3">
+                            <div class="pic"><img src="images/zxfw3.png" /></div>
+                            <p>@scjjzdbmzx.sName</p>
+                        </a>
+                    </div>
+                    <div class="ct">
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(scjjzdbmzx.ID,1)" class="color_bj color-1">
+                            <div class="pic"><img src="images/zxfw1.png" /></div>
+                            <p>@ywzxly.sName</p>
+                        </a>
+                    </div>
+                    <div class="ct">
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(wwgajtglxjxc.ID,1)" class="color_bj color-2">
+                            <div class="pic"><img src="images/zxfw2.png" /></div>
+                            <p>@wwgajtglxjxc.sName</p>
+                        </a>
+                    </div>
+                    <div class="ct last">
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(zxtc.ID)" class="color_bj color-6">
+                            <div class="pic"><img src="images/zxfw6.png" /></div>
+                            <p>@zxtc.sName</p>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-box">
+            <div class="col-2-r">
+                @{
+                var aqcs = FuncHelper.Instance.GetCategoryByEnName("aqcs");//安全常识
+                var jzcm = FuncHelper.Instance.GetCategoryByEnName("jzcm");//警钟长鸣
+                var jtbs = FuncHelper.Instance.GetCategoryByEnName("jtbs");//交通标识
+                }
+                <div class="tit">@aqcs.sName</div>
+                <div class="tit" style="margin-left:307px;">@jzcm.sName</div>
+                <div class="tit" style="margin-left:420px; background: url(images/jsq2.png) 0 9px no-repeat;">@jtbs.sName</div>
+                <div class="clearfix"></div>
+                <div class="sfbox">
+                    <div class="gsht">
+                        <ul class="newslist htlist">
+                            <!--安全常识-->
+                            @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(aqcs.ID, 6))
+                            {
+                            <li>
+                                <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                                <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="sftxt">
+                        <div class="info">
+                            <!--警钟长鸣-->
+                            @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(jzcm.ID, 10))
+                            {
+
+                            <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">
+                                @article.sTitle
+                                <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                            </a>
+                            <br />
+                            }
+                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(jzcm.ID,1)">[查看全部]</a>
+                        </div>
+                    </div>
+                    <div class="jisuan">
+                        <div class="info">
+                            <!--交通标识-->
+                            @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(jtbs.ID, 10))
+                            {
+
+                            <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)" style="cursor:pointer">
+                                @article.sTitle
+                            </a><br />
+                            }
+                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(jtbs.ID,1)">[查看全部]</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    @Include("bottom")
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        jQuery(function ($) {
+            $('#newspic').slideBox({
+                duration: 0.3,//滚动持续时间，单位：秒
+                easing: 'linear',//swing,linear//滚动特效
+                delay: 5,//滚动延迟时间，单位：秒
+                hideClickBar: false,//不自动隐藏点选按键
+                clickBarRadius: 10
+            });
+        });
+        $("#news").rTabs({
+            bind : 'hover',
+            animation : 'fadein',
+            auto:false
+        });
+    })
+</script>

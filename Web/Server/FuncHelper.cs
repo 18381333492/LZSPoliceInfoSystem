@@ -80,7 +80,6 @@ namespace Web.Server
             }
         }
 
-
         /// <summary>
         /// 获取所有显示的栏目
         /// </summary>
@@ -140,6 +139,19 @@ namespace Web.Server
             }
         }
 
+        /// <summary>
+        /// 根据栏目ID获取栏目
+        /// </summary>
+        /// <param name="iCategoryId"></param>
+        /// <returns></returns>
+        public TG_Category GetCategoryById(int iCategoryId)
+        {
+            using (var db = new Entities())
+            {
+                var category = db.TG_Category.Find(iCategoryId);
+                return category;
+            }
+        }
 
         /// <summary>
         /// 根据栏目的英文标识获取栏目
@@ -155,6 +167,38 @@ namespace Web.Server
             }
         }
 
+
+        /// <summary>
+        /// 根据栏目英文标识获取栏目指定数量文章
+        /// </summary>
+        /// <param name="sEnName"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<TG_Article> GetCategoryArticleByEnName(string sEnName,int count)
+        {
+            using (var db = new Entities())
+            {
+                var category = db.TG_Category.FirstOrDefault(m => m.sEnName == sEnName);
+                return db.TG_Article.Where(m => m.iCategoryId == category.ID).OrderByDescending(m => m.dInsertTime).Take(count).ToList();
+                
+            }
+        }
+
+        /// <summary>
+        /// 根据栏目ID获取栏目指定数量的文章
+        /// </summary>
+        /// <param name="sEnName"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<TG_Article> GetArticleByCategoryId(int categoryID, int count)
+        {
+            using (var db = new Entities())
+            {
+                return db.TG_Article.Where(m => m.iCategoryId == categoryID).OrderByDescending(m => m.dInsertTime).Take(count).ToList();
+            }
+        }
+
+
         /// <summary>
         /// 根据栏目主键ID获取栏目下的文章列表
         /// </summary>
@@ -168,6 +212,21 @@ namespace Web.Server
                 return ArticleList;
             }
         
+        }
+
+        /// <summary>
+        /// 获取栏目下面的所有文章
+        /// </summary>
+        /// <param name="iCategoryId"></param>
+        /// <returns></returns>
+        public List<TG_Article> GetAllArticleListByCategoryId(int iCategoryId)
+        {
+            using (var db = new Entities())
+            {
+                var ArticleList = db.TG_Article.Where(m => m.iCategoryId == iCategoryId && m.bIsDeleted == false).OrderByDescending(m => m.dInsertTime).ToList();
+                return ArticleList;
+            }
+
         }
 
         /// <summary>

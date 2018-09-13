@@ -43,43 +43,60 @@ namespace Web.Controllers
             {
                 var templet = allTempletList.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
                 if (templet != null)
-                {//模板存在               
-                    //判断栏目是或否内容栏目
-                    if (category.bIsContentCategory != null)
-                    {//内容栏目直接生成页面
-                        string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
-                        string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
-                        if (RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString))
-                        {
-                            iSuccessCount++;
-                        }
-                        else
-                        {
-                            iFalseCount++;
-                        }
-                    }
-                    else
-                    { //文章分页栏目
-                      //获取栏目下面所有文章数量
-                        var articleTotalCount = mangae.db.TG_Article.
-                            Where(m => m.iCategoryId == category.ID&& m.bIsDeleted == false && m.bIsRelease == true).Count();
-                        int categoryHtmlCount = (int)Math.Ceiling((double)articleTotalCount / (double)20); //生成栏目页的个数
-                        var pageCategory = new PageCategory();
-                        pageCategory.Category = category;
-                        pageCategory.Rows = categoryHtmlCount;//总页数
-                        for (var i=1;i<=categoryHtmlCount; i++)
-                        {
-                            pageCategory.Page = i;
-                            string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, pageCategory);
-                            string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
-                            string sFileName = string.Format("{0}_{1}", category.sEnName,i);
-                            if (RazorHelper.MakeHtml(sHtmlPath, sFileName, templetHtmlString))
+                {//模板存在 
+                    if (category.bIsRedirect != true)
+                    { //跳转栏目不生成页面
+                        //判断栏目是或否内容栏目
+                        if (category.bIsContentCategory != null)
+                        {//内容栏目直接生成页面
+                            string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
+                            if (!string.IsNullOrEmpty(templetHtmlString))
                             {
-                                iSuccessCount++;
+                                string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
+                                if (RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString))
+                                {
+                                    iSuccessCount++;
+                                }
+                                else
+                                {
+                                    iFalseCount++;
+                                }
                             }
                             else
                             {
                                 iFalseCount++;
+                            }
+                        }
+                        else
+                        { //文章分页栏目
+                          //获取栏目下面所有文章数量
+                            var articleTotalCount = mangae.db.TG_Article.
+                                Where(m => m.iCategoryId == category.ID && m.bIsDeleted == false && m.bIsRelease == true).Count();
+                            int categoryHtmlCount = (int)Math.Ceiling((double)articleTotalCount / (double)20); //生成栏目页的个数
+                            var pageCategory = new PageCategory();
+                            pageCategory.Category = category;
+                            pageCategory.Rows = categoryHtmlCount;//总页数
+                            for (var i = 1; i <= categoryHtmlCount; i++)
+                            {
+                                pageCategory.Page = i;
+                                string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, pageCategory);
+                                if (!string.IsNullOrEmpty(templetHtmlString))
+                                {
+                                    string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
+                                    string sFileName = string.Format("{0}_{1}", category.sEnName, i);
+                                    if (RazorHelper.MakeHtml(sHtmlPath, sFileName, templetHtmlString))
+                                    {
+                                        iSuccessCount++;
+                                    }
+                                    else
+                                    {
+                                        iFalseCount++;
+                                    }
+                                }
+                                else
+                                {
+                                    iFalseCount++;
+                                }
                             }
                         }
                     }     
@@ -132,13 +149,20 @@ namespace Web.Controllers
                     {//模板存在
                      //解析模板        
                         string templetHtmlString = RazorHelper.ParseString(templetArticle.sTempletEnName, article);
-                        string ArticlePath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
-                        if (RazorHelper.MakeHtml(ArticlePath, article.ID.ToString(), templetHtmlString))
-                        {//生成成功
-                            iSuccessCount++;
+                        if (!string.IsNullOrEmpty(templetHtmlString))
+                        {
+                            string ArticlePath = FuncHelper.Instance.GetArticleHtmlPath(category, allCategoryList);
+                            if (RazorHelper.MakeHtml(ArticlePath, article.ID.ToString(), templetHtmlString))
+                            {//生成成功
+                                iSuccessCount++;
+                            }
+                            else
+                            {//生成失败
+                                iFalseCount++;
+                            }
                         }
                         else
-                        {//生成失败
+                        {
                             iFalseCount++;
                         }
                     }

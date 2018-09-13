@@ -36,7 +36,7 @@
             <td>独立模板:</td>
             <td>
                 <input name="iTemplateId" class="easyui-combobox" data-options="url:'/Templet/comboxData',valueField:'ID',
-                        textField:'sTempletName',editable:false,height:25,width:173">   
+                        textField:'sTempletName',editable:false,height:25,width:173">
             </td>
         </tr>
         <tr>
@@ -52,11 +52,11 @@
         <tr>
             <td>信息语言:</td>
             <td>
-                <input class="easyui-textbox" name="sLang"> 
+                <input class="easyui-textbox" name="sLang">
             </td>
             <td>作者/提供商:</td>
             <td>
-                <input class="easyui-textbox" name="sAuthor">   
+                <input class="easyui-textbox" name="sAuthor">
             </td>
         </tr>
         <tr>
@@ -67,6 +67,13 @@
             <td>摘要/运行环境:</td>
             <td>
                 <input class="easyui-textbox" name="sSummary">
+            </td>
+        </tr>
+        <tr>
+            <td>上传文件:</td>
+            <td colspan="3">
+                <a id="UploadFileName" class="easyui-linkbutton">上传文件</a><span id="FileValue"></span>
+                <input type="hidden" name="sFileName" />
             </td>
         </tr>
         <tr>
@@ -96,6 +103,10 @@
         </tr>
     </table>
 </form>
+<form id="upload_form" enctype="multipart/form-data" method="post" style="display:none">
+    <input type="file" name="upload_input" />
+</form>
+
 <script type="text/javascript">
     $('.bIsRelease,.bIsTop,.bIsSlide,.bIsHot').iCheck({
         labelHover: false,
@@ -107,4 +118,29 @@
 
     var pciture = new dpictures();
     pciture.create("sPictureUrl");
+
+    //上传文件
+    $('#UploadFileName').on("click", function () {
+        $('input[name=upload_input]').val('');
+        $('input[name=upload_input]').click();
+    });
+
+    //文件上传
+    $('input[name=upload_input]').on("change", function () {
+        if ($(this).val() != "") {
+            $('#upload_form').form('submit', {
+                url: '/FileUpload.ashx',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.error == 0) {
+                        $('input[name=sFileName]').val(data.name);
+                        $('#FileValue').text(data.name);
+                        alert("上传成功");
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+    });
 </script>
