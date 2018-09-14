@@ -117,49 +117,77 @@
                 <tbody>
                     <tr>
                         <td style="text-align: left">
-                            <a>
-                                <img src="/Html/images/x_1ae126.gif"
-                                     onmouseover=this.src ='/Html/images/x_f95159.gif'
-                                     onmouseout=this.src ='/Html/images/x_1ae126.gif' />
+                            <a href='@FuncHelper.Instance.GetCategoryHtmlUrl(FuncHelper.Instance.GetCategoryByEnName("xwdt").ID,1)'>
+                                <img src="images/x_1ae126.gif"
+                                     onmouseover="this.src ='images/x_f95159.gif'"
+                                     onmouseout="this.src ='images/x_1ae126.gif'" />
                             </a>
                         </td>
-                        <td style="text-align: center; PADDING-LEFT: 1px" rowspan="2">
-                            <a>
-                                <img src="images/x_1ae197.gif"
-                                     onmouseover=this.src ='images/x_948178.gif'
-                                     onmouseout=this.src ='images/x_1ae197.gif' />
+                        <td class="hover_a" style="text-align: center; PADDING-LEFT: 1px" rowspan="2">
+                            <a class="hover_a_hide">
+                                <img src="images/x_1ae197.gif" />
                             </a>
+                            @{
+                            var jwgk = FuncHelper.Instance.GetCategoryByEnName("jwgk");
+                            var childCategory = FuncHelper.Instance.GetChildCategory(jwgk.ID);
+                            }
+                            <div class="hover_a_show" style="width:240px;height:223px;background-color:#2f4e9a;margin:0 auto;line-height:44px;display:none">
+                                @foreach (var item in childCategory)
+                                {
+                                if (item.bIsContentCategory == true)
+                                {
+                                <p><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
+                                }
+                                else
+                                {
+                                <p><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID,1)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
+                                }
+                                }
+                            </div>
                         </td>
                         <td style="text-align: center; PADDING-LEFT: 8px; PADDING-RIGHT: 0">
-                            <a>
+                            <a href='@FuncHelper.Instance.GetCategoryHtmlUrl(FuncHelper.Instance.GetCategoryByEnName("tpxcl").ID)'>
                                 <img src="images/x_6cc172.gif"
-                                     onmouseover=this.src ='images/x_e9b153.gif'
-                                     onmouseout=this.src ='images/x_6cc172.gif' />
+                                     onmouseover="this.src ='images/x_e9b153.gif'"
+                                     onmouseout="this.src ='images/x_6cc172.gif'" />
                             </a>
                         </td>
-                        <td style="text-align: right" rowspan="2">
-                            <a>
-                                <!--<img src="images/x_0ed195.gif"-->
-                                <!--onmouseover=this.src='images/x_e9b174.gif'-->
-                                <!--onmouseout=this.src='images/x_0ed195.gif'-->
-                                <!--&gt;-->
+                        <td class="hover_b" style="text-align: right" rowspan="2">
+                            <a class="hover_b_hide">
                                 <img src="images/x_0ed195.gif" />
                             </a>
+                            @{
+                            var jtxt = FuncHelper.Instance.GetCategoryByEnName("jtxt");
+                            var jtxtchildCategory = FuncHelper.Instance.GetChildCategory(jtxt.ID);
+                            }
+                            <div class="hover_b_show" style="width:320px;height:223px;background-color:#2f4e9a;margin:0 auto;line-height:75px;display:none;text-align:center">
+                                @foreach (var item in jtxtchildCategory)
+                                {
+                                if (item.bIsContentCategory == true)
+                                {
+                                <p><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
+                                }
+                                else
+                                {
+                                <p><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID,1)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
+                                }
+                                }
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align: left; PADDING-TOP: 9px">
-                            <a>
+                            <a href='@FuncHelper.Instance.GetCategoryHtmlUrl(FuncHelper.Instance.GetCategoryByEnName("ggxx").ID,1)'>
                                 <img src="images/x_c0c110.gif"
-                                     onmouseover=this.src ='images/x_f6e171.gif'
-                                     onmouseout=this.src ='images/x_c0c110.gif' />
+                                     onmouseover="this.src ='images/x_f6e171.gif'"
+                                     onmouseout="this.src ='images/x_c0c110.gif'" />
                             </a>
                         </td>
                         <td style="text-align: center; PADDING-TOP: 9px; PADDING-LEFT: 8px; PADDING-RIGHT: 0px">
-                            <a>
+                            <a href='@FuncHelper.Instance.GetCategoryHtmlUrl(FuncHelper.Instance.GetCategoryByEnName("zxtc").ID)'>
                                 <img src="images/x_de6165.gif"
-                                     onmouseover=this.src ='images/x_6be152.gif'
-                                     onmouseout=this.src ='images/x_de6165.gif' />
+                                     onmouseover="this.src ='images/x_6be152.gif'"
+                                     onmouseout="this.src ='images/x_de6165.gif'" />
                             </a>
                         </td>
                     </tr>
@@ -263,7 +291,7 @@
                         </a>
                     </div>
                     <div class="ct">
-                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(scjjzdbmzx.ID,1)" class="color_bj color-1">
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(ywzxly.ID)" class="color_bj color-1">
                             <div class="pic"><img src="images/zxfw1.png" /></div>
                             <p>@ywzxly.sName</p>
                         </a>
@@ -361,5 +389,23 @@
             animation : 'fadein',
             auto:false
         });
+
+        $('.hover_a').mouseenter(function () {
+            $('.hover_a_hide').hide();
+            $('.hover_a_show').show();
+        });
+        $('.hover_a').mouseleave(function () {
+            $('.hover_a_hide').show();
+            $('.hover_a_show').hide();
+        })
+
+        $('.hover_b').mouseenter(function () {
+            $('.hover_b_hide').hide();
+            $('.hover_b_show').show();
+        });
+        $('.hover_b').mouseleave(function () {
+            $('.hover_b_hide').show();
+            $('.hover_b_show').hide();
+        })
     })
 </script>

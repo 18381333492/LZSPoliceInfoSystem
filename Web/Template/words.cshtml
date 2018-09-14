@@ -1,0 +1,90 @@
+@using Web.Server;
+@using Web.Models;
+@{
+    var Category = Model as TG_Category;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>泸州市公安交警信息网</title>
+    <link href="/Html/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/Html/css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Html/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Html/js/nav.js"></script>
+    <script src="/Html/js/Tabs.js"></script>
+</head>
+<body>
+    @Include("top")
+    <div class="container mg-t-b container_col">
+        <div class="page-right" style="padding:0 30px;float:none;width:auto">
+            <div class="pagelujing">
+                <div class="name">@Category.sName</div>
+                <span>
+                    您当前所在位置：<a href="#">首页</a>
+                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(Category.ID))
+                    {
+                    @:><a>@location</a>
+                    }
+                </span>
+            </div>
+            <div class="news-txt ny mg-t-b">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="11%" height="34" align="center">姓　名：</td>
+                            <td colspan="2">
+                                <input name="sName" type="text" class="input1" size="52" maxlength="20" style="width:95%; border:#999999 dashed 1px; color:#666666; padding:5px; outline:none;" onfocus="this.select()" onblur="if (this.value =='') this.value='请输入您的姓名，不填写为匿名发表'" onclick="if (this.value=='请输入您的姓名，不填写为匿名发表') this.value=''" value="请输入您的姓名，不填写为匿名发表" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="11%" height="34" align="center">电  话</td>
+                            <td colspan="2">
+                                <input name="sPhone" type="number" class="input1" size="52" maxlength="20" style="width:95%; border:#999999 dashed 1px; color:#666666; padding:5px; outline:none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">留　言：</td>
+                            <td colspan="2">
+                                <textarea name="sContent" cols="50" rows="7" style="width:95%; border:#999999 dashed 1px; color: #5C5C5C; line-height:20px; padding:5px; outline:none;"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="2">
+                                <span class="font8">
+                                    <div align="center" style="margin:20px 0;">
+                                        <input type="hidden" name="action_e" value="Add_New" />
+                                        <input id="fabu" type="submit" name="Submit2" value="发表留言" style="width:100px;height:30px;" />
+                                    </div>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    @Include("bottom")
+</body>
+</html>
+<script type="text/javascript">
+    $('#fabu').on("click", function () {
+        var sName=$.trim($('input[name=sName]').val());
+        var sPhone=$.trim($('input[name=sPhone]').val());
+        var sContent = $.trim($('textarea[name=sContent]').val());
+        $.ajax({
+            url: '/Download/Insert',
+            type: 'POST',
+            dataType: 'json',
+            data: { sName: sName, sPhone: sPhone, sContent: sContent },
+            success: function (r) {
+                if (r.success) {
+                    alert(r.info);//留言成功
+                }
+            }
+        });
+    });
+
+</script>

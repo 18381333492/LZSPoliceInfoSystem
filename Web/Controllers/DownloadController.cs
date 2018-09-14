@@ -19,7 +19,7 @@ namespace Web.Controllers
                 string fileName = acticle.sFileName;
                 string filePath = AppDomain.CurrentDomain.BaseDirectory + "Files//" + fileName;
                 FileStream fs = new FileStream(filePath, FileMode.Open);
-                return File(fs, "application/ms-excel", fileName);
+                return File(fs, "application/ms-excel", acticle.sTitle);
 
             }
         }
@@ -41,6 +41,29 @@ namespace Web.Controllers
                     result.success = true;
                 }
                 return Content(result.toJson());
+            }
+        }
+
+
+        /// <summary>
+        /// 客户留言
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public ActionResult Insert(TG_Client client)
+        {
+            using (var db = new Entities())
+            {
+                var result = new Result();
+                client.dInsertTime = DateTime.Now;
+                db.TG_Client.Add(client);
+                var res = db.SaveChanges();
+                if (res > 0)
+                {
+                    result.info = "留言成功";
+                    result.success = true;
+                }
+                return Json(result);
             }
         }
     }
