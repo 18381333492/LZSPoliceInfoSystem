@@ -1086,6 +1086,7 @@
     <Content Include="Content\login\images\login-img.png" />
     <Content Include="Content\login\images\login_logo.png" />
     <Content Include="Content\login\css\login.css" />
+    <Content Include="Content\topbj.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
@@ -1103,6 +1104,18 @@
     <Content Include="Html\js\nav.js" />
     <Content Include="Html\js\slider.js" />
     <Content Include="Html\js\Tabs.js" />
+    <Content Include="jQuery-ydnav20160823\contact.html" />
+    <Content Include="jQuery-ydnav20160823\css\reset.css" />
+    <Content Include="jQuery-ydnav20160823\css\style.css" />
+    <Content Include="jQuery-ydnav20160823\img\cd-icon-arrow.svg" />
+    <Content Include="jQuery-ydnav20160823\index.html" />
+    <Content Include="jQuery-ydnav20160823\js\jquery-2.1.4.js" />
+    <Content Include="jQuery-ydnav20160823\js\main.js" />
+    <Content Include="jQuery-ydnav20160823\js\modernizr.js" />
+    <Content Include="jQuery-ydnav20160823\js\velocity.min.js" />
+    <Content Include="jQuery-ydnav20160823\projects.html" />
+    <Content Include="jQuery-ydnav20160823\services.html" />
+    <Content Include="jQuery-ydnav20160823\www.jq22.com.txt" />
     <Content Include="Models\WebModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>WebModel.edmx</DependentUpon>
@@ -1401,6 +1414,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\LZSPoliceInfoSystem.pubxml" />
+    <Content Include="Views\Shared\_Home.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
