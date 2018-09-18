@@ -34,6 +34,12 @@ public partial class TG_Client
 
     public System.DateTime dInsertTime { get; set; }
 
+    public string sRespone { get; set; }
+
+    public Nullable<System.DateTime> dDoneTime { get; set; }
+
+    public int iState { get; set; }
+
 }
 
 }

@@ -24,6 +24,15 @@ namespace Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 新的栏目页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult NewIndex()
+        {
+            return View();
+        }
+
         public ActionResult Add()
         {
             return View();
@@ -88,6 +97,34 @@ namespace Web.Controllers
         }
 
         /// <summary>
+        /// 新接口
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult NewCategoryComtreeData()
+        {
+            //获取文章栏目
+            var query = mangae.db.TG_Category.
+                Where(m=>m.bIsContentCategory==null&&m.bIsRedirect==null&&m.iArticleTemplateId !=null&&m.iTemplateId!=null||m.sEnName=="bgxz")
+                .OrderBy(m => m.iOrder).AsQueryable();
+            var main = query.Where(m => m.CategoryId == 0).ToList();
+            var child = query.Where(m => m.CategoryId > 0).ToList();
+
+            JArray comtreeData = new JArray();
+           
+            foreach (var m in query)
+            {
+                JObject mainData = new JObject();
+                mainData.Add(new JProperty("id", m.ID));
+                mainData.Add(new JProperty("text", m.sName));
+                var array = recursion(m, child);
+                mainData.Add(new JProperty("children", array));
+                comtreeData.Add(mainData);
+            }
+            return Content(comtreeData.ToString());
+        }
+
+ 
+        /// <summary>
         /// 递归调用
         /// </summary>
         /// <returns></returns>
@@ -151,21 +188,28 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public void Update(TG_Category category)
         {
-            if (mangae.db.TG_Category.Where(m=>m.ID!= category.ID).Any(m => m.sName == category.sName || m.sEnName == category.sEnName))
-            {//存在相同的栏目名称或栏目标识
-                result.info = "存在相同的栏目名称或栏目标识";
-                return;
-            }
-            mangae.Edit<TG_Category>(category);
-            result.success = mangae.SaveChange();
+            if (LoginStatus.sCategoryIds.Contains(category.ID.ToString()) && LoginStatus.iUserType == 0)
+            {
+                if (mangae.db.TG_Category.Where(m => m.ID != category.ID).Any(m => m.sName == category.sName || m.sEnName == category.sEnName))
+                {//存在相同的栏目名称或栏目标识
+                    result.info = "存在相同的栏目名称或栏目标识";
+                    return;
+                }
+                mangae.Edit<TG_Category>(category);
+                result.success = mangae.SaveChange();
 
-            /**编辑栏目重新生成栏目页***/
-            var templet = mangae.db.TG_Templet.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
-            if (templet != null)
-            {//模板存在
-                string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
-                string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, mangae.db.TG_Category.ToList());
-                RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString);
+                /**编辑栏目重新生成栏目页***/
+                var templet = mangae.db.TG_Templet.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
+                if (templet != null)
+                {//模板存在
+                    string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
+                    string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, mangae.db.TG_Category.ToList());
+                    RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString);
+                }
+            }
+            else
+            {
+               result.info = "您没有权限操作";
             }
         }
 

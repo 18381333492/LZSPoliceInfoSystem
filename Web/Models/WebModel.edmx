@@ -64,10 +64,13 @@
           <Property Name="sName" Type="nvarchar" MaxLength="100" />
           <Property Name="sPhone" Type="nvarchar" MaxLength="100" />
           <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="sRespone" Type="nvarchar(max)" />
           <Property Name="sEmail" Type="nvarchar" MaxLength="255" />
           <Property Name="sQQ" Type="nvarchar" MaxLength="255" />
           <Property Name="sAddress" Type="nvarchar(max)" />
           <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="dDoneTime" Type="datetime" />
+          <Property Name="iState" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TG_LoginLog">
           <Key>
@@ -100,6 +103,7 @@
           <Property Name="sPhone" Type="nvarchar" MaxLength="50" />
           <Property Name="sRealName" Type="nvarchar" MaxLength="50" />
           <Property Name="iUserType" Type="int" Nullable="false" />
+          <Property Name="sCategoryIds" Type="nvarchar" MaxLength="200" />
           <Property Name="bIsSuper" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TG_WebSite">
@@ -197,6 +201,9 @@
           <Property Name="sQQ" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="sAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sRespone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dDoneTime" Type="DateTime" Precision="3" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TG_LoginLog">
           <Key>
@@ -230,6 +237,7 @@
           <Property Name="sRealName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="iUserType" Type="Int32" Nullable="false" />
           <Property Name="bIsSuper" Type="Boolean" Nullable="false" />
+          <Property Name="sCategoryIds" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TG_WebSite">
           <Key>
@@ -321,6 +329,9 @@
           <EntitySetMapping Name="TG_Client">
             <EntityTypeMapping TypeName="CmsSystemModel.TG_Client">
               <MappingFragment StoreEntitySet="TG_Client">
+                <ScalarProperty Name="iState" ColumnName="iState" />
+                <ScalarProperty Name="dDoneTime" ColumnName="dDoneTime" />
+                <ScalarProperty Name="sRespone" ColumnName="sRespone" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sName" ColumnName="sName" />
                 <ScalarProperty Name="sPhone" ColumnName="sPhone" />
@@ -358,6 +369,7 @@
           <EntitySetMapping Name="TG_User">
             <EntityTypeMapping TypeName="CmsSystemModel.TG_User">
               <MappingFragment StoreEntitySet="TG_User">
+                <ScalarProperty Name="sCategoryIds" ColumnName="sCategoryIds" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sUserName" ColumnName="sUserName" />
                 <ScalarProperty Name="sPassword" ColumnName="sPassword" />

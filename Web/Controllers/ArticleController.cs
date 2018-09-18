@@ -76,12 +76,19 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public void Insert(TG_Article article)
         {
-            var config=mangae.db.TG_WebSite.SingleOrDefault();
-            article.bIsRelease = config.IsNeedVerify;
-            article.bIsDeleted = false;
-            article.dInsertTime = DateTime.Now;
-            mangae.Add<TG_Article>(article);
-            result.success = mangae.SaveChange();
+
+            if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) && LoginStatus.iUserType == 0)
+            {
+                article.bIsRelease = true;
+                article.bIsDeleted = false;
+                article.dInsertTime = DateTime.Now;
+                mangae.Add<TG_Article>(article);
+                result.success = mangae.SaveChange();
+            }
+            else
+            {
+                result.info = "您没有权限操作";
+            }
         }
 
         /// <summary>
@@ -91,8 +98,16 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public void Update(TG_Article article)
         {
-            mangae.Edit<TG_Article>(article);
-            result.success = mangae.SaveChange();
+            if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) && LoginStatus.iUserType == 0)
+            {
+                article.bIsRelease = true;
+                mangae.Edit<TG_Article>(article);
+                result.success = mangae.SaveChange();
+            }
+            else
+            {
+                result.info = "您没有权限操作";
+            }
         }
 
         /// <summary>

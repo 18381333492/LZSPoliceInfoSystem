@@ -60,7 +60,12 @@
                 client.ajax.postRequest("/User/Login", { sUserName: username, sPassword: password, sCode: code }, function (r) {
                     $("#commit").val("登录成功,即将跳转");
                     setTimeout(function () {
-                        location.href = "/Home/Index";
+                        if (r.data <=1) {
+                            location.href = "/Home/NewIndex";
+                        }
+                        else {
+                            location.href = "/Home/Index";
+                        }
                     }, 1000);
                 }, function (r) {
                     State = true;

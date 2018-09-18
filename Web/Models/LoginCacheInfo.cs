@@ -44,6 +44,22 @@ namespace Web.Models
         }
 
         /// <summary>
+        /// 栏目ID
+        /// </summary>
+        public string sCategoryIds
+        {
+            get;set;
+        }
+
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        public int iUserType
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// 上次登录IP地址
         /// </summary>
         public string Ip

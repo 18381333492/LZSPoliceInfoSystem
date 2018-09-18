@@ -19,29 +19,11 @@
     .hover:hover{
         color:#438eb9;
     }
-    .myul{
-        list-style:none;
-        padding:0px;
-        margin:0px;
-    }
-    .myul li{
-        text-align:center;
-        background-color:#438eb9;
-        padding:10px 0px;
-        color:white;
-        cursor:pointer;
-    }
-     .myul li:hover{
-        background-color:#007acc;
-    }
-    .myul .activeli{
-        background-color:#007acc;
-    }
 </style>
 <link href="~/Content/fonts/iconfont.css" rel="stylesheet" />
 <div id="layout" class="easyui-layout" data-options="fit:true">
     <!--header-->
-    <div data-options="region:'north',border:false" style="height:75px;background-image:url(/Content/topbj.jpg);box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);">
+    <div data-options="region:'north',border:false" style="height:75px;background-image:url(/Content/topbj.jpg);">
         <div>
             <div style="float:left;height:70px;">
                 <img src="~/Content/images/logo.png" style="width:50px;height:50px;margin:12px 10px 0px 30px;" />
@@ -56,84 +38,54 @@
         </div> 
     </div>
     <!--Menu-->
-    <div data-options="region:'west',border:false" style="width:100px;background-color:#438eb9">
-        <ul class="myul">
-            <li>
-                <div style="height:60px;">
-                    <i class="iconfont icon-caidanguanli" style="font-size:35px;"></i><br />
-                    <span data-url="/Category/Index">栏目管理</span>
-                </div>
-            </li>
-            <li>
-                <div style="height:60px;">
-                    <i class="iconfont icon-svgwrite" style="font-size:35px;"></i><br />
-                    <span data-url="/Article/Index">文章管理</span>
-                </div>
-            </li>
-            <li>
-                <div style="height:60px;">
-                    <i class="iconfont icon-xitongshezhi" style="font-size:35px;"></i><br />
-                    <span data-url="/WebSite/Index">系统设置</span>
-                </div>
-            </li>
-            <li>
-                <div style="height:60px;">
-                    <i class="iconfont icon-yonghu" style="font-size:35px;"></i><br />
-                    <span data-url="/User/Index">用户管理</span>
-                </div>
-            </li>        
-        </ul>
-        @*<ul id="tree" class="easyui-tree" data-options="animate:true,lines:false" 
-            style="width:180px;margin:0 auto;margin-top:10px">
-            <li>
-                <span>信息管理</span>
-                <ul>
-                    <li>
-                        <span><a data-url="/Category/Index">栏目管理</a></span>
-                    </li>
-                    <li>
-                        <span><a data-url="/Article/Index">文章管理</a></span>
-                    </li>
-                    <li>
-                        <span><a data-url="/Templet/Index">模板管理</a></span>
-                    </li>
-                    <li>
-                        <span><a data-url="/MakeHtml/Index">生成页面</a></span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <span>系统设置</span>
-                <ul>
-                    <li>
-                        <span><a data-url="/User/Index">用户管理</a></span>
-                    </li>
-                    <li>
-                        <span><a data-url="/WebSite/Index">站点设置</a></span>
-                    </li>
-                    @if (Model.bIsSuper)
-                    {
-                        <li>
-                            <span><a data-url="/User/LogList">登录日志</a></span>
-                        </li>
-                    }
-                </ul>
-            </li>
-            <li>
-                <span>客户资料</span>
-                <ul>
-                    <li>
-                        <span><a data-url="/Client/Index">客户咨询</a></span>
-                    </li>
-                </ul>
-            </li>
-        </ul>*@
+    <div data-options="region:'west',border:true" style="width:200px;">
+        <ul id="tree" class="easyui-tree" data-options="animate:true,lines:false"
+        style="width:180px;margin:0 auto;margin-top:10px">
+        <li>icon-jiaoliuxuanzhong
+            <span>信息管理</span>
+            <ul>
+                <li>
+                    <span><a data-url="/Category/Index">栏目管理</a></span>
+                </li>
+                <li>
+                    <span><a data-url="/Article/Index">文章管理</a></span>
+                </li>
+                <li>
+                    <span><a data-url="/Templet/Index">模板管理</a></span>
+                </li>
+                <li>
+                    <span><a data-url="/MakeHtml/Index">生成页面</a></span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span>系统设置</span>
+            <ul>
+                <li>
+                    <span><a data-url="/User/Index">用户管理</a></span>
+                </li>
+                <li>
+                    <span><a data-url="/WebSite/Index">站点设置</a></span>
+                </li>   
+                <li>
+                    <span><a data-url="/User/LogList">登录日志</a></span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span>客户资料</span>
+            <ul>
+                <li>
+                    <span><a data-url="/Client/Index">客户咨询</a></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
     </div>
 
     <!--Center-->
     <div data-options="region:'center',border:false"> 
-        <iframe style="width:100%;height:100%;display:-webkit-box;" scrolling="auto" frameborder="0"></iframe>
-        @*<div id="tabs" class="easyui-tabs" data-options="fit:true,tabHeight:31">
+        <div id="tabs" class="easyui-tabs" data-options="fit:true,tabHeight:31">
             <div title="首页" style="padding:10px;">
                 <div style="padding:0px;font-size:13px;">
                     <div style="margin-bottom:5px;color:rgb(67, 142, 185)">欢迎登录泸州市公安信息网管理系统</div>
@@ -149,7 +101,7 @@
                     }
                 </div>
             </div>
-        </div>*@
+        </div>
     </div>
     <!--footer-->
     @*<div data-options="region:'south'" style="height:30px;">
@@ -161,42 +113,33 @@
 <script src="~/Scripts/common.client.js"></script>
 <script type="text/javascript">
     $(function () {
+        $('#tree').tree({
+            onClick: function (node) {
+                var menu = $(node.target).find('a');
+                if (menu.length == 1) {
+                    var title = menu.text();
+                    var url = menu.attr("data-url");
+                    if ($('#tabs').tabs("getTab", title)) {
+                        $('#tabs').tabs("select", title);
+                    }
+                    else {
+                        $('#tabs').tabs('add', {
+                            title: title,
+                            content: '<iframe scrolling="auto" frameborder="0"  src="' + url + '" width="100%" height="100%" style="display:-webkit-box"></iframe>',
+                            closable: true,
+                            tools: [{
+                                iconCls: 'icon-mini-refresh',
+                                handler: function () {
+                                    //刷新
+                                    $('#tabs').tabs('getSelected').panel();
+                                }
+                            }]
 
-        //菜单的切换
-        $(".myul li").on("click", function () {
-            $(this).addClass("activeli").siblings().removeClass("activeli");
-            var url = $(this).find("span").attr("data-url");
-            if (url) {
-                $('iframe').attr("src", url);
+                        });
+                    }
+                }
             }
         });
-        //$('#tree').tree({
-        //    onClick: function (node) {
-        //        var menu = $(node.target).find('a');
-        //        if (menu.length == 1) {
-        //            var title = menu.text();
-        //            var url = menu.attr("data-url");
-        //            if ($('#tabs').tabs("getTab", title)) {
-        //                $('#tabs').tabs("select", title);
-        //            }
-        //            else {
-        //                $('#tabs').tabs('add', {
-        //                    title: title,
-        //                    content: '<iframe scrolling="auto" frameborder="0"  src="' + url + '" width="100%" height="100%" style="display:-webkit-box"></iframe>',
-        //                    closable: true,
-        //                    tools: [{
-        //                        iconCls: 'icon-mini-refresh',
-        //                        handler: function () {
-        //                            //刷新
-        //                            $('#tabs').tabs('getSelected').panel();
-        //                        }
-        //                    }]
-
-        //                });
-        //            }
-        //        }
-        //    }
-        //});
 
         var admin = new adminPackage();
         //注册路由

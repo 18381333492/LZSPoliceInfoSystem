@@ -2,111 +2,168 @@
 @{
     ViewBag.Title = "后台用户列表";
 }
-<table id="User"></table>
-<div id="User_toolbar" style="padding:5px;">
-    <form id="searchForm">
-        <div style="margin-bottom:5px">
-            <span>模糊查询</span>
-            <input class="easyui-textbox" name="sKeyWord" data-options="width:180,height:22,required:false,prompt:'账号/姓名'">
-            <a class="easyui-linkbutton search" data-options="iconCls:'icon-search'">查 询</a>
-        </div>
-    </form>
-    <a class="easyui-linkbutton add" data-options="iconCls:'icon-add',plain:true">添加管理员</a>
-    <a class="easyui-linkbutton edit" data-options="iconCls:'icon-edit',plain:true">修改密码</a>
-    <a class="easyui-linkbutton cancel" data-options="iconCls:'icon-cancel',plain:true">删除</a>
-</div>
-<script type="text/javascript">
-    $(function () {
-        var admin = new adminPackage();
-        //注册路由
-        admin.routeRegister("User");
+<link href="~/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Content/icheck/icheck.min.js"></script>
+<div style="height:100%;width:100%">
+    <table id="User" style="height:100%;width:100%"></table>
+    <div id="User_toolbar" style="padding:20px;">
+        <form id="searchForm">
+            <div style="margin-bottom:5px">
+                <span>模糊查询</span>
+                <input type="text" class="form-control" name="sKeyWord">&nbsp;&nbsp;
+                @*<input class="easyui-textbox" name="sKeyWord" data-options="width:180,height:22,required:false,prompt:'账号/姓名'">*@
+                <a class="btn btn-primary btn-sm search" style="vertical-align: baseline">查 询</a>
+                <div style="display:inline-block;float:right">
+                    <a class="btn btn-success btn-sm add" style="vertical-align: baseline">添 加</a>
+                    @*<a class="btn btn-primary btn-sm search" style="vertical-align: baseline">修改密码</a>
+                    <a class="btn btn-primary btn-sm search" style="vertical-align: baseline">删 除</a>*@
+                </div>
+            </div>
+        </form>
+        @*<a class="easyui-linkbutton add" data-options="iconCls:'icon-add',plain:true">添加管理员</a>
+        <a class="easyui-linkbutton edit" data-options="iconCls:'icon-edit',plain:true">修改密码</a>
+        <a class="easyui-linkbutton cancel" data-options="iconCls:'icon-cancel',plain:true">删除</a>*@
+    </div>
+ </div>
+ <script type="text/javascript">
+        $(function () {
+            var admin = new adminPackage();
+            //注册路由
+            admin.routeRegister("User");
 
-        //查询操作
-        $('#searchForm .search').on("click", function () {
-            var params = $(admin.searchform).serializeArray().toObject();
-            admin.grid.datagrid({
-                queryParams: params
-            })
-        });
+            //查询操作
+            $('#searchForm .search').on("click", function () {
+                var params = $(admin.searchform).serializeArray().toObject();
+                admin.grid.datagrid({
+                    queryParams: params
+                })
+            });
 
-        //新增操作
-        $('.add').on("click", function () {
-            var dialog = admin.dialog(admin.route('Add'), "添加管理员", function (r) {
-                if ($(admin.form).form('validate')) {
-                    admin.button.disable();
-                    var data = $(admin.form).serialize();
-                    admin.Ajax(admin.route('Insert'), data, function (r) {
-                        admin.alert("添加成功");
-                        dialog.dialog('close');
-                        admin.grid.datagrid("reload");
-                    });
-                }
-            },300,280);
-        });
-
-        //修改密码操作
-        $('.edit').on("click", function () {
-            var selected = admin.grid.datagrid('getSelections');
-            if (selected.length == 1) {
-                var dialog = admin.dialog(admin.route('Edit') + "?ID="+selected[0].ID, "修改密码", function (r) {
+            //新增操作
+            $('.add').on("click", function () {
+                var dialog = admin.dialog(admin.route('Add'), "添加管理员", function (r) {
                     if ($(admin.form).form('validate')) {
+                        var selected = $('.select_category:checked');
+                        var sCategoryIds = [];
+                        $(selected).each(function () {
+                            sCategoryIds.push($(this).val());
+                        });
                         admin.button.disable();
-                        var data = $(admin.form).serialize();
+                        var data = $(admin.form).serialize() + "&sCategoryIds=" + sCategoryIds;
+                        admin.Ajax(admin.route('Insert'), data, function (r) {
+                            admin.alert("添加成功");
+                            dialog.dialog('close');
+                            admin.grid.datagrid("reload");
+                        });
+                    }
+                }, 500, 450);
+            });
+
+            //编辑操作
+            function Update(id) {
+                var dialog = admin.dialog(admin.route('Edit') + "?ID=" + id, "编辑管理员", function (r) {
+                    if ($(admin.form).form('validate')) {
+                        var selected = $('.select_category:checked');
+                        var sCategoryIds = [];
+                        $(selected).each(function () {
+                            sCategoryIds.push($(this).val());
+                        });
+                        admin.button.disable();
+                        var data = $(admin.form).serialize() + "&sCategoryIds=" + sCategoryIds;
                         admin.Ajax(admin.route('Update'), data, function (r) {
                             admin.alert("修改成功");
                             dialog.dialog('close');
                         });
                     }
-                }, 300, 200);
+                }, 500, 450);
             }
-            else {
-                admin.alert("请选择一条数据进行操作!");
-            }
-        });
 
-        //删除操作
-        $('.cancel').on("click", function () {
-            var selected = admin.grid.datagrid('getSelections');
-            if (selected.length > 0) {
-                admin.confirm("确定要删除选择的管理员", function () {
-                    var Ids = [];
-                    $(selected).each(function () {
-                        Ids.push(this.ID);
+            //修改密码操作
+            $('.edit').on("click", function () {
+                var selected = admin.grid.datagrid('getSelections');
+                if (selected.length == 1) {
+                    var dialog = admin.dialog(admin.route('Edit') + "?ID=" + selected[0].ID, "修改密码", function (r) {
+                        if ($(admin.form).form('validate')) {
+                            admin.button.disable();
+                            var data = $(admin.form).serialize();
+                            admin.Ajax(admin.route('Update'), data, function (r) {
+                                admin.alert("修改成功");
+                                dialog.dialog('close');
+                            });
+                        }
+                    }, 300, 200);
+                }
+                else {
+                    admin.alert("请选择一条数据进行操作!");
+                }
+            });
+
+            //删除操作
+            $('.cancel').on("click", function () {
+                var selected = admin.grid.datagrid('getSelections');
+                if (selected.length > 0) {
+                    admin.confirm("确定要删除选择的管理员", function () {
+                        var Ids = [];
+                        $(selected).each(function () {
+                            Ids.push(this.ID);
+                        });
+                        admin.Ajax(admin.route("Cancel"), { Ids: Ids.join() }, function (r) {
+                            admin.alert("删除成功");
+                            admin.grid.datagrid("reload");
+                            admin.grid.datagrid("clearSelections");
+                        });
                     });
-                    admin.Ajax(admin.route("Cancel"), { Ids: Ids.join() }, function (r) {
-                        admin.alert("删除成功");
-                        admin.grid.datagrid("reload");
-                        admin.grid.datagrid("clearSelections");
+                }
+                else {
+                    admin.alert("请选择数据进行操作!");
+                }
+            });
+
+            /*!
+            * method:数据列表(datagrid)的绑定
+            */
+            admin.grid.datagrid({
+                url: admin.route('List'),
+                toolbar: admin.toolbar,
+                fitColumns: true,
+                singleSelect: true,
+                columns: [[
+                    { field: 'sUserName', title: '账号', align: 'center', width: 120 },
+                    { field: 'sRealName', title: '姓名', align: 'center', width: 150 },
+                    { field: 'sPhone', title: '电话', align: 'center', width: 150 },
+                    {
+                        field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value, row) {
+                            var html = [];
+                            html.push("<div style='padding:2px;'>")
+                            html.push('<a class="btn btn-sm btn-success editData" data-id=' + row.ID + ' style="vertical-align: baseline">编辑</a>&nbsp;&nbsp;');
+                            html.push('<a class="btn btn-sm btn-danger cancelData"  data-id=' + row.ID + ' style="vertical-align: baseline">删除</a>');
+                            html.push('</div>');
+                            return html.join('');
+                        }
+                    },
+                ]],
+                onLoadSuccess: function () {
+                    admin.grid.datagrid('resize');
+                    //编辑事件
+                    $('.editData').on("click", function (event) {
+                        event.stopPropagation();
+                        var id = $(this).attr("data-id");
+                       Update(id);
                     });
-                });
-            }
-            else {
-                admin.alert("请选择数据进行操作!");
-            }
+                    //删除事件
+                    $('.cancelData').on("click", function (event) {
+                        event.stopPropagation();
+                        var id = $(this).attr("data-id");
+                        admin.confirm("确定要删除选择的管理员", function () {
+                            admin.Ajax(admin.route("Cancel"), { Ids: id }, function (r) {
+                                admin.alert("删除成功");
+                                admin.grid.datagrid("reload");
+                                admin.grid.datagrid("clearSelections");
+                            });
+                        });
+                    });
+                },
+            });
         });
-
-        /*!
-        * method:数据列表(datagrid)的绑定
-        */
-        admin.grid.datagrid({
-            url: admin.route('List'),
-            toolbar: admin.toolbar,
-            fitColumns:false,
-            columns: [[
-                { field: 'sUserName', title: '账号', align: 'center', width: 120 },
-                { field: 'sRealName', title: '姓名', align: 'center', width: 150 },
-                { field: 'sPhone', title: '电话', align: 'center', width: 150 },
-            ]],
-            onLoadSuccess: function () {
-                admin.grid.datagrid('resize');
-            }
-        });
-
-    });
-
-
-
-
-</script>
-
+    </script>
 

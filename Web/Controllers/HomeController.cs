@@ -16,5 +16,10 @@ namespace Web.Controllers
         {
             return View(LoginStatus);
         }
+
+        public ActionResult NewIndex()
+        {
+            return View(LoginStatus);
+        }
     }
 }

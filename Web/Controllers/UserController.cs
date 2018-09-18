@@ -29,13 +29,16 @@ namespace Web.Controllers
         /// <returns></returns>
         public ActionResult Add()
         {
-            return View();
+            //获取需要控制的栏目
+            var list=mangae.db.TG_Category.Where(m => m.iTemplateId != null && m.iTemplateId > 0 && m.bIsRedirect == null&&m.sEnName!="index").ToList();
+            return View(list);
         }
 
         public ActionResult Edit(int ID)
         {
-            ViewBag.ID = ID;
-            return View();
+            ViewBag.UserInfo = mangae.db.TG_User.Find(ID);
+            var list = mangae.db.TG_Category.Where(m => m.iTemplateId != null && m.iTemplateId > 0 && m.bIsRedirect == null && m.sEnName != "index").ToList();
+            return View(list);
         }
 
         /// <summary>
@@ -111,8 +114,7 @@ namespace Web.Controllers
         /// <param name="user"></param>
         public void Update(TG_User user)
         {
-            var item = mangae.db.TG_User.Find(user.ID);
-            item.sPassword = SecurityHelper.MD5(user.sPassword);
+            mangae.Edit<TG_User>(user);
             result.success = mangae.SaveChange();
         }
 
@@ -176,7 +178,8 @@ namespace Web.Controllers
                     LoginStatus = new LoginCacheInfo();
                     LoginStatus.ID = user.ID;
                     LoginStatus.sUserName = user.sUserName;
-                    LoginStatus.bIsSuper = user.bIsSuper;
+                    LoginStatus.iUserType = user.iUserType;
+                    LoginStatus.sCategoryIds = user.sCategoryIds;
                     if (log != null)
                     {
                         LoginStatus.dLoginTime = log.dInsertTime;
@@ -192,6 +195,7 @@ namespace Web.Controllers
                     Session[sUserSessionKey] = LoginStatus;
                     result.success = true;
                     result.info = "登录成功";
+                    result.data = LoginStatus.iUserType;
                     Task.Factory.StartNew(() =>
                     {
                         InsertLog(sUserName, Ip, now);

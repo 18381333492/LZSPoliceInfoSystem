@@ -1415,6 +1415,8 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\LZSPoliceInfoSystem.pubxml" />
     <Content Include="Views\Shared\_Home.cshtml" />
+    <Content Include="Views\Category\NewIndex.cshtml" />
+    <Content Include="Views\Home\NewIndex.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

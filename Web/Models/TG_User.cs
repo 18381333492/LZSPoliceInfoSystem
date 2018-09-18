@@ -32,6 +32,8 @@ public partial class TG_User
 
     public bool bIsSuper { get; set; }
 
+    public string sCategoryIds { get; set; }
+
 }
 
 }

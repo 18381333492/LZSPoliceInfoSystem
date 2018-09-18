@@ -16,22 +16,157 @@
 
     <script src="~/Scripts/mylib/admin.js"></script>
     <script src="~/Scripts/mylib/extend.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
        html,body{
            margin:0px;
            padding:0px;
-       }
-       .title_header{
-           width:100%;
            height:100%;
-           padding-top:45px;
        }
+    .panel-body {
+        padding:0px;
+    }
+    .form-control{
+        width:250px;
+        padding:6px 6px;
+        display:inline-block;
+        height:30px;
+        line-height:34px;
+    }
+    .btn-sm{
+        padding:5px 20px;
+    }
+    .panel-title{
+        font-size:14px;
+    }
+
+    /*等待效果弹出层*/
+#myloader {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1999;
+  background: #F6F6F6;
+  text-align: center;
+}
+
+#myloader .loader {
+  display: inline-block;
+  height: auto;
+  position: relative;
+  top: 40%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#myloader .loader .grid {
+  width: 60px;
+  height: 60px;
+  margin: 100px auto;
+}
+
+#myloader .loader .grid .cube {
+  width: 33%;
+  height: 33%;
+  background-color: #438eb9;
+  float: left;
+  -webkit-animation: cubeGridScaleDelay 1.3s infinite ease-in-out;
+  animation: cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+
+#myloader .loader .grid .cube1 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+#myloader .loader .grid .cube2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+#myloader .loader .grid .cube3 {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+#myloader .loader .grid .cube4 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+#myloader .loader .grid .cube5 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+#myloader .loader .grid .cube6 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+#myloader .loader .grid .cube7 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+#myloader .loader .grid .ube8 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+#myloader .loader .grid .cube9 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+@@-webkit-keyframes cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
+@@keyframes cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
     </style>
 </head>
 <body>
-    <div style="height:40px;background-color:#007acc;position:fixed;top:0px;width:100%;line-height:40px;font-size:18px;font-weight:600;color:white">
-        &nbsp;&nbsp;<i class="glyphicon glyphicon-triangle-right" style="font-size:20px;top:3px;"></i>&nbsp;<span>@ViewBag.Title</span>
+    <!--  loader  -->
+    <div id="myloader">
+        <div class="loader">
+            <div class="grid">
+                <div class="cube cube1"></div>
+                <div class="cube cube2"></div>
+                <div class="cube cube3"></div>
+                <div class="cube cube4"></div>
+                <div class="cube cube5"></div>
+                <div class="cube cube6"></div>
+                <div class="cube cube7"></div>
+                <div class="cube cube8"></div>
+                <div class="cube cube9"></div>
+            </div>
+        </div>
     </div>
     @RenderBody()
 </body>
 </html>
+<script type="text/javascript">
+    $(function () {
+        $("#myloader").fadeOut(800);
+    })
+</script>

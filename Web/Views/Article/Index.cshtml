@@ -8,25 +8,24 @@
 <script src="~/Scripts/plug-in/kindeditor.js"></script>
 <link href="~/Scripts/plug-in/dpictures/dpictures.css" rel="stylesheet" />
 <script src="~/Scripts/plug-in/dpictures/dpictures.js"></script>
-<div class="title_header">
+<div  style="height:100%;width:100%">
     <table id="Article"></table>
-    <div id="Article_toolbar" style="padding:5px;">
+    <div id="Article_toolbar" style="padding:20px;">
         <form id="searchForm">
             <div style="margin-bottom:5px">
                 <span>栏目选择</span>
-                <input class="easyui-combotree" name="iCategoryId" data-options="url:'/Category/CategoryComtreeData?IsGen=0',panelHeight:'auto',editable:true">
+                <input class="easyui-combotree" name="iCategoryId" data-options="url:'/Category/NewCategoryComtreeData',panelHeight:'auto',editable:true,height:30">
                 <span>模糊查询</span>
-                <input class="easyui-textbox" name="sKeyWord" data-options="width:180,height:22,required:false,prompt:'标题'">
-                <a class="easyui-linkbutton search" data-options="iconCls:'icon-search'">查 询</a>
+                <input type="text" class="form-control" name="sKeyWord" placeholder="文章标题">&nbsp;&nbsp;
+                <a class="btn btn-primary btn-sm search" style="vertical-align: baseline">查 询</a>
+                <div style="display:inline-block;float:right">
+                    <a class="btn btn-success btn-sm add" style="vertical-align: baseline">添加文章</a>
+                </div>
             </div>
         </form>
-        <a class="easyui-linkbutton add" data-options="iconCls:'icon-add',plain:true">新增</a>
+        @*<a class="easyui-linkbutton add" data-options="iconCls:'icon-add',plain:true">新增</a>
         <a class="easyui-linkbutton edit" data-options="iconCls:'icon-edit',plain:true">编辑</a>
-        <a class="easyui-linkbutton cancel" data-options="iconCls:'icon-cancel',plain:true">删除</a>
-        @if (ViewBag.bIsSuper)
-        {
-            <a class="easyui-linkbutton verify" data-options="iconCls:'icon-tip',plain:true">审核</a>
-        }
+        <a class="easyui-linkbutton cancel" data-options="iconCls:'icon-cancel',plain:true">删除</a>*@
     </div>
 </div>
 <script type="text/javascript">
@@ -97,7 +96,7 @@
         $('.cancel').on("click", function () {
             var selected = admin.grid.datagrid('getSelections');
             if (selected.length > 0) {
-                admin.confirm("确定要删除选择的模板", function () {
+                admin.confirm("确定要删除选择的文章", function () {
                     var Ids = [];
                     $(selected).each(function () {
                         Ids.push(this.ID);
@@ -141,22 +140,24 @@
         admin.grid.datagrid({
             url: admin.route('List'),
             toolbar: admin.toolbar,
+            fitColumns: true,
+            singleSelect:true,
             columns: [[
-                { field: 'ID', title: ' ', align: 'center',  rowspan: 2, checkbox: true },
-                { field: 'sTitle', title: '标题', align: 'center', width: 350, rowspan: 2},
-                { field: 'sName', title: '所属栏目', align: 'center', width: 150, rowspan: 2 },
-                { field: 'sAuthor', title: '作者', align: 'center', width: 100, rowspan: 2 },
+                { field: 'sTitle', title: '标题', align: 'center', width: 200, rowspan: 2},
+                { field: 'sName', title: '所属栏目', align: 'center', width: 80, rowspan: 2 },
+                { field: 'sAuthor', title: '作者', align: 'center', width: 80, rowspan: 2 },
+                { title: '文章属性', width: 200, colspan: 3 },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 100, rowspan: 2 },
                 {
-                    field: 'bIsRelease', title: '审核状态', align: 'center', width: 100, rowspan: 2, formatter: function (value) {
-                        if (value) {
-                            return "<span style='color:green'>已审核</span>";
-                        } else {
-                            return "<span style='color:red'>待审核</span>";
-                        }
+                    field: 'ID', title: '操作', align: 'center', width: 150, rowspan: 2, formatter: function (value, row) {
+                        var html = [];
+                        html.push("<div style='padding:2px;'>")
+                        html.push('<a class="btn btn-sm btn-success editData" data-id=' + row.ID + ' style="vertical-align: baseline">编辑</a>&nbsp;&nbsp;');
+                        html.push('<a class="btn btn-sm btn-danger cancelData"  data-id=' + row.ID + ' style="vertical-align: baseline">删除</a>');
+                        html.push('</div>');
+                        return html.join('');
                     }
                 },
-                { title: '文章属性', width: 200, colspan: 3 },
-                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 150, rowspan: 2 },
                 ],
                     [
                         {
@@ -190,10 +191,29 @@
             ],
             onLoadSuccess: function () {
                 admin.grid.datagrid('resize');
+                //编辑事件
+                $('.editData').on("click", function (event) {
+                    event.stopPropagation();
+                    var id = $(this).attr("data-id");
+                    UpdateArticle(id);
+                });
+                //删除事件
+                $('.cancelData').on("click", function (event) {
+                    event.stopPropagation();
+                    var id = $(this).attr("data-id");
+                    admin.confirm("确定要删除选择的文章", function () {
+                        admin.Ajax(admin.route("Cancel"), { Ids: id }, function (r) {
+                            admin.alert("删除成功");
+                            admin.grid.datagrid("reload");
+                            admin.grid.datagrid("clearSelections");
+                        });
+                    });
+                });
+
             },
-            onDblClickRow: function (index, row) {
-                UpdateArticle(row.ID);
-            }
+            //onDblClickRow: function (index, row) {
+            //    UpdateArticle(row.ID);
+            //}
         });
     });
 </script>

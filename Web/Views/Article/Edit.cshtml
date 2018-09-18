@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = null;
+}
 @using Web.Models;
 @model TG_Article
 @{ string iTemplateId = Model.iTemplateId == 0 ? string.Empty : Model.iTemplateId.ToString(); }
@@ -18,7 +20,7 @@
         <tr>
             <td>所属栏目:</td>
             <td>
-                <input class="easyui-combotree" value="@Model.iCategoryId" name="iCategoryId" data-options="url:'/Category/CategoryComtreeData?IsGen=0',required:true,panelHeight:'auto'">
+                <input class="easyui-combotree" value="@Model.iCategoryId" name="iCategoryId" data-options="url:'/Category/NewCategoryComtreeData',required:true,panelHeight:'auto'">
             </td>
             <td>文章属性:</td>
             <td>

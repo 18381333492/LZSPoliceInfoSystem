@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "泸州市公安信息网管理系统";
+    Layout = "~/Views/Shared/_Home.cshtml";
+}
+@model Web.Models.LoginCacheInfo
+<style>
+    .panel-header{
+        padding-top:8px;
+        padding-bottom:8px;
+    }
+    .operate{
+       cursor:pointer;
+       color:#007acc;
+       font-size:14px;
+       display:inline-block;
+       margin-right:30px;
+    }
+    .hover:hover{
+        color:#438eb9;
+    }
+    .myul{
+        list-style:none;
+        padding:0px;
+        margin:0px;
+    }
+    .myul li{
+        text-align:center;
+        background-color:#438eb9;
+        padding:10px 0px;
+        color:white;
+        cursor:pointer;
+    }
+     .myul li:hover{
+        background-color:#007acc;
+    }
+    .myul .activeli{
+        background-color:#007acc;
+    }
+    .layout-panel-north{
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+</style>
+<link href="~/Content/fonts/iconfont.css" rel="stylesheet" />
+<div id="layout" class="easyui-layout" data-options="fit:true">
+    <!--header-->
+    <div data-options="region:'north',border:false" style="height:75px;background-image:url(/Content/topbj.jpg);">
+        <div>
+            <div style="float:left;height:70px;">
+                <img src="~/Content/images/logo.png" style="width:50px;height:50px;margin:12px 10px 0px 30px;" />
+            </div>
+            <div style="float:left;height:70px;line-height:70px;color:#438eb9;font-size:24px">泸州市公安信息网管理系统</div>
+            <div style="float:right;height:70px;line-height:70px;margin-right:50px;font-size:16px;">
+               <span id="weather"></span>
+               <span class="operate">欢迎您:@Model.sUserName</span>
+               <span class="operate hover AlterPwd"><i class="iconfont icon-xiugaimima"></i>密码修改</span>
+               <span class="operate hover Quit"><i class="iconfont icon-084tuichu"></i>退出系统</span>
+            </div>
+        </div> 
+    </div>
+    <!--Menu-->
+    <div data-options="region:'west',border:false" style="width:100px;background-color:#438eb9">
+        <ul class="myul">
+            <li>
+                <div style="height:60px;">
+                    <i class="iconfont icon-caidanguanli" style="font-size:35px;"></i><br />
+                    <span data-url="/Category/Index">栏目管理</span>
+                </div>
+            </li>
+            <li>
+                <div style="height:60px;">
+                    <i class="iconfont icon-svgwrite" style="font-size:35px;"></i><br />
+                    <span data-url="/Article/Index">文章管理</span>
+                </div>
+            </li>
+            <li>
+                <div style="height:60px;">
+                    <i class="iconfont icon-xitongshezhi" style="font-size:35px;"></i><br />
+                    <span data-url="/WebSite/Index">系统设置</span>
+                </div>
+            </li>
+            @if (Model.iUserType == 1)
+            {
+                <li>
+                    <div style="height:60px;">
+                        <i class="iconfont icon-yonghu" style="font-size:35px;"></i><br />
+                        <span data-url="/User/Index">用户管理</span>
+                    </div>
+                </li>        
+            }
+            <li>
+                <div style="height:60px;">
+                    <i class="iconfont icon-jiaoliuxuanzhong" style="font-size:35px;"></i><br />
+                    <span data-url="/Client/Index">互动交流</span>
+                </div>
+            </li>        
+        </ul>
+     
+    </div>
+
+    <!--Center-->
+    <div data-options="region:'center',border:false"> 
+        <iframe style="width:100%;height:100%;display:-webkit-box;" scrolling="auto" frameborder="0"></iframe>
+    </div>
+</div>  
+<script src="~/Scripts/common.client.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //菜单的切换
+        $(".myul li").on("click", function () {
+            $(this).addClass("activeli").siblings().removeClass("activeli");
+            var url = $(this).find("span").attr("data-url");
+            if (url) {
+                $('iframe').attr("src", url);
+            }
+        });
+     
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("User");
+        //修改密码
+        $('.AlterPwd').on("click", function () {
+            var dialog = admin.dialog(admin.route('AlterPwd'), "修改密码", function (r) {
+                if ($(admin.form).form('validate')) {
+                    admin.button.disable();
+                    var data = $(admin.form).serialize();
+                    admin.Ajax(admin.route('AlterPwd'), data, function (r) {
+                        admin.alert("修改成功");
+                        dialog.dialog('close');
+                    });
+                }
+            }, 300,200);
+        });
+        //退出系统
+        $('.Quit').on("click", function () {
+            if (confirm("确定要退出系统")) {
+                client.ajax.postRequest("/User/Quit", null, function (r) {
+                    location.href = "/User/Login";
+                });
+            }
+        });
+    });
+</script>
