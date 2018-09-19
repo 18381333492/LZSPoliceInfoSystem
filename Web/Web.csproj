@@ -1097,6 +1097,7 @@
     <Content Include="Html\css\base.css" />
     <Content Include="Html\css\jquery.slideBox.css" />
     <Content Include="Html\css\main.css" />
+    <Content Include="Html\images\bottom.png" />
     <Content Include="Html\js\jquery-1.8.3.min.js" />
     <Content Include="Html\js\jquery.leoweather.min.js" />
     <Content Include="Html\js\jquery.page.js" />
