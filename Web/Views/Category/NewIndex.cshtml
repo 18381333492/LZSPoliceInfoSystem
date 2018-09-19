@@ -1,6 +1,101 @@
-﻿@{
-    ViewBag.Title = "栏目数据列表";
+﻿
+@{
+    ViewBag.Title = "栏目管理";
 }
+<style>
+    .nav{
+        margin-top:20px;
+    }
+    .nav ul li {
+        float: left;
+        list-style: none;
+        margin-right: 20px;
+        cursor:pointer;
+    }
 
+        .nav ul li:hover {
+            font-size:18px;
+        }
 
+    .top_box {
+        background-color: rebeccapurple;
+        margin: 0;
+        padding: 10px 40px;
+        text-align: center;
+        color: white;
+    }
 
+    .title_content {
+        background-color: powderblue;
+        margin: 0;
+        padding: 10px 40px;
+    }
+</style>
+<link href="~/Content/fonts/iconfont.css" rel="stylesheet" />
+<link href="~/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Content/icheck/icheck.min.js"></script>
+<script src="~/Content/kindeditor/kindeditor.js"></script>
+<script src="~/Scripts/plug-in/kindeditor.js"></script>
+<link href="~/Scripts/plug-in/dpictures/dpictures.css" rel="stylesheet" />
+<script src="~/Scripts/plug-in/dpictures/dpictures.js"></script>
+<div class="nav">
+    <ul>
+        <li data-Id="20">
+            <p class="top_box" style="background-color:#00acec"><i class="iconfont icon-jieshao" style="font-size:35px;"></i></p>
+            <p class="title_content">支队介绍</p>
+        </li>
+        <li data-Id="21">
+            <p class="top_box" style="background-color:#49bf67"><i class="iconfont icon-navicon-jgsz" style="font-size:35px;"></i></p>
+            <p class="title_content">机构设置</p>
+        </li>
+        <li data-Id="22">
+            <p class="top_box" style="background-color:#f8a326"><i class="iconfont icon-qunfengfuwudianhua" style="font-size:35px;"></i></p>
+            <p class="title_content">服务电话</p>
+        </li>
+        <li data-Id="40">
+            <p class="top_box" style="background-color:#9564e2"><i class="iconfont icon-jiaojing" style="font-size:35px;"></i></p>
+            <p class="title_content">酒城交警</p>
+        </li>
+        <li data-Id="42">
+            <p class="top_box" style="background-color:#f34541"><i class="iconfont icon-peixunxuanchuan" style="font-size:35px;"></i></p>
+            <p class="title_content">图片宣传栏</p>
+        </li>
+        @*<li>
+            <p class="top_box" style="background-color:#999"><i class="iconfont icon-xitongshezhi" style="font-size:35px;"></i></p>
+            <p class="title_content">Comments</p>
+        </li>*@
+    </ul>
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Category");
+        var editor = new kindeditor();
+        //编辑操作
+        $('.nav ul li').on("click", function () {
+            var ID = $(this).attr("data-Id");
+            UpdateCategory(ID);
+        });
+
+        //编辑栏目
+        function UpdateCategory(ID) {
+            var dialog = admin.dialog('/Category/Edit?ID='+ID, "编辑栏目", function (r) {
+                if ($(admin.form).form('validate')) {
+                    admin.button.disable();
+                    var data = $(admin.form).serializeArray().toObject();
+                    data.sContent = editor.gethtml();
+                    admin.Ajax('/Category/Update', data, function (r) {
+                        admin.alert("编辑成功");
+                        dialog.dialog('close');
+                        admin.grid.treegrid("reload");
+                    });
+                }
+            }, 850, 650, function () {
+                editor.create("#sContent", { items: editor.items.defaults });
+            });
+        }
+
+    });
+</script>

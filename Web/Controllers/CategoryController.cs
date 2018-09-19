@@ -188,7 +188,15 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public void Update(TG_Category category)
         {
-            if (LoginStatus.sCategoryIds.Contains(category.ID.ToString()) && LoginStatus.iUserType == 0)
+
+            if (LoginStatus.iUserType == 0)
+            {
+                if (LoginStatus.sCategoryIds.Contains(category.ID.ToString()) == false)
+                {
+                    result.info = "您没有权限操作";
+                }
+            }
+            else
             {
                 if (mangae.db.TG_Category.Where(m => m.ID != category.ID).Any(m => m.sName == category.sName || m.sEnName == category.sEnName))
                 {//存在相同的栏目名称或栏目标识
@@ -206,10 +214,6 @@ namespace Web.Controllers
                     string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, mangae.db.TG_Category.ToList());
                     RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString);
                 }
-            }
-            else
-            {
-               result.info = "您没有权限操作";
             }
         }
 

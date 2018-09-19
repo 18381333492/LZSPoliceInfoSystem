@@ -76,18 +76,20 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public void Insert(TG_Article article)
         {
-
-            if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) && LoginStatus.iUserType == 0)
+            if (LoginStatus.iUserType == 0)
+            {
+                if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) == false)
+                {
+                    result.info = "您没有权限操作";
+                }
+            }
+            else
             {
                 article.bIsRelease = true;
                 article.bIsDeleted = false;
                 article.dInsertTime = DateTime.Now;
                 mangae.Add<TG_Article>(article);
                 result.success = mangae.SaveChange();
-            }
-            else
-            {
-                result.info = "您没有权限操作";
             }
         }
 
@@ -98,15 +100,18 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public void Update(TG_Article article)
         {
-            if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) && LoginStatus.iUserType == 0)
+            if (LoginStatus.iUserType == 0)
+            {
+                if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) == false)
+                {
+                    result.info = "您没有权限操作";
+                }
+            }
+            else
             {
                 article.bIsRelease = true;
                 mangae.Edit<TG_Article>(article);
                 result.success = mangae.SaveChange();
-            }
-            else
-            {
-                result.info = "您没有权限操作";
             }
         }
 
@@ -116,7 +121,7 @@ namespace Web.Controllers
         /// <param name="Ids"></param>
         public void Cancel(string Ids)
         {
-           var res=mangae.Cancel<TG_Article>(Ids);
+            var res = mangae.Cancel<TG_Article>(Ids);
             if (res > 0)
                 result.success = true;
         }
