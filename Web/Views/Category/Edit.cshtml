@@ -8,7 +8,7 @@
 <form id="dataForm">
     <input type="hidden" name="ID" value="@Model.ID" />
     <table class="gridtable">
-        <tr>
+        <tr style="display:none">
             <td>所属栏目：</td>
             <td>
                 <input class="easyui-combotree" name="CategoryId" value="@Model.CategoryId" data-options="url:'/Category/CategoryComtreeData',required:true,panelHeight:'auto'">
@@ -20,7 +20,7 @@
                 <input class="easyui-textbox" type="text" name="sRedirectUrl" value="@Model.sRedirectUrl" />
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>栏目名称：</td>
             <td>
                 <input class="easyui-textbox" name="sName" data-options="required:true" value="@Model.sName">
@@ -30,7 +30,7 @@
                 <input type="checkbox" name="bIsShowNav" class="bIsShowNav" value="true" />
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>栏目标识：</td>
             <td>
                 <input class="easyui-textbox" name="sEnName" data-options="required:true" value="@Model.sEnName">
@@ -40,7 +40,7 @@
                 <input type="checkbox" class="bIsContentCategory" name="bIsContentCategory" value="true" />
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>排序编号：</td>
             <td>
                 <input class="easyui-numberspinner" name="iOrder" required="required" value="@Model.iOrder"
@@ -51,7 +51,7 @@
                 <input class="easyui-textbox" name="sEnNick" value="@Model.sEnNick">
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>栏目模板：</td>
             <td>
                 <input name="iTemplateId" class="easyui-combobox" value="@Model.iTemplateId" data-options="url:'/Templet/comboxData',valueField:'ID',
@@ -63,7 +63,7 @@
                          textField:'sTempletName',editable:false,height:25,width:173">
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>导图尺寸：</td>
             <td colspan="3">
                 <input class="easyui-textbox" type="text" name="sPictureSize" value="@Model.sPictureSize" />(建议尺寸)

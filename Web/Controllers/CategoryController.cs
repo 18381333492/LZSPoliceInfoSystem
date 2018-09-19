@@ -93,6 +93,7 @@ namespace Web.Controllers
                 mainData.Add(new JProperty("children", array));
                 comtreeData.Add(mainData);
             }
+            var str = comtreeData.ToString();
             return Content(comtreeData.ToString());
         }
 

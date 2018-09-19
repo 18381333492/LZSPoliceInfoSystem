@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    Layout = null;
+}
 @using Web.Models;
 @model List<TG_Category>
     @{
@@ -9,11 +11,11 @@
         text-align: center;
     }
 
-    ul li {
+    /*ul li {
         float: left;
         margin-right: 10px;
         margin-bottom: 10px;
-    }
+    }*/
 </style>
 <!--编辑用户-->
 <form id="dataForm">
@@ -32,13 +34,13 @@
             <label>电话：</label><input class="easyui-textbox" name="sPhone" style="width:200px" validType="isPhone" value="@UserInfo.sPhone">
         </p>
         <p>
-            <label>权限设置：</label>
-            <ul style="list-style:none">
+            <label>权限：</label><input style="width:200px" id="UserIds">  
+            @*<ul style="list-style:none">
                 @foreach (var category in Model)
                 {
                     <li><input type="checkbox" value="@category.ID" class="select_category" />@(category.sName)&nbsp;</li>
                 }
-            </ul>
+            </ul>*@
         </p>
     </div>
 </form>
@@ -52,12 +54,109 @@
             increaseArea: '20%'
         });
 
-        var sCategoryIds = '@UserInfo.sCategoryIds';
+        @*var sCategoryIds = '@UserInfo.sCategoryIds';
         if (sCategoryIds) {
             var array = sCategoryIds.split(',');
             $(array).each(function () {
                 $('.select_category[value="' + this + '"]').iCheck('check');
             });
-        }
+        }*@
+
+        $('#UserIds').combotree({
+            // url: '/AdminNotice/GetSelectUserList',
+            required: false,
+            panelHeight: 'auto',
+            multiple: true,
+            checkbox: true,
+            data: [
+      {
+          "id": 19,
+          "text": "栏目管理",
+          "children": [
+            {
+                "id": 20,
+                "text": "支队介绍",
+                "children": []
+            },
+            {
+                "id": 21,
+                "text": "机构设置",
+                "children": []
+            },
+            {
+                "id": 22,
+                "text": "服务电话",
+                "children": []
+            },
+            {
+                "id": 23,
+                "text": "酒城交警",
+                "children": []
+            }
+          ]
+      },
+      {
+          "id": 25,
+          "text": "文章管理",
+          "children": [
+            {
+                "id": 91,
+                "text": "新闻动态",
+                "children": []
+            },
+            {
+                "id": 94,
+                "text": "公告信息",
+                "children": []
+            },
+            {
+                "id": 26,
+                "text": "交通法规",
+                "children": []
+            },
+            {
+                "id": 27,
+                "text": "相关法规",
+                "children": []
+            },
+            {
+                "id": 30,
+                "text": "驾驶培训考试",
+                "children": []
+            },
+            {
+                "id": 33,
+                "text": "安全常识",
+                "children": []
+            },
+            {
+                "id": 34,
+                "text": "交通标识",
+                "children": []
+            },
+            {
+                "id": 35,
+                "text": "警钟长鸣",
+                "children": []
+            }
+          ]
+      },
+      {
+          "id": 281,
+          "text": "系统设置",
+          "children": []
+      },
+      {
+          "id": 282,
+          "text": "用户管理",
+          "children": []
+      },
+      {
+          "id": 283,
+          "text": "互动交流",
+          "children": []
+      }
+            ]
+        });
     });
 </script>

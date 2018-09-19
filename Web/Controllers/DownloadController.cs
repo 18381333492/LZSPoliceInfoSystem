@@ -66,5 +66,21 @@ namespace Web.Controllers
                 return Json(result);
             }
         }
+
+        /// <summary>
+        /// 获取访问量
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetRequestCount()
+        {
+            using (var db=new Entities())
+            {
+                var result = new Result();
+                var count = db.TG_WebSite.FirstOrDefault().iCount;
+                result.data = count;
+                result.success = true;
+                return Json(result);
+            }
+        }
     }
 }

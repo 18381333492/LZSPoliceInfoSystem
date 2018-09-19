@@ -15,7 +15,7 @@
                 @*<input type="checkbox" name="bIsRelease" value="true" class="bIsRelease" />发布&nbsp;&nbsp;*@
                 <input type="checkbox" name="bIsSlide" value="true" class="bIsSlide" />最新 &nbsp;&nbsp;
                 <input type="checkbox" name="bIsTop" value="true" class="bIsTop" />置顶 &nbsp;&nbsp;
-                <input type="checkbox" name="bIsHot" value="true" class="bIsHot" />热点
+                @*<input style="display:none" type="checkbox" name="bIsHot" value="true" class="bIsHot" />热点*@
             </td>
         </tr>
         <tr>
@@ -24,13 +24,13 @@
                 <input class="easyui-textbox" name="sTitle" style="width:500px">
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>英文标题:</td>
             <td colspan="3">
                 <input class="easyui-textbox" name="sEnTitle" style="width:500px">
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>发布时间:</td>
             <td>
                 <input type="text" class="easyui-datebox" name="dPublishTime" />
@@ -41,7 +41,7 @@
                         textField:'sTempletName',editable:false,height:25,width:173">
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>信息版本:</td>
             <td>
                 <input class="easyui-textbox" name="sVersion">
@@ -51,7 +51,7 @@
                 <input class="easyui-textbox" name="sSize">
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>信息语言:</td>
             <td>
                 <input class="easyui-textbox" name="sLang">
@@ -61,7 +61,7 @@
                 <input class="easyui-textbox" name="sAuthor">
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td>导图尺寸:</td>
             <td>
                 <input class="easyui-textbox" type="text" name="sPictureSize" />

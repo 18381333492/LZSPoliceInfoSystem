@@ -46,6 +46,8 @@ public partial class TG_WebSite
 
     public bool IsNeedVerify { get; set; }
 
+    public int iCount { get; set; }
+
 }
 
 }

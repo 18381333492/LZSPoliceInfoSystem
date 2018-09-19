@@ -124,6 +124,7 @@
           <Property Name="sCopyRight" Type="nvarchar(max)" />
           <Property Name="sFiling" Type="nvarchar(max)" />
           <Property Name="IsNeedVerify" Type="bit" Nullable="false" />
+          <Property Name="iCount" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="CmsSystemModelStoreContainer">
           <EntitySet Name="TG_Article" EntityType="Self.TG_Article" Schema="dbo" store:Type="Tables" />
@@ -257,6 +258,7 @@
           <Property Name="sCopyRight" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="sFiling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsNeedVerify" Type="Boolean" Nullable="false" />
+          <Property Name="iCount" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TG_Article" EntityType="Self.TG_Article" />
@@ -383,6 +385,7 @@
           <EntitySetMapping Name="TG_WebSite">
             <EntityTypeMapping TypeName="CmsSystemModel.TG_WebSite">
               <MappingFragment StoreEntitySet="TG_WebSite">
+                <ScalarProperty Name="iCount" ColumnName="iCount" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sSiteName" ColumnName="sSiteName" />
                 <ScalarProperty Name="sSiteDNS" ColumnName="sSiteDNS" />

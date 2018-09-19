@@ -1,0 +1,88 @@
+﻿ [
+      {
+          "id": 19,
+          "text": "栏目管理",
+          "children": [
+            {
+                "id": 20,
+                "text": "支队介绍",
+                "children": []
+            },
+            {
+                "id": 21,
+                "text": "机构设置",
+                "children": []
+            },
+            {
+                "id": 22,
+                "text": "服务电话",
+                "children": []
+            },
+            {
+                "id": 23,
+                "text": "酒城交警",
+                "children": []
+            }
+          ]
+      },
+      {
+          "id": 25,
+          "text": "文章管理",
+          "children": [
+            {
+                "id": 91,
+                "text": "新闻动态",
+                "children": []
+            },
+            {
+                "id": 94,
+                "text": "公告信息",
+                "children": []
+            },
+            {
+                "id": 26,
+                "text": "交通法规",
+                "children": []
+            },
+            {
+                "id": 27,
+                "text": "相关法规",
+                "children": []
+            },
+            {
+                "id": 30,
+                "text": "驾驶培训考试",
+                "children": []
+            },
+            {
+                "id": 33,
+                "text": "安全常识",
+                "children": []
+            },
+            {
+                "id": 34,
+                "text": "交通标识",
+                "children": []
+            },
+            {
+                "id": 35,
+                "text": "警钟长鸣",
+                "children": []
+            }
+            ]},
+      {
+          "id": 281,
+          "text": "系统设置",
+          "children": []
+      },
+      {
+          "id": 282,
+          "text": "用户管理",
+          "children": []
+      },
+      {
+      "id": 283,
+      "text": "互动交流",
+      "children": []
+  }
+ ]

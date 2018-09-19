@@ -1104,6 +1104,10 @@
     <Content Include="Html\js\nav.js" />
     <Content Include="Html\js\slider.js" />
     <Content Include="Html\js\Tabs.js" />
+    <Content Include="Images\x_0ec115.jpg" />
+    <Content Include="Images\x_0ec116.jpg" />
+    <Content Include="Images\x_c2e3151433.png" />
+    <Content Include="Images\x_dd83151483.png" />
     <Content Include="jQuery-ydnav20160823\contact.html" />
     <Content Include="jQuery-ydnav20160823\css\reset.css" />
     <Content Include="jQuery-ydnav20160823\css\style.css" />
@@ -1417,6 +1421,7 @@
     <Content Include="Views\Shared\_Home.cshtml" />
     <Content Include="Views\Category\NewIndex.cshtml" />
     <Content Include="Views\Home\NewIndex.cshtml" />
+    <Content Include="Scripts\power.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
