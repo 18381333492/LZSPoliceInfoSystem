@@ -17,7 +17,7 @@
     <div class="header">
         <div class="container">
             <div id="weather"></div>
-            <div class="toptxt"><a href="#">管理员登陆</a>|<a href="#">天气</a></div>
+            <div class="toptxt"><a id="requestCount" style="color:#0594c9">访问量:</a></div>
             <div class="logo"><a href="#"><img src="/Html/images/logo.png" /></a></div>
             <div class="search">
                 <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
@@ -33,7 +33,7 @@
                     <div id="newspic" class="slideBox">
                         <ul class="items">
                             <!--首页导航图-->
-                            @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(Category.ID, 5))
+                            @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("xwdt", 5))
                             {
                                 <li>
                                     <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)" title="@article.sTitle">
@@ -47,13 +47,11 @@
             </div>
             <div class="news-txt" id="news">
                 <div class="news-title">
+                    @{ var xwdt_category = FuncHelper.Instance.GetCategoryByEnName("xwdt"); }
                     <div class="news-name tab-nav j-tab-nav">
-                        <a href="javascript:void(0);" class="current">@FuncHelper.Instance.GetCategoryByEnName("xwdt").sName<i></i></a>
-                        <a href="javascript:void(0);" class="">@FuncHelper.Instance.GetCategoryByEnName("ggxx").sName<i></i></a>
-                        <a href="javascript:void(0);" class="">@FuncHelper.Instance.GetCategoryByEnName("jtfg").sName<i></i></a>
-                        <a href="javascript:void(0);" class="">@FuncHelper.Instance.GetCategoryByEnName("xgfg").sName<i></i></a>
+                        <a href="javascript:void(0);" class="current">@xwdt_category.sName<i></i></a>
                     </div>
-                    <a href="#" class="more">更多 >></a>
+                    <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(xwdt_category.ID,1)" class="more">更多 >></a>
                 </div>
                 <div class="tab-con">
                     <div class="j-tab-con">
@@ -61,42 +59,6 @@
                             <ul class="newslist">
                                 <!--新闻动态-->
                                 @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("xwdt", 8))
-                                {
-                                    <li>
-                                        <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
-                                        <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="tab-con-item news-con" style="display: none;">
-                            <ul class="newslist">
-                                <!--公告信息-->
-                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("ggxx", 8))
-                                {
-                                    <li>
-                                        <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
-                                        <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="tab-con-item news-con" style="display: none;">
-                            <ul class="newslist">
-                                <!--交通法规-->
-                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("jtfg", 8))
-                                {
-                                    <li>
-                                        <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
-                                        <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="tab-con-item news-con" style="display: none;">
-                            <ul class="newslist">
-                                <!--相关法规-->
-                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("xgfg", 8))
                                 {
                                     <li>
                                         <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
@@ -127,7 +89,7 @@
                             <a class="hover_a_hide">
                                 <img src="images/x_1ae197.gif" />
                             </a>
-                            @{  
+                            @{
                                 var jwgk = FuncHelper.Instance.GetCategoryByEnName("jwgk");
                                 var childCategory = FuncHelper.Instance.GetChildCategory(jwgk.ID);
                             }
@@ -136,7 +98,7 @@
                                 {
                                     if (item.bIsContentCategory == true)
                                     {
-                                     <p><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
+                                        <p><a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
                                     }
                                     else
                                     {
@@ -406,6 +368,17 @@
         $('.hover_b').mouseleave(function () {
             $('.hover_b_hide').show();
             $('.hover_b_show').hide();
+        })
+
+        $.ajax({
+            url: '/Download/GetRequestCount',
+            type: 'POST',
+            dataType: 'json',
+            success: function (r) {
+                if (r.success) {
+                    $('#requestCount').text("访问量:" + r.data);
+                }
+            }
         })
     })
 </script>
