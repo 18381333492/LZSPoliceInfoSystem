@@ -13,7 +13,7 @@
     <div class="header">
     <div class="container">
         <div id="weather"></div>
-        <div class="toptxt"><a href="#">管理员登陆</a>|<a href="#">天气</a></div>
+        <div class="toptxt"><a id="requestCount" style="color:#0594c9">访问量:</a></div>
         <div class="logo"><a href="#"><img src="/Html/images/logo.png" /></a></div>
         <div class="search">
             <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
@@ -125,7 +125,11 @@
             </li>
             <li>
 
-                            <a href="/Html/zxtc.html">在线调查</a>
+                            <a href="/Html/zxtc_1.html">在线调查</a>
+            </li>
+            <li>
+
+                            <a href="/Html/zxcgzpgg_1.html">自行采购(中)招标公告</a>
             </li>
     </ul>
 </div>
@@ -377,56 +381,63 @@
         <div class="clearfix"></div>
     </div>
     <div class="foot">
-        <div class="ft-menu">
-            <div class="container">
-                <div class="menu">
-                    <div>
-                        <a style="color: white;font-size: 16px;">友情链接</a>
-                    </div>
-                    <dl>
-                        <dd>
-                            <a href="#">泸州公安公众信息网</a>
-                            <a href="#">四川道路交通安全网</a>
-                            <a href="#">泸州市人民政府公众信息网</a>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dd>
-                            <a href="#">泸州公安公众信息网</a>
-                            <a href="#">四川道路交通安全网</a>
-                            <a href="#">泸州市人民政府公众信息网</a>
-                        </dd>
-                    </dl>
-                    <dl>
-
-                        <dd>
-                            <a href="#">泸州公安公众信息网</a>
-                            <a href="#">四川道路交通安全网</a>
-                            <a href="#">泸州市人民政府公众信息网</a>
-                        </dd>
-                    </dl>
-                    <dl class="last">
-                        <dd>
-                            <p>联系地址：中卫市沙坡头区清风路55号（市财政局后楼四楼）</p>
-                            <p>邮政编码：755000</p>
-                            <p>咨询电话：0955-7674885</p>
-                            <p>电子邮件：zwzcwyh@163.com</p>
-                            <p>网　　址：www.zwzcwyh.com</p>
-                        </dd>
-                    </dl>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="ewm">
-                    <img src="/Html/images/ewm.png" />
-                    <p>扫码关注公众号</p>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="cop">
-            <div class="container" style="text-align:center">Copyright © 2013 - 2017 www.zwzcwyh.com All Rights Reserved  ICP备14031554号-4 公网安备32131102000333号</div>
+    <div class="ft-menu" style="height:200px;width:1220px;margin:auto;
+ background:url(/Html/images/bottom.png) no-repeat;background-size:100% 100%;background-position:center center">
+    </div>
+    <div class="ft-menu" style="height:160px;margin:auto">
+        <div style="margin:0 auto;text-align:center;font-size: 14px;color: white;padding-top:30px">
+            <p>Copyright©2017All Rights Reserved　主办：泸州市公安局 电话：6110110</p>
+            <br />
+            <p> 网站标识码5105000058  川公网安备 51050202000146号</p>
+            <br />
+            <p> 网站备案/许可证号：蜀ICP备11014134号-3 　旧版入口</p>
         </div>
     </div>
+    <div class="cop" style="background-color:white;height:auto;">
+        <div id="img_bottom" class="container" style="text-align:center;padding:20px 0px 20px 0px;">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $.ajax({
+        url: '/Download/GetRequestCount',
+        type: 'POST',
+        dataType: 'json',
+        success: function (r) {
+            if (r.success) {
+                $('#requestCount').text("访问量:" + r.data);
+            }
+        }
+    });
+
+    $.ajax({
+        url: '/Download/GetImgList',
+        type: 'POST',
+        dataType: 'json',
+        success: function (r) {
+            if (r.success) {
+                var html = [];
+                var img = r.data.img;
+                var url = r.data.url;
+                if (img) {
+                    img = img.split(',');
+                    if (url) url = url.split(',');
+                    else
+                        url = [];
+                    for (var i = 0; i < img.length; i++) {
+                        if (url[i]) {
+                            html.push('<a target="_blank" href="' + url[i] + '"><img style="width:250px;height:53px" src="' + img[i] + '" /></a>');
+                        }
+                        else {
+                            html.push('<a><img style="width:250px;height:53px" src="' + img[i] + '" /></a>');
+                        }
+                    }
+                    $('#img_bottom').html(html.join(''));
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>
 <script type="text/javascript">

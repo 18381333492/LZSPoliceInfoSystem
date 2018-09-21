@@ -82,5 +82,25 @@ namespace Web.Controllers
                 return Json(result);
             }
         }
+
+        /// <summary>
+        /// 获取图片宣传栏
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetImgList()
+        {
+            using (var db=new Entities())
+            {
+               var category=db.TG_Category.Find(42);
+                var result = new Result();
+                result.success = true;
+                result.data = new
+                {
+                    img = category.sPictureUrl,
+                    url = category.sKeyWord
+                };
+                return Json(result);
+            }
+        }
     }
 }

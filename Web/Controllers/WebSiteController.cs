@@ -35,15 +35,25 @@ namespace Web.Controllers
         /// <param name="webSite"></param>
         public void Set(TG_WebSite webSite)
         {
-            if (webSite.ID == 0)
-            {//添加
-                mangae.Add<TG_WebSite>(webSite);
-                result.success = mangae.SaveChange();
+            if (LoginStatus.iUserType == 0)
+            {
+                if (LoginStatus.sCategoryIds.Contains("a") == false)
+                {
+                    result.info = "您没有权限操作";
+                }
             }
             else
-            {//编辑
-                mangae.Edit<TG_WebSite>(webSite);
-                result.success = mangae.SaveChange();
+            {
+                if (webSite.ID == 0)
+                {//添加
+                    mangae.Add<TG_WebSite>(webSite);
+                    result.success = mangae.SaveChange();
+                }
+                else
+                {//编辑
+                    mangae.Edit<TG_WebSite>(webSite);
+                    result.success = mangae.SaveChange();
+                }
             }
         }
     }

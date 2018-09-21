@@ -93,18 +93,28 @@ namespace Web.Controllers
         /// <param name="user"></param>
         public void Insert(TG_User user)
         {
-            if (mangae.db.TG_User.Any(m => m.sUserName == user.sUserName))
+            if (LoginStatus.iUserType == 0)
             {
-                result.info = "该账户已存在";
+                if (LoginStatus.sCategoryIds.Contains("b") == false)
+                {
+                    result.info = "您没有权限操作";
+                }
             }
             else
             {
-                user.sUserName = user.sUserName.Trim();
-                user.iUserType = 0;
-                user.bIsSuper = false;//默认非超级管理员
-                user.sPassword = SecurityHelper.MD5(user.sPassword);
-                mangae.Add<TG_User>(user);
-                result.success = mangae.SaveChange();
+                if (mangae.db.TG_User.Any(m => m.sUserName == user.sUserName))
+                {
+                    result.info = "该账户已存在";
+                }
+                else
+                {
+                    user.sUserName = user.sUserName.Trim();
+                    user.iUserType = 0;
+                    user.bIsSuper = false;//默认非超级管理员
+                    user.sPassword = SecurityHelper.MD5(user.sPassword);
+                    mangae.Add<TG_User>(user);
+                    result.success = mangae.SaveChange();
+                }
             }
         }
 
@@ -114,8 +124,18 @@ namespace Web.Controllers
         /// <param name="user"></param>
         public void Update(TG_User user)
         {
-            mangae.Edit<TG_User>(user);
-            result.success = mangae.SaveChange();
+            if (LoginStatus.iUserType == 0)
+            {
+                if (LoginStatus.sCategoryIds.Contains("b") == false)
+                {
+                    result.info = "您没有权限操作";
+                }
+            }
+            else
+            {
+                mangae.Edit<TG_User>(user);
+                result.success = mangae.SaveChange();
+            }
         }
 
         /// <summary>
@@ -262,6 +282,47 @@ namespace Web.Controllers
                 {
                     result.info = "原密码输入错误";
                     return Json(result);
+                }
+                return Json(result);
+            }
+        }
+
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="sNewPwd"></param>
+        /// <returns></returns>
+        public ActionResult SetPwd(int ID, string sNewPwd)
+        {
+            if (Request.HttpMethod.ToUpper() == "GET")
+            {
+                ViewBag.ID = ID;
+                return View();
+            }
+            else
+            {
+                if (LoginStatus.iUserType == 0)
+                {
+                    if (LoginStatus.sCategoryIds.Contains("b") == false)
+                    {
+                        result.info = "您没有权限操作";
+                        result.success = false;
+                    }
+                }
+                else
+                {
+                    sNewPwd = SecurityHelper.MD5(sNewPwd);
+                    List<SqlParameter> SqlParsArray = new List<SqlParameter>();
+                    SqlParsArray.Add(new SqlParameter("ID", LoginStatus.ID));
+                    SqlParsArray.Add(new SqlParameter("sPassword", sNewPwd));
+                    var res = mangae.ExcuteBySql("update TG_User set sPassword=@sPassword where ID=@ID", SqlParsArray.ToArray());
+                    if (res > 0)
+                    {
+                        result.success = true;
+                    }
+                    else
+                        result.info = "密码重置失败";
                 }
                 return Json(result);
             }

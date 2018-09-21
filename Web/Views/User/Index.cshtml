@@ -78,6 +78,21 @@
                 }, 500, 450);
             }
 
+            //重置密码
+            function SetPwd(id) {
+                var dialog = admin.dialog(admin.route('SetPwd') + "?ID=" + id, "重置密码", function (r) {
+                    if ($(admin.form).form('validate')) {
+                        admin.button.disable();
+                        var data = $(admin.form).serialize();
+                        admin.Ajax(admin.route('SetPwd'), data, function (r) {
+                            admin.alert("操作成功");
+                            dialog.dialog('close');
+                        });
+                    }
+                }, 300, 200);
+            }
+
+
             //修改密码操作
             $('.edit').on("click", function () {
                 var selected = admin.grid.datagrid('getSelections');
@@ -97,6 +112,7 @@
                     admin.alert("请选择一条数据进行操作!");
                 }
             });
+
 
             //删除操作
             $('.cancel').on("click", function () {
@@ -136,6 +152,7 @@
                             var html = [];
                             html.push("<div style='padding:2px;'>")
                             html.push('<a class="btn btn-sm btn-success editData" data-id=' + row.ID + ' style="vertical-align: baseline">编辑</a>&nbsp;&nbsp;');
+                            html.push('<a class="btn btn-sm btn-warning setpwd" data-id=' + row.ID + ' style="vertical-align: baseline">重置密码</a>&nbsp;&nbsp;');
                             html.push('<a class="btn btn-sm btn-danger cancelData"  data-id=' + row.ID + ' style="vertical-align: baseline">删除</a>');
                             html.push('</div>');
                             return html.join('');
@@ -149,6 +166,12 @@
                         event.stopPropagation();
                         var id = $(this).attr("data-id");
                        Update(id);
+                    });
+                    //重置密码事件
+                    $('.setpwd').on("click", function (event) {
+                        event.stopPropagation();
+                        var id = $(this).attr("data-id");
+                        SetPwd(id);
                     });
                     //删除事件
                     $('.cancelData').on("click", function (event) {

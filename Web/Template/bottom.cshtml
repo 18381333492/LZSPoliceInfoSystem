@@ -1,11 +1,58 @@
 <div class="foot">
-        <div class="ft-menu">
-            <div class="container">
-            
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="cop">
-           
+    <div class="ft-menu" style="height:200px;width:1220px;margin:auto;
+ background:url(/Html/images/bottom.png) no-repeat;background-size:100% 100%;background-position:center center">
+    </div>
+    <div class="ft-menu" style="height:160px;margin:auto">
+        <div style="margin:0 auto;text-align:center;font-size: 14px;color: white;padding-top:30px">
+            <p>Copyright©2017All Rights Reserved　主办：泸州市公安局 电话：6110110</p>
+            <br />
+            <p> 网站标识码5105000058  川公网安备 51050202000146号</p>
+            <br />
+            <p> 网站备案/许可证号：蜀ICP备11014134号-3 　旧版入口</p>
         </div>
     </div>
+    <div class="cop" style="background-color:white;height:auto;">
+        <div id="img_bottom" class="container" style="text-align:center;padding:20px 0px 20px 0px;">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $.ajax({
+        url: '/Download/GetRequestCount',
+        type: 'POST',
+        dataType: 'json',
+        success: function (r) {
+            if (r.success) {
+                $('#requestCount').text("访问量:" + r.data);
+            }
+        }
+    });
+
+    $.ajax({
+        url: '/Download/GetImgList',
+        type: 'POST',
+        dataType: 'json',
+        success: function (r) {
+            if (r.success) {
+                var html = [];
+                var img = r.data.img;
+                var url = r.data.url;
+                if (img) {
+                    img = img.split(',');
+                    if (url) url = url.split(',');
+                    else
+                        url = [];
+                    for (var i = 0; i < img.length; i++) {
+                        if (url[i]) {
+                            html.push('<a target="_blank" href="' + url[i] + '"><img style="width:250px;height:53px" src="' + img[i] + '" /></a>');
+                        }
+                        else {
+                            html.push('<a><img style="width:250px;height:53px" src="' + img[i] + '" /></a>');
+                        }
+                    }
+                    $('#img_bottom').html(html.join(''));
+                }
+            }
+        }
+    });
+</script>

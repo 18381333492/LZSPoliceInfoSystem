@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RazorBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -90,6 +91,10 @@ namespace Web.Controllers
                 article.dInsertTime = DateTime.Now;
                 mangae.Add<TG_Article>(article);
                 result.success = mangae.SaveChange();
+                if (result.success)
+                {
+                    MakeArticleHtml(article);
+                }
             }
         }
 
@@ -112,6 +117,10 @@ namespace Web.Controllers
                 article.bIsRelease = true;
                 mangae.Edit<TG_Article>(article);
                 result.success = mangae.SaveChange();
+                if (result.success)
+                {
+                    MakeArticleHtml(article);
+                }
             }
         }
 
@@ -135,6 +144,72 @@ namespace Web.Controllers
             var res=mangae.ExcuteBySql(string.Format("update TG_Article set bIsRelease=1 where ID IN ({0})", Ids));
             if (res > 0)
                 result.success = true;
+        }
+
+        public void MakeArticleHtml(TG_Article article)
+        {
+            try
+            {
+                //获取文章所属栏目
+                var category = mangae.db.TG_Category.Find(article.iCategoryId);
+                var allCategoryList = mangae.db.TG_Category.OrderBy(m => m.ID).AsQueryable().ToList();
+                TG_Templet templetArticle;//生成文章的模板
+                if (article.iTemplateId != 0)
+                {//存在独立文章模板
+                    templetArticle = mangae.db.TG_Templet.Find(article.iTemplateId);
+                }
+                else
+                {
+                    //获取栏目的文章模板ID
+                    templetArticle = mangae.db.TG_Templet.Find(category.iArticleTemplateId);
+                }
+                if (templetArticle != null)
+                {
+                    string templetHtmlString = RazorHelper.ParseString(templetArticle.sTempletEnName, article);
+                    string ArticlePath = category.sEnName + FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
+                    RazorHelper.MakeHtml(ArticlePath, article.ID.ToString(), templetHtmlString);
+                }
+
+                //生成文章页栏目
+                if (category.bIsContentCategory==null&& category.bIsRedirect==null)
+                {//文章栏目
+                    var category_templet = mangae.db.TG_Templet.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
+                    //文章分页栏目
+                    //获取栏目下面所有文章数量
+                    var articleTotalCount = mangae.db.TG_Article.
+                        Where(m => m.iCategoryId == category.ID && m.bIsDeleted == false && m.bIsRelease == true).Count();
+                    int categoryHtmlCount = (int)Math.Ceiling((double)articleTotalCount / (double)20); //生成栏目页的个数
+                    var pageCategory = new PageCategory();
+                    pageCategory.Category = category;
+                    pageCategory.Rows = categoryHtmlCount;//总页数
+                    for (var i = 1; i <= categoryHtmlCount; i++)
+                    {
+                        pageCategory.Page = i;
+                        string templetHtmlString = RazorHelper.ParseString(category_templet.sTempletEnName, pageCategory);
+                        if (!string.IsNullOrEmpty(templetHtmlString))
+                        {
+                            string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, allCategoryList);
+                            string sFileName = string.Format("{0}_{1}", category.sEnName, i);
+                            RazorHelper.MakeHtml(sHtmlPath, sFileName, templetHtmlString)   ;               
+                        }
+                    }
+                }
+
+                //生成首页          
+                var index_category = FuncHelper.Instance.GetCategoryByEnName("index");
+                var index_templet = mangae.db.TG_Templet.Where(m => m.ID == index_category.iTemplateId).SingleOrDefault();
+                if (index_templet != null)
+                {//模板存在
+                    string templetHtmlString = RazorHelper.ParseString(index_templet.sTempletEnName, index_category);
+                    string sHtmlPath = FuncHelper.Instance.GetHtmlPath(index_category, allCategoryList);
+                    RazorHelper.MakeHtml(sHtmlPath, index_category.sEnName, templetHtmlString);
+                }
+            }
+           finally
+            {
+               
+            }
+           
         }
     }
 }

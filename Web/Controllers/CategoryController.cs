@@ -207,13 +207,16 @@ namespace Web.Controllers
                 mangae.Edit<TG_Category>(category);
                 result.success = mangae.SaveChange();
 
-                /**编辑栏目重新生成栏目页***/
-                var templet = mangae.db.TG_Templet.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
-                if (templet != null)
-                {//模板存在
-                    string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
-                    string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, mangae.db.TG_Category.ToList());
-                    RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString);
+                if (category.bIsContentCategory == true)
+                {//内容栏目才重新生成页面
+                    /**编辑栏目重新生成栏目页***/
+                    var templet = mangae.db.TG_Templet.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
+                    if (templet != null)
+                    {//模板存在
+                        string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
+                        string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, mangae.db.TG_Category.ToList());
+                        RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString);
+                    }
                 }
             }
         }
