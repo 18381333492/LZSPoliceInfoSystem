@@ -95,7 +95,7 @@ namespace Web.Controllers
         {
             if (LoginStatus.iUserType == 0)
             {
-                if (LoginStatus.sCategoryIds.Contains("b") == false)
+                if (string.IsNullOrEmpty(LoginStatus.sCategoryIds) || LoginStatus.sCategoryIds.Contains("b") == false)
                 {
                     result.info = "您没有权限操作";
                 }
@@ -126,7 +126,7 @@ namespace Web.Controllers
         {
             if (LoginStatus.iUserType == 0)
             {
-                if (LoginStatus.sCategoryIds.Contains("b") == false)
+                if (string.IsNullOrEmpty(LoginStatus.sCategoryIds) || LoginStatus.sCategoryIds.Contains("b") == false)
                 {
                     result.info = "您没有权限操作";
                 }
@@ -304,7 +304,7 @@ namespace Web.Controllers
             {
                 if (LoginStatus.iUserType == 0)
                 {
-                    if (LoginStatus.sCategoryIds.Contains("b") == false)
+                    if (string.IsNullOrEmpty(LoginStatus.sCategoryIds)||LoginStatus.sCategoryIds.Contains("b") == false)
                     {
                         result.info = "您没有权限操作";
                         result.success = false;

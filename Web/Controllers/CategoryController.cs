@@ -192,7 +192,7 @@ namespace Web.Controllers
 
             if (LoginStatus.iUserType == 0)
             {
-                if (LoginStatus.sCategoryIds.Contains(category.ID.ToString()) == false)
+                if (string.IsNullOrEmpty(LoginStatus.sCategoryIds)||LoginStatus.sCategoryIds.Contains(category.ID.ToString()) == false)
                 {
                     result.info = "您没有权限操作";
                 }

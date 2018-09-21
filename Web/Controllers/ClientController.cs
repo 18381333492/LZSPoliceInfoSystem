@@ -28,6 +28,7 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Add(TG_Client client)
         {
+         
             client.dInsertTime = DateTime.Now;
             mangae.Add<TG_Client>(client);
             result.success=mangae.SaveChange();

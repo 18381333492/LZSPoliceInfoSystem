@@ -79,7 +79,7 @@ namespace Web.Controllers
         {
             if (LoginStatus.iUserType == 0)
             {
-                if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) == false)
+                if (string.IsNullOrEmpty(LoginStatus.sCategoryIds)||LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) == false)
                 {
                     result.info = "您没有权限操作";
                 }
@@ -107,7 +107,7 @@ namespace Web.Controllers
         {
             if (LoginStatus.iUserType == 0)
             {
-                if (LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) == false)
+                if (string.IsNullOrEmpty(LoginStatus.sCategoryIds) || LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) == false)
                 {
                     result.info = "您没有权限操作";
                 }
@@ -130,9 +130,24 @@ namespace Web.Controllers
         /// <param name="Ids"></param>
         public void Cancel(string Ids)
         {
-            var res = mangae.Cancel<TG_Article>(Ids);
-            if (res > 0)
-                result.success = true;
+            var article = mangae.db.TG_Article.Find(Ids);
+            if (LoginStatus.iUserType == 0)
+            {
+                if (string.IsNullOrEmpty(LoginStatus.sCategoryIds) || LoginStatus.sCategoryIds.Contains(article.iCategoryId.ToString()) == false)
+                {
+                    result.info = "您没有权限操作";
+                }
+            }
+            else
+            {
+                var res = mangae.Cancel<TG_Article>(Ids);
+                if (res > 0)
+                {
+                    result.success = true;
+                    MakeArticleHtml(article);
+                }
+
+            }
         }
 
         /// <summary>
