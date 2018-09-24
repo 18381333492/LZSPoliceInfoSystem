@@ -1,6 +1,6 @@
 @using Web.Server;
 @using Web.Models;
-@{  var Category = Model as TG_Category; }
+@{  var pageCategory = Model as PageCategory; }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,13 +14,39 @@
 <body>
     @Include("top")
     <div class="container mg-t-b container_col">
-        <div class="page-right" style="padding:0 30px;float:none;width:auto">
+        <div class="page-left">
+            <div class="pagelist">
+                @{ var child = FuncHelper.Instance.GetChildCategory(pageCategory.Category.CategoryId);}
+                <ul class="listbox">
+                    @foreach (var item in child)
+                    {
+                    if (item.bIsRedirect == true)
+                    {
+                    <li><a target="_blank" href="@item.sRedirectUrl">@item.sName</a></li>
+                    }
+                    else
+                    {
+                    if (item.bIsContentCategory == true)
+                    {
+                    <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a></li>
+                    }
+
+                    if (item.bIsContentCategory == null)
+                    {
+                    <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID, 1)">@item.sName</a></li>
+                    }
+                    }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="page-right">
             <div class="pagelujing">
-                <div class="name">@Category.sName</div>
+                <div class="name">@pageCategory.Category.sName</div>
                 <span>
                     您当前所在位置：
                     <a>首页</a>
-                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(Category.ID))
+                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(pageCategory.Category.ID))
                     {
                     @:><a>@location</a>
                     }
@@ -29,7 +55,7 @@
             <div class="news-txt ny mg-t-b">
                 <div class="news-con">
                     <ul class="newslist ny">
-                        @foreach (var article in FuncHelper.Instance.GetAllArticleListByCategoryId(Category.ID))
+                        @foreach (var article in FuncHelper.Instance.GetAllArticleListByCategoryId(pageCategory.Category.ID))
                         {
                         <li>
                             <a>@article.sTitle</a>
@@ -38,6 +64,38 @@
                         </li>
                         }
                     </ul>
+                    <div class="tcdPageCode">
+                        <!--上一页-->
+                        @if (pageCategory.Page == 1)
+                        {
+                        <span class="disabled">上一页</span>
+                        }
+                        else
+                        {
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page-1)" class="tcdNumber">上一页</a>
+                        }
+                        <!--页面数-->
+                        @for (var i = 1; i <= pageCategory.Rows; i++)
+                        {
+                        if (pageCategory.Page == i)
+                        {
+                        <span class="current">@i</span>
+                        }
+                        else
+                        {
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID, i)" class="tcdNumber">@i</a>
+                        }
+                        }
+                        <!--下一页-->
+                        @if (pageCategory.Page == 1)
+                        {
+                        <span class="disabled">下一页</span>
+                        }
+                        else
+                        {
+                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page+1)" class="tcdNumber">下一页</a>
+                        }
+                    </div>
                 </div>
             </div>
 

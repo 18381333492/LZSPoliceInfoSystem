@@ -14,7 +14,7 @@ body{min-width:1200px; background:#d6e8f4;}
 .search a{display:block; width:90px; height:42px; background:#044464; color:#fff; line-height:42px; text-align:center; font-size:14px; transition:all .3s ease; position:absolute; right:0; top:0;}
 .search a:hover{background:#0594c9;}
 
-.nav{width:1220px; margin:0 auto; height:60px; background:#004c73;}
+.nav{width:1220px; margin:0 auto; height:auto; /*background:#004c73;*/}
 .nav li{width:120px; float:left; height:60px; position:relative;}
 .nav li a{display:block; text-align:center; line-height:60px; font-size:15px; color:#fff; transition:all .3s ease;}
 .nav li a:hover,.nav li.active a{background:#0594c9; color:#FF0;}
@@ -178,14 +178,14 @@ overflow:hidden;}
 
 .cop{font-size:14px; color:#b7c1c6; height:50px; line-height:50px; background:#084466;}
 
-.mg-t-b{margin:20px auto;}
+.mg-t-b{margin:10px auto;}
 .page-left{width: 255px; float: left;background:#fff;}
 .page-right{width: 900px; float: right; margin-right:15px;}
 .pagelist .listbox{border:1px solid #efefef;}
 .pagelist h1{ color: #fff; height: 45px; line-height: 45px; font-size: 18px; font-weight: 600; background: #084466; padding-left: 20px; margin-bottom: 5px;}
 .pagelist li{border-top:1px solid #efefef; border-bottom:1px solid #efefef; margin-top:-1px;}
-.pagelist li a{height: 35px; line-height: 35px; display: block; background:url(../images/sanjiao2.png) 220px 14px no-repeat #fafafa; font-size: 12px; color: #333; padding-left:20px;}
-.pagelist li a:hover,.pagelist li.active>a{background:url(../images/sanjiao.png) 218px 14px no-repeat #fafafa; font-weight:bold;}
+.pagelist li a{height: 40px; line-height: 40px; display: block; background:url(../images/sanjiao2.png) 220px 16px no-repeat #fafafa; font-size: 16px; /*color: #333;*/ padding-left:30px;}
+.pagelist li a:hover,.pagelist li.active>a{/*background:url(../images/sanjiao2.png) 218px 14px no-repeat #fafafa;*/ font-weight:bold;}
 
 .pagelist li .dropdown{display:none;}
 .pagelist li.active .dropdown{display:block;}

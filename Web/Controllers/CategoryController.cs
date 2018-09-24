@@ -38,6 +38,15 @@ namespace Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 栏目新页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult NewEdit(int ID)
+        {
+            return View(mangae.db.TG_Category.Find(ID));
+        }
+
         public ActionResult Edit(int ID)
         {
             return View(mangae.db.TG_Category.Find(ID));

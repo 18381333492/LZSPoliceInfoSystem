@@ -1,0 +1,67 @@
+@using Web.Server;
+@using Web.Models;
+<div class="header">
+    <div class="container">
+        <div id="weather"></div>
+        <div class="toptxt"><a id="requestCount" style="color:#0594c9">访问量:</a></div>
+        <div class="logo"><a href="#"><img src="/Html/images/logo.png" /></a></div>
+        <div class="search">
+            <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
+            <a href="javascript:;">搜索</a>
+        </div>
+    </div>
+</div>
+<div class="nav">
+    <ul class="" id="navul">
+        @foreach (var category in FuncHelper.Instance.GetShowCategory())
+        {
+            <li>
+                @{ var childList = FuncHelper.Instance.GetChildCategory(category.ID); }
+                @if (childList.Count > 0)
+                {//有二级栏目一级栏目不能点击
+                    <a>@category.sName</a>
+                    <ul>
+                        @foreach (var item in childList)
+                        {
+                            <li>
+                                @if (item.bIsRedirect == true)
+                                {//跳转栏目
+                                    <a href="@item.sRedirectUrl">@item.sName</a>
+                                }
+                                else
+                                {
+                                    if (item.bIsContentCategory == true)
+                                    {//内容栏目
+                                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a>
+                                    }
+                                    else
+                                    {//文章栏目
+                                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID,1)">@item.sName</a>
+                                    }
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {//没有二级栏目
+                    if (category.bIsRedirect == true)
+                    {//跳转栏目
+                        <a href="@category.sRedirectUrl">@category.sName</a>
+                    }
+                    else
+                    {
+                        if (category.bIsContentCategory == true)
+                        {//内容栏目
+                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(category.ID)">@category.sName</a>
+                        }
+                        else
+                        {//文章栏目
+                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(category.ID,1)">@category.sName</a>
+                        }
+                    }
+                }
+            </li>
+         }
+    </ul>
+</div>

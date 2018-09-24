@@ -1098,6 +1098,7 @@
     <Content Include="Html\css\jquery.slideBox.css" />
     <Content Include="Html\css\main.css" />
     <Content Include="Html\images\bottom.png" />
+    <Content Include="Html\images\x_749130.png" />
     <Content Include="Html\js\jquery-1.8.3.min.js" />
     <Content Include="Html\js\jquery.leoweather.min.js" />
     <Content Include="Html\js\jquery.page.js" />
@@ -1424,6 +1425,8 @@
     <Content Include="Views\Home\NewIndex.cshtml" />
     <Content Include="Scripts\power.json" />
     <Content Include="Views\User\SetPwd.cshtml" />
+    <Content Include="Views\Category\NewEdit.cshtml" />
+    <Content Include="Template\top_old.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

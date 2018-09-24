@@ -102,5 +102,23 @@ namespace Web.Controllers
                 return Json(result);
             }
         }
+
+        /// <summary>
+        /// 分页获取留言数据
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetPageWords(PageInfo pageInfo)
+        {
+            using (var db = new Entities())
+            {
+                var query = db.TG_Client.OrderByDescending(m => m.dInsertTime).AsQueryable();
+                var result = new Result();
+                result.pageResult.page = pageInfo.page;
+                result.pageResult.total = query.Count();
+                query = query.Skip((pageInfo.page - 1) * pageInfo.rows).Take(pageInfo.rows);
+                result.pageResult.rows = query;
+                return Content(result.pageResult.toJson());
+            }
+        }
     }
 }

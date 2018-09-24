@@ -1,6 +1,6 @@
 ﻿@using Web.Server;
 @using Web.Models;
-@{  var Category = Model as TG_Category; }
+@{  var pageCategory = Model as PageCategory; }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -9,319 +9,98 @@
     <link href="/Html/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/Html/css/main.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="/Html/js/jquery-1.8.3.min.js"></script>
-    <link href="/Html/css/jquery.slideBox.css" rel="stylesheet" type="text/css" />
-    <script src="/Html/js/jquery.slideBox.min.js" type="text/javascript"></script>
-    <script src="/Html/js/Tabs.js"></script>
+    <script type="text/javascript" src="/Html/js/nav.js"></script>
 </head>
 <body>
-    <div class="header">
-        <div class="container">
-            <div id="weather"></div>
-            <div class="toptxt"><a id="requestCount" style="color:#0594c9">访问量:</a></div>
-            <div class="logo"><a href="#"><img src="/Html/images/logo.png" /></a></div>
-            <div class="search">
-                <input type="text" class="ipt-sea" placeholder="请输入搜索关键词" />
-                <a href="javascript:;">搜索</a>
-            </div>
-        </div>
-    </div>
-    <div class="container container_col">
-        <div class="news-notice">
-            <!--导航图-->
-            <div class="indnews">
-                <div class="news-pic">
-                    <div id="newspic" class="slideBox">
-                        <ul class="items">
-                            <!--首页导航图-->
-                            @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("xwdt", 5))
+    @Include("top")
+    <div class="container mg-t-b container_col">
+        <div class="page-left">
+            <div class="pagelist">
+                @{ var child = FuncHelper.Instance.GetChildCategory(pageCategory.Category.CategoryId);}
+                <ul class="listbox">
+                    @foreach (var item in child)
+                    {
+                        if (item.bIsRedirect == true)
+                        {
+                            <li><a target="_blank" href="@item.sRedirectUrl">@item.sName</a></li>
+                        }
+                        else
+                        {
+                            if (item.bIsContentCategory == true)
                             {
-                                <li>
-                                    <a target="_blank" href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)" title="@article.sTitle">
-                                        @if (!string.IsNullOrEmpty(article.sPictureUrl))
-                                        {
-                                            <img src="@article.sPictureUrl.Split(',')[0]" />
-                                        }
-                                        else
-                                        {
-                                            <img src="" />
-                                        }
-                                    </a>
-                                </li>
+                            <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a></li>
                             }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="news-txt" id="news">
-                <div class="news-title">
-                    @{ var xwdt_category = FuncHelper.Instance.GetCategoryByEnName("xwdt"); }
-                    <div class="news-name tab-nav j-tab-nav">
-                        <a href="javascript:void(0);" class="current">@xwdt_category.sName<i></i></a>
-                    </div>
-                    <a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(xwdt_category.ID,1)" class="more">更多 >></a>
-                </div>
-                <div class="tab-con">
-                    <div class="j-tab-con">
-                        <div class="tab-con-item news-con" style="display: block;">
-                            <ul class="newslist">
-                                <!--新闻动态-->
-                                @foreach (var article in FuncHelper.Instance.GetCategoryArticleByEnName("xwdt", 8))
-                                {
-                                    <li>
-                                        <a target="_blank" href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
-                                        <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <!--中间banner图片-->
-        <div style="background-color: #f3f3f3;    PADDING-BOTTOM: 12px;PADDING-LEFT: 12px; PADDING-RIGHT: 12px;PADDING-TOP: 12px;">
-            <table style="WIDTH: 100%; BORDER-COLLAPSE: collapse" bordercolor="#999999" cellspacing="0"
-                   cellpadding="0" border="0">
-                <tbody>
-                    <tr>
-                        <td class="hover_c" style="text-align: center; PADDING-LEFT: 1px" rowspan="2">
-                            <a class="hover_c_hide">
-                                <img src="images/x_0ed1915.gif" />
-                            </a>
-                            @{
-                                var zcfg = FuncHelper.Instance.GetCategoryByEnName("zcfg");
-                                var zcfg_childCategory = FuncHelper.Instance.GetChildCategory(zcfg.ID);
-                            }
-                            <div class="hover_c_show" style="width:320px;height:223px;background-color:#2f4e9a;margin:0 auto;line-height:110px;display:none">
-                                @foreach (var item in zcfg_childCategory)
-                                {
-                                    if (item.bIsContentCategory == true)
-                                    {
-                                        <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                    else
-                                    {
-                                        <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID,1)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                }
-                            </div>
-                        </td>
-                        <td class="hover_a" style="text-align: center; PADDING-LEFT: 1px" rowspan="2">
-                            <a class="hover_a_hide">
-                                <img src="images/x_1ae197.gif" />
-                            </a>
-                            @{
-                                var jwgk = FuncHelper.Instance.GetCategoryByEnName("jwgk");
-                                var childCategory = FuncHelper.Instance.GetChildCategory(jwgk.ID);
-                            }
-                            <div class="hover_a_show" style="width:240px;height:223px;background-color:#2f4e9a;margin:0 auto;line-height:44px;display:none">
-                                @foreach (var item in childCategory)
-                                {
-                                    if (item.bIsContentCategory == true)
-                                    {
-                                        <p><a target="_blank"  href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                    else
-                                    {
-                                        <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID,1)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                }
-                            </div>
-                        </td>
-                        <td class="hover_d" style="text-align: center; PADDING-LEFT: 8px; PADDING-RIGHT: 0">
-                            <a class="hover_d_hide">
-                                <img src="images/x_6cc172.gif" />
-                            </a>
-                            @{
-                                var wscgs = FuncHelper.Instance.GetCategoryByEnName("wscgs");
-                                var wscgs_childCategory = FuncHelper.Instance.GetChildCategory(wscgs.ID);
-                            }
-                            <div class="hover_d_show" style="width:240px;height:107px;background-color:#2f4e9a;margin:0 auto;line-height:35px;display:none">
-                                @foreach (var item in wscgs_childCategory)
-                                {
-                                    if (item.bIsContentCategory == true)
-                                    {
-                                        <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                    else
-                                    {
-                                        if (item.bIsRedirect == true)
-                                        {
-                                            <p><a target="_blank" href="@item.sRedirectUrl" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                        }
-                                        else
-                                        {
-                                            <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID, 1)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                        }
-                                    }
-                                }
-                            </div>
-                        </td>
-                        <td class="hover_b" style="text-align: right" rowspan="2">
-                            <a class="hover_b_hide">
-                                <img src="images/x_0ed195.gif" />
-                            </a>
-                            @{
-                                var fdjl = FuncHelper.Instance.GetCategoryByEnName("fdjl");
-                                var fdjl_childCategory = FuncHelper.Instance.GetChildCategory(fdjl.ID);
-                            }
-                            <div class="hover_b_show" style="width:320px;height:223px;background-color:#2f4e9a;margin:0 auto;line-height:44px;display:none;text-align:center">
-                                @foreach (var item in fdjl_childCategory)
-                                {
-                                    if (item.bIsContentCategory == true)
-                                    {
-                                        <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                    else
-                                    {
 
-                                        if (item.bIsRedirect == true)
-                                        {
-                                            <p><a target="_blank" href="@item.sRedirectUrl" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                        }
-                                        else
-                                        {
-                                            <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID, 1)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                        }
-                                    }
-                                }
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="hover_e" style="text-align: center; PADDING-TOP: 9px; PADDING-LEFT: 8px; PADDING-RIGHT: 0px">
-                            <a class="hover_e_hide">
-                                <img src="images/x_de6165.gif" />
-                            </a>
-                            @{
-                                var jtxt = FuncHelper.Instance.GetCategoryByEnName("jtxt");
-                                var jtxt_childCategory = FuncHelper.Instance.GetChildCategory(jtxt.ID);
+                            if (item.bIsContentCategory == null)
+                            {
+                            <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID, 1)">@item.sName</a></li>
                             }
-                            <div class="hover_e_show" style="width:240px;height:107px;background-color:#2f4e9a;margin:0 auto;line-height:35px;display:none">
-                                @foreach (var item in jtxt_childCategory)
-                                {
-                                    if (item.bIsContentCategory == true)
-                                    {
-                                        <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                    else
-                                    {
-                                        <p><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID, 1)" style="cursor:pointer;color:#F0BD38;font-size:15px">@item.sName</a></p>
-                                    }
-                                }
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        }
+                    }
+                </ul>
+            </div>
         </div>
-        <div class="col-box">
-            <div class="news-txt col-3" style="width:590px;">
-                <div class="news-title">
-                    <!--自行采购招（中）标结果公告-->
-                    @{  var zxcgzpgg = FuncHelper.Instance.GetCategoryByEnName("zxcgzpgg"); }
-                    <div class="name">@zxcgzpgg.sName<i></i></div>
-                    <a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(zxcgzpgg.ID, 1)" class="more">更多 >></a>
-                </div>
+        <div class="page-right">
+            <div class="pagelujing">
+                <div class="name">@pageCategory.Category.sName</div>
+                <span>
+                    您当前所在位置：
+                    <a>首页</a>
+                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(pageCategory.Category.ID))
+                    {
+                        @:><a>@location</a>
+                    }
+                </span>
+            </div>
+            <div class="news-txt ny mg-t-b">
                 <div class="news-con">
-                    <ul class="newslist">
-                        @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(zxcgzpgg.ID, 6))
+                    <ul class="newslist ny">
+                        @foreach (var article in FuncHelper.Instance.GetPageArticleByCategoryPageId(pageCategory.Page, pageCategory.Category.ID))
                         {
                             <li>
-                                <a target="_blank" href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
-                                <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
+                                <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
+                                <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd HH:mm")</span>
                             </li>
                         }
                     </ul>
-                </div>
-            </div>
-            <div class="news-txt col-3" style="width:590px;margin-right:0px">
-                <div class="news-title">
-                    <!--公告信息-->
-                    @{  var ggxx = FuncHelper.Instance.GetCategoryByEnName("ggxx"); }
-                    <div class="name">@ggxx.sName<i></i></div>
-                    <a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(ggxx.ID, 1)" class="more">更多 >></a>
-                </div>
-                <div class="news-con">
-                    <ul class="newslist">
-                        @foreach (var article in FuncHelper.Instance.GetArticleByCategoryId(ggxx.ID, 6))
+                    <div class="tcdPageCode">
+                        <!--上一页-->
+                        @if (pageCategory.Page == 1)
                         {
-                            <li>
-                                <a target="_blank" href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
-                                <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd")</span>
-                            </li>
+                            <span class="disabled">上一页</span>
                         }
-                    </ul>
+                        else
+                        {
+                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page-1)" class="tcdNumber">上一页</a>
+                        }
+                        <!--页面数-->
+                        @for (var i = 1; i <= pageCategory.Rows; i++)
+                        {
+                            if (pageCategory.Page == i)
+                            {
+                                <span class="current">@i</span>
+                            }
+                            else
+                            {
+                                <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID, i)" class="tcdNumber">@i</a>
+                            }
+                        }
+                        <!--下一页-->
+                        @if (pageCategory.Page == 1)
+                        {
+                            <span class="disabled">下一页</span>
+                        }
+                        else
+                        {
+                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page+1)" class="tcdNumber">下一页</a>
+                        }
+                    </div>
                 </div>
             </div>
-            <div class="clearfix"></div>
+
         </div>
+        <div class="clearfix"></div>
     </div>
     @Include("bottom")
 </body>
 </html>
-<script type="text/javascript">
-    $(function () {
-        jQuery(function ($) {
-            $('#newspic').slideBox({
-                duration: 0.3,//滚动持续时间，单位：秒
-                easing: 'linear',//swing,linear//滚动特效
-                delay: 5,//滚动延迟时间，单位：秒
-                hideClickBar: false,//不自动隐藏点选按键
-                clickBarRadius: 10
-            });
-        });
-        $("#news").rTabs({
-            bind : 'hover',
-            animation : 'fadein',
-            auto:false
-        });
-
-        //a
-        $('.hover_a').mouseenter(function () {
-            $('.hover_a_hide').hide();
-            $('.hover_a_show').show();
-        });
-        $('.hover_a').mouseleave(function () {
-            $('.hover_a_hide').show();
-            $('.hover_a_show').hide();
-        })
-        //b
-        $('.hover_b').mouseenter(function () {
-            $('.hover_b_hide').hide();
-            $('.hover_b_show').show();
-        });
-        $('.hover_b').mouseleave(function () {
-            $('.hover_b_hide').show();
-            $('.hover_b_show').hide();
-        });
-        //c
-        $('.hover_c').mouseenter(function () {
-            $('.hover_c_hide').hide();
-            $('.hover_c_show').show();
-        });
-        $('.hover_c').mouseleave(function () {
-            $('.hover_c_hide').show();
-            $('.hover_c_show').hide();
-        })
-        //d
-        $('.hover_d').mouseenter(function () {
-            $('.hover_d_hide').hide();
-            $('.hover_d_show').show();
-        });
-        $('.hover_d').mouseleave(function () {
-            $('.hover_d_hide').show();
-            $('.hover_d_show').hide();
-        })
-        //e
-        $('.hover_e').mouseenter(function () {
-            $('.hover_e_hide').hide();
-            $('.hover_e_show').show();
-        });
-        $('.hover_e').mouseleave(function () {
-            $('.hover_e_hide').show();
-            $('.hover_e_show').hide();
-        })
-    })
-</script>

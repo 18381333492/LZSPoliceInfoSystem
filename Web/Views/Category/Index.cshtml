@@ -52,7 +52,7 @@
 
         //编辑栏目
         function UpdateCategory(ID) {
-            var dialog = admin.dialog(admin.route('Edit') + "?ID=" +ID, "编辑栏目", function (r) {
+            var dialog = admin.dialog(admin.route('NewEdit') + "?ID=" +ID, "编辑栏目", function (r) {
                 if ($(admin.form).form('validate')) {
                     admin.button.disable();
                     var data = $(admin.form).serializeArray().toObject();

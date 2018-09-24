@@ -182,10 +182,7 @@ namespace Web.Server
                     }
                     while (parentCategory != null && parentCategory.CategoryId != 0);
                 }
-                else
-                {
-                    LocationArray.Add(category.sName);
-                }
+                LocationArray.Add(category.sName);
                 return LocationArray;
             }
         }

@@ -12,56 +12,18 @@
     </div>
 </div>
 <div class="nav">
-    <ul class="" id="navul">
-        @foreach (var category in FuncHelper.Instance.GetShowCategory())
-        {
-            <li>
-                @{ var childList = FuncHelper.Instance.GetChildCategory(category.ID); }
-                @if (childList.Count > 0)
-                {//有二级栏目一级栏目不能点击
-                    <a>@category.sName</a>
-                    <ul>
-                        @foreach (var item in childList)
-                        {
-                            <li>
-                                @if (item.bIsRedirect == true)
-                                {//跳转栏目
-                                    <a href="@item.sRedirectUrl">@item.sName</a>
-                                }
-                                else
-                                {
-                                    if (item.bIsContentCategory == true)
-                                    {//内容栏目
-                                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a>
-                                    }
-                                    else
-                                    {//文章栏目
-                                        <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID,1)">@item.sName</a>
-                                    }
-                                }
-                            </li>
-                        }
-                    </ul>
-                }
-                else
-                {//没有二级栏目
-                    if (category.bIsRedirect == true)
-                    {//跳转栏目
-                        <a href="@category.sRedirectUrl">@category.sName</a>
-                    }
-                    else
-                    {
-                        if (category.bIsContentCategory == true)
-                        {//内容栏目
-                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(category.ID)">@category.sName</a>
-                        }
-                        else
-                        {//文章栏目
-                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(category.ID,1)">@category.sName</a>
-                        }
-                    }
-                }
-            </li>
-         }
-    </ul>
+    <table style="WIDTH: 100%; BORDER-COLLAPSE: collapse" bordercolor="#999999" cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+            <tr>
+                <td style="WIDTH: 246px; TEXT-ALIGN: left" rowspan="2"><a href="default.php?mod=article&amp;fid=1"><img style="margin-top:10px;" src="http://www.sclzga.gov.cn/files/103233/1707/x_749130.png" /></a></td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
+            </tr>
+            <tr>
+                <td style="HEIGHT: 78px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ssd9cd2bd"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_e89199.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_c0c147.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_e89199.gif" /></a></td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
