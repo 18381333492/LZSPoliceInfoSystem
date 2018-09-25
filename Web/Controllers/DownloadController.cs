@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
+using Common;
 
 namespace Web.Controllers
 {
@@ -107,17 +108,34 @@ namespace Web.Controllers
         /// 分页获取留言数据
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetPageWords(PageInfo pageInfo)
+        public ActionResult GetPageWords(PageInfo pageInfo, string sEmail)
         {
             using (var db = new Entities())
             {
-                var query = db.TG_Client.OrderByDescending(m => m.dInsertTime).AsQueryable();
+                var query = db.TG_Client.Where(m=>m.sEmail== sEmail).OrderByDescending(m => m.dInsertTime).AsQueryable();
                 var result = new Result();
                 result.pageResult.page = pageInfo.page;
                 result.pageResult.total = query.Count();
                 query = query.Skip((pageInfo.page - 1) * pageInfo.rows).Take(pageInfo.rows);
                 result.pageResult.rows = query;
                 return Content(result.pageResult.toJson());
+            }
+        }
+
+        /// <summary>
+        /// 获取留言详情
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public ActionResult GetWordsDetail(int ID)
+        {
+            using (var db = new Entities())
+            {
+                var result = new Result();
+                var detail = db.TG_Client.Find(ID);
+                result.data =JsonHelper.toJson(detail);
+                result.success = true;
+                return Json(result);
             }
         }
     }

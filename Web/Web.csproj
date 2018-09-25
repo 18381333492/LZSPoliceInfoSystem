@@ -1099,6 +1099,17 @@
     <Content Include="Html\css\main.css" />
     <Content Include="Html\images\bottom.png" />
     <Content Include="Html\images\x_749130.png" />
+    <Content Include="Html\images_menu\1-1.gif" />
+    <Content Include="Html\images_menu\1.gif" />
+    <Content Include="Html\images_menu\2-2.gif" />
+    <Content Include="Html\images_menu\2.gif" />
+    <Content Include="Html\images_menu\3-3.gif" />
+    <Content Include="Html\images_menu\3.gif" />
+    <Content Include="Html\images_menu\4-4.gif" />
+    <Content Include="Html\images_menu\4.gif" />
+    <Content Include="Html\images_menu\5-5.gif" />
+    <Content Include="Html\images_menu\5.gif" />
+    <Content Include="Html\images_menu\select.png" />
     <Content Include="Html\js\jquery-1.8.3.min.js" />
     <Content Include="Html\js\jquery.leoweather.min.js" />
     <Content Include="Html\js\jquery.page.js" />
@@ -1427,6 +1438,8 @@
     <Content Include="Views\User\SetPwd.cshtml" />
     <Content Include="Views\Category\NewEdit.cshtml" />
     <Content Include="Template\top_old.cshtml" />
+    <Content Include="Views\Client\Respone.cshtml" />
+    <Content Include="Views\Client\NewIndex.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

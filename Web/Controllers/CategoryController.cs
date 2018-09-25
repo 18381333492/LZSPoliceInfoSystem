@@ -114,7 +114,7 @@ namespace Web.Controllers
         {
             //获取文章栏目
             var query = mangae.db.TG_Category.
-                Where(m=>m.bIsContentCategory==null&&m.bIsRedirect==null&&m.iArticleTemplateId !=null&&m.iTemplateId!=null||m.sEnName=="bgxz")
+                Where(m=>m.bIsContentCategory==null&&m.bIsRedirect==null&&m.iArticleTemplateId !=null&&m.iTemplateId!=null)
                 .OrderBy(m => m.iOrder).AsQueryable();
             var main = query.Where(m => m.CategoryId == 0).ToList();
             var child = query.Where(m => m.CategoryId > 0).ToList();
@@ -204,6 +204,28 @@ namespace Web.Controllers
                 if (string.IsNullOrEmpty(LoginStatus.sCategoryIds)||LoginStatus.sCategoryIds.Contains(category.ID.ToString()) == false)
                 {
                     result.info = "您没有权限操作";
+                }
+                else
+                {
+                    if (mangae.db.TG_Category.Where(m => m.ID != category.ID).Any(m => m.sName == category.sName || m.sEnName == category.sEnName))
+                    {//存在相同的栏目名称或栏目标识
+                        result.info = "存在相同的栏目名称或栏目标识";
+                        return;
+                    }
+                    mangae.Edit<TG_Category>(category);
+                    result.success = mangae.SaveChange();
+
+                    if (category.bIsContentCategory == true)
+                    {//内容栏目才重新生成页面
+                     /**编辑栏目重新生成栏目页***/
+                        var templet = mangae.db.TG_Templet.Where(m => m.ID == category.iTemplateId).SingleOrDefault();
+                        if (templet != null)
+                        {//模板存在
+                            string templetHtmlString = RazorHelper.ParseString(templet.sTempletEnName, category);
+                            string sHtmlPath = FuncHelper.Instance.GetHtmlPath(category, mangae.db.TG_Category.ToList());
+                            RazorHelper.MakeHtml(sHtmlPath, category.sEnName, templetHtmlString);
+                        }
+                    }
                 }
             }
             else

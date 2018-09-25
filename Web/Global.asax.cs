@@ -25,25 +25,19 @@ namespace Web
             //获取访问量
         }
 
-        ///// <summary>
-        ///// 开始回话
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //void Session_Start(object sender, EventArgs e)        //{
-        //    //不是每次请求都调用
-        //    //会话开始时执行
-        //}
-
-        void Application_BeginRequest(object sender, EventArgs e)
-        {      
+        /// <summary>
+        /// 开始回话
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Session_Start(object sender, EventArgs e)        {
             //每次请求时第一个出发的事件，这个方法第一个执行
             try
             {
                 using (var db = new Entities())
                 {
-                    var res=db.Database.ExecuteSqlCommand("update TG_WebSite set iCount=iCount+1");
-                    logger.Info("更新访问返回结果:"+res.ToString());
+                    var res = db.Database.ExecuteSqlCommand("update TG_WebSite set iCount=iCount+1");
+                    logger.Info("更新访问返回结果:" + res.ToString());
                 }
             }
             catch (Exception ex)
@@ -51,8 +45,13 @@ namespace Web
                 logger.Info("更新访问量失败");
                 logger.Fatal(ex.Message);
                 throw;
-            }       
+            }
         }
+
+        //void Application_BeginRequest(object sender, EventArgs e)
+        //{      
+          
+        //}
 
     }
 }

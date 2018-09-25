@@ -1,6 +1,8 @@
 ﻿@using Web.Server;
 @using Web.Models;
-@{  var pageCategory = Model as PageCategory; }
+@{
+    var Category = Model as TG_Category;
+}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,97 +12,63 @@
     <link href="/Html/css/main.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="/Html/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/Html/js/nav.js"></script>
+    <script src="/Html/js/Tabs.js"></script>
 </head>
 <body>
-    @Include("top")
+    @Include("top", Category)
     <div class="container mg-t-b container_col">
-        <div class="page-left">
-            <div class="pagelist">
-                @{ var child = FuncHelper.Instance.GetChildCategory(pageCategory.Category.CategoryId);}
-                <ul class="listbox">
-                    @foreach (var item in child)
-                    {
-                        if (item.bIsRedirect == true)
-                        {
-                            <li><a target="_blank" href="@item.sRedirectUrl">@item.sName</a></li>
-                        }
-                        else
-                        {
-                            if (item.bIsContentCategory == true)
-                            {
-                            <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a></li>
-                            }
-
-                            if (item.bIsContentCategory == null)
-                            {
-                            <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID, 1)">@item.sName</a></li>
-                            }
-                        }
-                    }
-                </ul>
-            </div>
-        </div>
         <div class="page-right">
             <div class="pagelujing">
-                <div class="name">@pageCategory.Category.sName</div>
+                <div class="name">@Category.sName</div>
                 <span>
-                    您当前所在位置：
-                    <a>首页</a>
-                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(pageCategory.Category.ID))
+                    您当前所在位置：<a href="#">首页</a>
+                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(Category.ID))
                     {
                         @:><a>@location</a>
                     }
                 </span>
             </div>
             <div class="news-txt ny mg-t-b">
-                <div class="news-con">
-                    <ul class="newslist ny">
-                        @foreach (var article in FuncHelper.Instance.GetPageArticleByCategoryPageId(pageCategory.Page, pageCategory.Category.ID))
-                        {
-                            <li>
-                                <a href="@FuncHelper.Instance.GetArticleHtmlUrl(article.ID)">@article.sTitle</a>
-                                <span>@article.dInsertTime.Value.ToString("yyyy-MM-dd HH:mm")</span>
-                            </li>
-                        }
-                    </ul>
-                    <div class="tcdPageCode">
-                        <!--上一页-->
-                        @if (pageCategory.Page == 1)
-                        {
-                            <span class="disabled">上一页</span>
-                        }
-                        else
-                        {
-                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page-1)" class="tcdNumber">上一页</a>
-                        }
-                        <!--页面数-->
-                        @for (var i = 1; i <= pageCategory.Rows; i++)
-                        {
-                            if (pageCategory.Page == i)
-                            {
-                                <span class="current">@i</span>
-                            }
-                            else
-                            {
-                                <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID, i)" class="tcdNumber">@i</a>
-                            }
-                        }
-                        <!--下一页-->
-                        @if (pageCategory.Page == 1)
-                        {
-                            <span class="disabled">下一页</span>
-                        }
-                        else
-                        {
-                            <a href="@FuncHelper.Instance.GetCategoryHtmlUrl(pageCategory.Category.ID,pageCategory.Page+1)" class="tcdNumber">下一页</a>
-                        }
-                    </div>
-                </div>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td align="center">留　言</td>
+                            <td colspan="2">
+                                <textarea name="sContent" cols="50" rows="7" style="width:95%; border:#999999 dashed 1px; color: #5C5C5C; line-height:20px; padding:5px; outline:none;"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="11%" height="34" align="center">联系电话</td>
+                            <td colspan="2">
+                                <input name="sPhone" type="number" class="input1" size="52" maxlength="20" style="width:95%; border:#999999 dashed 1px; color:#666666; padding:5px; outline:none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="11%" height="34" align="center">联 系 人</td>
+                            <td colspan="2">
+                                <input name="sName" type="text" class="input1" size="52" maxlength="20" style="width:95%; border:#999999 dashed 1px; color:#666666; padding:5px; outline:none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="2">
+                                <span class="font8">
+                                    <div align="center" style="margin:20px 0;">
+                                        <input type="hidden" name="action_e" value="Add_New" />
+                                        <input id="fabu" type="submit" name="Submit2" value="发表留言" style="width:100px;height:30px;" />
+                                    </div>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
         </div>
         <div class="clearfix"></div>
     </div>
     @Include("bottom")
 </body>
 </html>
+<script type="text/javascript">
+
+</script>

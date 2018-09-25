@@ -2,16 +2,35 @@
 @{
     ViewBag.Title = "互动交流";
 }
-<div style="height:100%;width:100%">
-    <table id="Client" style="height:100%;width:100%"></table>
-    <div id="Client_toolbar" style="padding:20px;">
-        <form id="searchForm">
-            <div style="margin-bottom:5px">
-                <span>模糊查询</span>
-                <input type="text" class="form-control" name="sKeyWord">&nbsp;&nbsp;
-                <a class="btn btn-primary btn-sm search" style="vertical-align: baseline">查 询</a>
+<ul id="myTab" class="nav nav-tabs" style="margin:10px 0px 0px 0px;">
+    <li class="active">
+        <a href="#home" data-toggle="tab">
+            业务咨询留言
+        </a>
+    </li>
+    <li>
+        <a href="#ios" data-toggle="tab">
+            我为公安交通管理献计献策
+        </a>
+    </li>
+</ul>
+<div id="myTabContent" class="tab-content" style="height:90%">
+    <div class="tab-pane fade in active" id="home" style="height:100%">
+        <div style="height:100%;width:100%">
+            <table id="Client" style="height:100%;width:100%"></table>
+            <div id="Client_toolbar" style="padding:20px;">
+                <form id="searchForm">
+                    <div style="margin-bottom:5px">
+                        <span>模糊查询</span>
+                        <input type="text" class="form-control" name="sKeyWord">&nbsp;&nbsp;
+                        <a class="btn btn-primary btn-sm search" style="vertical-align: baseline">查 询</a>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="ios" style="height:100%">
+        <iframe src="/Client/NewIndex" style="width:100%;height:100%;display:-webkit-box;" scrolling="auto" frameborder="0"></iframe>
     </div>
 </div>
 <script type="text/javascript">
@@ -37,7 +56,7 @@
                 fitColumns: true,
                 singleSelect: true,
                 columns: [[
-                    { field: 'sName', title: '用户姓名', align: 'center', width: 120 },
+                    { field: 'sName', title: '联系人', align: 'center', width: 120 },
                     { field: 'sPhone', title: '联系电话', align: 'center', width: 100 },
                     { field: 'sContent', title: '咨询内容', align: 'center', width: 300 },
                     {
@@ -52,10 +71,11 @@
                     { field: 'dInsertTime', title: '提交时间', align: 'center', width: 100 },
                     { field: 'dDoneTime', title: '处理时间', align: 'center', width: 100 },
                     {
-                        field: 'ID', title: '操作', align: 'center', width: 100, formatter: function (value, row) {
+                        field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value, row) {
                             var html = [];
                             html.push("<div style='padding:2px;'>")
                             html.push('<a class="btn btn-sm btn-success editData" data-id=' + row.ID + ' style="vertical-align: baseline">回复</a>&nbsp;&nbsp;');
+                            html.push('<a class="btn btn-sm btn-danger cancelData" data-id=' + row.ID + ' style="vertical-align: baseline">删除</a>&nbsp;&nbsp;');
                             html.push('</div>');
                             return html.join('');
                         }
@@ -63,6 +83,35 @@
                 ]],
                 onLoadSuccess: function () {
                     admin.grid.datagrid('resize');
+                    //编辑事件
+                    $('.editData').on("click", function (event) {
+                        event.stopPropagation();
+                        var id = $(this).attr("data-id");
+                        var dialog = admin.dialog(admin.route('Respone') + "?ID=" + id, "回复", function (r) {
+                            if ($(admin.form).form('validate')) {
+                                admin.button.disable();
+                                var data = $(admin.form).serializeArray().toObject();
+                                data.sign = "c";
+                                admin.Ajax(admin.route('ResponeCommit'), data, function (r) {
+                                    admin.alert("操作成功");
+                                    dialog.dialog('close');
+                                    admin.grid.datagrid("reload");
+                                });
+                            }
+                        }, 600, 500);
+                    });
+                    //删除事件
+                    $('.cancelData').on("click", function (event) {
+                        event.stopPropagation();
+                        var id = $(this).attr("data-id");
+                        admin.confirm("确定要删除选择的数据", function () {
+                            admin.Ajax(admin.route("Cancel"), { Ids: id, sign: "c" }, function (r) {
+                                admin.alert("删除成功");
+                                admin.grid.datagrid("reload");
+                                admin.grid.datagrid("clearSelections");
+                            });
+                        });
+                    });
                 }
             });
 

@@ -41,6 +41,19 @@ namespace Web.Controllers
                 {
                     result.info = "您没有权限操作";
                 }
+                else
+                {
+                    if (webSite.ID == 0)
+                    {//添加
+                        mangae.Add<TG_WebSite>(webSite);
+                        result.success = mangae.SaveChange();
+                    }
+                    else
+                    {//编辑
+                        mangae.Edit<TG_WebSite>(webSite);
+                        result.success = mangae.SaveChange();
+                    }
+                }
             }
             else
             {

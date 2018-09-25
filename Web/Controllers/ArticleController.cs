@@ -83,6 +83,18 @@ namespace Web.Controllers
                 {
                     result.info = "您没有权限操作";
                 }
+                else
+                {
+                    article.bIsRelease = true;
+                    article.bIsDeleted = false;
+                    article.dInsertTime = DateTime.Now;
+                    mangae.Add<TG_Article>(article);
+                    result.success = mangae.SaveChange();
+                    if (result.success)
+                    {
+                        MakeArticleHtml(article);
+                    }
+                }
             }
             else
             {
@@ -111,6 +123,16 @@ namespace Web.Controllers
                 {
                     result.info = "您没有权限操作";
                 }
+                else
+                {
+                    article.bIsRelease = true;
+                    mangae.Edit<TG_Article>(article);
+                    result.success = mangae.SaveChange();
+                    if (result.success)
+                    {
+                        MakeArticleHtml(article);
+                    }
+                }
             }
             else
             {
@@ -137,11 +159,20 @@ namespace Web.Controllers
                 {
                     result.info = "您没有权限操作";
                 }
+                else
+                {
+                    var res = mangae.Delete<TG_Article>(Ids);
+                    if (res)
+                    {
+                        result.success = true;
+                        MakeArticleHtml(article);
+                    }
+                }
             }
             else
             {
-                var res = mangae.Cancel<TG_Article>(Ids);
-                if (res > 0)
+                var res = mangae.Delete<TG_Article>(Ids);
+                if (res)
                 {
                     result.success = true;
                     MakeArticleHtml(article);

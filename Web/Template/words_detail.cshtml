@@ -1,0 +1,101 @@
+@using Web.Server;
+@using Web.Models;
+@{
+    var Category = Model as TG_Category;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>泸州市公安交警信息网</title>
+    <link href="/Html/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/Html/css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Html/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Html/js/nav.js"></script>
+    <script src="/Html/js/Tabs.js"></script>
+</head>
+<body>
+    @Include("top",Category)
+    <div class="container mg-t-b container_col">
+        <div class="page-right" style="padding:0 30px;float:none;width:auto">
+            <div class="pagelujing">
+                <div class="name">@Category.sName</div>
+                <span>
+                    您当前所在位置：<a href="#">首页</a>
+                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(Category.ID))
+                    {
+                    @:><a>@location</a>
+                    }
+                </span>
+            </div>
+            <div class="news-txt ny mg-t-b">
+                <style>
+                    #my_detail tr td {
+                        padding: 10px;
+                        font-size: 14px;
+                        border-bottom: 1px solid #cacaca;
+                    }
+                </style>
+                <table id="my_detail" width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td style="background-color:#f1f1f1;color:#05608c">留言内容:</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;<span id="sContent"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#f1f1f1;color:#05608c">提交时间:<span id="dInsertTime"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#f1f1f1;color:#05608c">处理状态:<span id="iState"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#f1f1f1;color:#05608c">回复内容:</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;<span id="sRespone"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#f1f1f1;color:#05608c">回复时间:<span id="dDoneTime"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    @Include("bottom")
+</body>
+</html>
+<script type="text/javascript">
+
+    function getQueryString(name) {
+        var result = window.location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+        if (result == null || result.length < 1) {
+            return "";
+        }
+        return result[1];
+    }
+
+    var ID = getQueryString("ID");
+
+
+    $.ajax({
+        url: '/Download/GetWordsDetail',
+        type: 'POST',
+        dataType: 'json',
+        data: { ID: ID },
+        success: function (r) {
+            var info = JSON.parse(r.data);
+            $('#sContent').text(info.sContent||'');
+            $('#dInsertTime').text(info.dInsertTime || '');
+            $('#sRespone').text(info.sRespone || '');
+            $('#dDoneTime').text(info.dDoneTime || '');
+            if (info.iState == 0)
+                $('#iState').text("等待处理");
+            else
+                $('#iState').text("处理完成");
+        }
+    });
+</script>

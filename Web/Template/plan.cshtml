@@ -1,0 +1,213 @@
+@using Web.Server;
+@using Web.Models;
+@{
+    var Category = Model as TG_Category;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>泸州市公安交警信息网</title>
+    <link href="/Html/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/Html/css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Html/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Html/js/nav.js"></script>
+    <script src="/Html/js/Tabs.js"></script>
+</head>
+<body>
+    @Include("top",Category)
+    <div class="container mg-t-b container_col">
+        <div class="page-left">
+            <div class="pagelist">
+                @{ var child = FuncHelper.Instance.GetChildCategory(Category.CategoryId);}
+                <ul class="listbox">
+                    @foreach (var item in child)
+                    {
+                    if (item.bIsRedirect == true)
+                    {
+                    <li><a target="_blank" href="@item.sRedirectUrl">@item.sName</a></li>
+                    }
+                    else
+                    {
+                    if (item.bIsContentCategory == true)
+                    {
+                    <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID)">@item.sName</a></li>
+                    }
+
+                    if (item.bIsContentCategory == null)
+                    {
+                    <li><a target="_blank" href="@FuncHelper.Instance.GetCategoryHtmlUrl(item.ID, 1)">@item.sName</a></li>
+                    }
+                    }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="page-right">
+            <div class="pagelujing">
+                <div class="name">@Category.sName</div>
+                <span>
+                    您当前所在位置：<a href="#">首页</a>
+                    @foreach (var location in FuncHelper.Instance.GetCategoryLocation(Category.ID))
+                    {
+                    @:><a>@location</a>
+                    }
+                </span>
+            </div>
+            <div class="news-txt ny mg-t-b">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="11%" height="34" align="center">主 题</td>
+                            <td colspan="2">
+                                <input name="sAddress" type="text" class="input1" size="52" maxlength="20" style="width:95%; border:#999999 dashed 1px; color:#666666; padding:5px; outline:none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">留　言</td>
+                            <td colspan="2">
+                                <textarea name="sContent" cols="50" rows="7" style="width:95%; border:#999999 dashed 1px; color: #5C5C5C; line-height:20px; padding:5px; outline:none;"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="11%" height="34" align="center">联系电话</td>
+                            <td colspan="2">
+                                <input name="sPhone" type="number" class="input1" size="52" maxlength="20" style="width:95%; border:#999999 dashed 1px; color:#666666; padding:5px; outline:none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="11%" height="34" align="center">联 系 人</td>
+                            <td colspan="2">
+                                <input name="sName" type="text" class="input1" size="52" maxlength="20" style="width:95%; border:#999999 dashed 1px; color:#666666; padding:5px; outline:none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="2">
+                                <span class="font8">
+                                    <div align="center" style="margin:20px 0;">
+                                        <input type="hidden" name="action_e" value="Add_New" />
+                                        <input id="fabu" type="submit" name="Submit2" value="提交问题" style="width:100px;height:30px;" />
+                                    </div>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pagelujing">
+                    <div class="name">献计献策列表</div>
+                </div>
+                <div class="news-con">
+                    <style>
+                        .gridtable_own tr td {
+                            padding: 5px;
+                            font-size: 13px;
+                        }
+                    </style>
+                    <table class="gridtable_own" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="45%" style="text-align:left">主题</th>
+                                <th width="20%" style="text-align:center">提交时间</th>
+                                <th width="15%" style="text-align:center">处理状态</th>
+                                <th width="20%" style="text-align:center">处理时间</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="tcdPageCode">
+                        <!--上一页-->
+                        <span class="disabled">上一页</span>
+                        <!--页面数-->
+                        <span class="current">1</span>
+                        <!--下一页-->
+                        <span class="disabled">下一页</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    @Include("bottom")
+</body>
+</html>
+<script src="~/Scripts/common.client.js"></script>
+<script src="~/Html/js/jquery.page.js"></script>
+<script type="text/javascript">
+    $('#fabu').on("click", function () {
+        var sAddress = $.trim($('input[name=sAddress]').val());
+        var sName=$.trim($('input[name=sName]').val());
+        var sPhone=$.trim($('input[name=sPhone]').val());
+        var sContent = $.trim($('textarea[name=sContent]').val());
+        if (sAddress.length == 0) return alert("请输入主题");
+        if (sContent.length == 0) return alert("请输入内容");
+        if (sPhone.length == 0) return alert("请输入联系电话");
+        if (!client.regex.isPhone(sPhone)) return alert("手机号码格式错误");
+        if (sName.length == 0) return alert("请输入联系人");
+        $.ajax({
+            url: '/Download/Insert',
+            type: 'POST',
+            dataType: 'json',
+            data: { sName: sName, sPhone: sPhone, sContent: sContent, sAddress: sAddress, sEmail:1 },
+            success: function (r) {
+                if (r.success) {
+                    alert("提交成功");
+                    location.reload();
+                }
+            }
+        });
+    });
+
+    var IsInit = false;
+    var pageParam = {
+        page: 1,
+        rows: 10,
+        sEmail:1
+    }
+
+    LoadData();
+
+    //加载留言分页数据
+    function LoadData() {
+        $.ajax({
+            url: '/Download/GetPageWords',
+            type: 'POST',
+            dataType: 'json',
+            data: pageParam,
+            success: function (r) {
+                var pageCount = Math.ceil(r.total / r.rows.length);
+                if (IsInit == false) {
+                    IsInit = true;
+                    $(".tcdPageCode").createPage({
+                        pageCount: pageCount,
+                        current: 1,
+                        backFn: function (p) {
+                            pageParam.page = p;
+                            LoadData();
+                        }
+                    });
+                }
+                if (r.rows.length > 0) {
+                    var html = [];
+                    $(r.rows).each(function () {
+                        var title = this.sAddress || '';
+                        var dDoneTime = this.dDoneTime || '';
+                        html.push('<tr>');
+                        html.push('<td style="text-align:left"><a target="_blank" href="/Html/fdjl/xjxcxq.html?ID=' + this.ID + '">' + title + '</a></td>');
+                        html.push('<td style="text-align:center">' + this.dInsertTime + '</td>');
+                        if (this.iState == 0) {
+                            html.push('<td style="text-align:center;color:red">待处理</td>');
+                        }
+                        else {
+                            html.push('<td style="text-align:center">处理完成</td>');
+                        }
+                        html.push('<td style="text-align:center">' + dDoneTime + '</td>');
+                        html.push('</tr>');
+                    });
+                    $('.gridtable_own tbody').html(html.join(''));
+                }
+            }
+        });
+    }
+
+</script>

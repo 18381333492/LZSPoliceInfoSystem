@@ -1,5 +1,12 @@
 @using Web.Server;
 @using Web.Models;
+@{  
+    TG_Category category = Model as TG_Category;
+    if (category.CategoryId != 0)
+    {
+        category = FuncHelper.Instance.GetCategoryById(category.CategoryId);
+    }
+}
 <div class="header">
     <div class="container">
         <div id="weather"></div>
@@ -15,14 +22,55 @@
     <table style="WIDTH: 100%; BORDER-COLLAPSE: collapse" bordercolor="#999999" cellspacing="0" cellpadding="0" border="0">
         <tbody>
             <tr>
-                <td style="WIDTH: 246px; TEXT-ALIGN: left" rowspan="2"><a href="default.php?mod=article&amp;fid=1"><img style="margin-top:10px;" src="http://www.sclzga.gov.cn/files/103233/1707/x_749130.png" /></a></td>
-                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
-                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
-                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
+                <td style="WIDTH: 246px; TEXT-ALIGN: left" rowspan="2">
+                <a style="position:relative">
+                    <img style="margin-top:10px;" src="~/Html/images_menu/select.png" />
+                    <span style="position: absolute;
+                        display: inline-block;
+                        width: 100px;
+                        color: white;
+                        right: 30px;
+                        bottom: 50px;
+                        font-size: 24px;">@category.sName</span>
+                </a>
+                </td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left">
+                    <a href="/Html/zcfg/jtfg_1.html">
+                    <img src="~/Html/images_menu/4.gif" 
+                         onmouseover="this.src = '/Html/images_menu/4-4.gif'"
+                         onmouseout="this.src='/Html/images_menu/4.gif'" />
+                    </a>
+                </td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left">
+                    <a href="/Html/jwgk/zdjs.html">
+                        <img src="~/Html/images_menu/3.gif"
+                             onmouseover="this.src = '/Html/images_menu/3-3.gif'"
+                             onmouseout="this.src='/Html/images_menu/3.gif'" />
+                   </a>
+                </td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left">
+                    <a href="/Html/wscgs/ywzxly.html">
+                        <img src="~/Html/images_menu/5.gif"
+                             onmouseover="this.src = '/Html/images_menu/5-5.gif'"
+                             onmouseout="this.src='/Html/images_menu/5.gif'" />
+                    </a>
+                </td>
             </tr>
             <tr>
-                <td style="HEIGHT: 78px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ssd9cd2bd"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_e89199.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_c0c147.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_e89199.gif" /></a></td>
-                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left"><a href="default.php?mod=c&amp;s=ss8a50ffa"><img src="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" onmouseover="special_asqewrqdfad2(this)" onmouseout="special_asqewrqdfad3(this)" sbgimg="files/103233/1707/x_8e9156.gif" sbgimg1="http://www.sclzga.gov.cn/files/103233/1707/x_c08121.gif" /></a></td>
+                <td style="HEIGHT: 78px; TEXT-ALIGN: left">
+                        <a href="/Html/jtxt/aqcs_1.html">
+                            <img src="~/Html/images_menu/1.gif"
+                                 onmouseover="this.src = '/Html/images_menu/1-1.gif'"
+                                 onmouseout="this.src='/Html/images_menu/1.gif'" />
+                    </a>
+                </td>
+                <td style="HEIGHT: 76px; WIDTH: 322px; TEXT-ALIGN: left">
+                    <a href="/Html/fdjl/jcjj.html">
+                        <img src="~/Html/images_menu/2.gif"
+                             onmouseover="this.src = '/Html/images_menu/2-2.gif'"
+                             onmouseout="this.src='/Html/images_menu/2.gif'" />
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>

@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+}
+@using Web.Models;
+@model TG_Client
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <input type="hidden" name="sEmail" value="@Model.sEmail" />
+    <input type="hidden" name="iState" value="@Model.iState" />
+    <input type="hidden" name="dInsertTime" value="@Model.dInsertTime" />
+    <table class="gridtable">
+        @if (!string.IsNullOrEmpty(Model.sAddress))
+        {
+            <tr>
+                <td>主题:</td>
+                <td>
+                    <input type="text" class="easyui-textbox" name="dInsertTime" style="width:400px;" value="@Model.sAddress" />
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>内容:</td>
+            <td>
+                <textarea name="sContent" style="height:120px;width:400px;border-radius:5px;">@Model.sContent</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>提交时间:</td>
+            <td>
+                <input type="text" class="easyui-textbox" name="dInsertTime" value="@Model.dInsertTime.ToString("yyyy-MM-dd HH:mm")" />
+            </td>
+        </tr>
+        <tr>
+            <td>联系电话</td>
+            <td>
+                <input type="text" class="easyui-textbox" name="sPhone" value="@Model.sPhone" />
+            </td>
+        </tr>
+        <tr>
+            <td>联系人:</td>
+            <td>
+                <input type="text" class="easyui-textbox" name="sName"  value="@Model.sName" />
+            </td>
+        </tr>
+        <tr>
+            <td>回复内容:</td>
+            <td>
+                <textarea name="sRespone" style="height:120px;width:400px;border-radius:5px;">@Model.sRespone</textarea>
+            </td>
+        </tr>
+        @if (Model.iState == 1)
+        {
+        <tr>
+            <td>回复时间:</td>
+            <td>
+                <input type="text" class="easyui-textbox" name="dDoneTime" value="@Model.dDoneTime" />
+            </td>
+        </tr>
+        }
+    </table>
+</form>

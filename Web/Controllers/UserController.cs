@@ -99,6 +99,23 @@ namespace Web.Controllers
                 {
                     result.info = "您没有权限操作";
                 }
+                else
+                {
+                    if (mangae.db.TG_User.Any(m => m.sUserName == user.sUserName))
+                    {
+                        result.info = "该账户已存在";
+                    }
+                    else
+                    {
+                        user.sUserName = user.sUserName.Trim();
+                        user.iUserType = 0;
+                        user.bIsSuper = false;//默认非超级管理员
+                        user.sPassword = SecurityHelper.MD5(user.sPassword);
+                        mangae.Add<TG_User>(user);
+                        result.success = mangae.SaveChange();
+                    }
+
+                }
             }
             else
             {
@@ -129,6 +146,11 @@ namespace Web.Controllers
                 if (string.IsNullOrEmpty(LoginStatus.sCategoryIds) || LoginStatus.sCategoryIds.Contains("b") == false)
                 {
                     result.info = "您没有权限操作";
+                }
+                else
+                {
+                    mangae.Edit<TG_User>(user);
+                    result.success = mangae.SaveChange();
                 }
             }
             else
@@ -308,6 +330,20 @@ namespace Web.Controllers
                     {
                         result.info = "您没有权限操作";
                         result.success = false;
+                    }
+                    else
+                    {
+                        sNewPwd = SecurityHelper.MD5(sNewPwd);
+                        List<SqlParameter> SqlParsArray = new List<SqlParameter>();
+                        SqlParsArray.Add(new SqlParameter("ID", LoginStatus.ID));
+                        SqlParsArray.Add(new SqlParameter("sPassword", sNewPwd));
+                        var res = mangae.ExcuteBySql("update TG_User set sPassword=@sPassword where ID=@ID", SqlParsArray.ToArray());
+                        if (res > 0)
+                        {
+                            result.success = true;
+                        }
+                        else
+                            result.info = "密码重置失败";
                     }
                 }
                 else
